@@ -1,0 +1,20 @@
+testpkg(8)
+==========
+
+Name
+----
+testpkg - test a lpm package for validity
+
+Synopsis
+--------
+'testpkg' <package file>
+
+Description
+-----------
+'testpkg' is a script used to make sure that a lpm package is valid.
+
+See Also
+--------
+linkman:lpm[8]
+
+include::footer.asciidoc[]

@@ -1,0 +1,36 @@
+lpm-db-upgrade(8)
+====================
+
+Name
+----
+lpm-db-upgrade - upgrade the local lpm database to a newer format
+
+Synopsis
+--------
+'lpm-db-upgrade' [options]
+
+Description
+-----------
+'lpm-db-upgrade' is a script that upgrades the local database used
+by linkman:lpm[8] to a newer format.
+
+Options
+--------------
+*-h, \--help*::
+Show the built-in help message and exit.
+*-V, \--version*::
+Show version information and exit.
+*-d, \--dbpath* <path>::
+Set an alternate database location.
+*-r, \--root* <path>::
+Set an alternate installation root.
+*\--config* <path>::
+Set an alternate configuration file.
+*\--nocolor*::
+Remove color from output.
+
+See Also
+--------
+linkman:lpm[8]
+
+include::footer.asciidoc[]

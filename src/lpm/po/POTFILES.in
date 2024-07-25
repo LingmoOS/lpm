@@ -1,0 +1,26 @@
+# List of source files with translatable strings
+# If a file is commented out, it is because it shouldn't have any
+# translatable strings
+
+# lpm frontend source files
+src/lpm/callback.c
+src/lpm/check.c
+src/lpm/conf.c
+src/lpm/database.c
+src/lpm/deptest.c
+src/lpm/files.c
+#src/lpm/ini.c
+src/lpm/package.c
+src/lpm/lpm.c
+src/lpm/query.c
+src/lpm/remove.c
+src/lpm/sighandler.c
+src/lpm/sync.c
+src/lpm/upgrade.c
+src/lpm/util.c
+#src/lpm/util-common.c
+
+# utility files
+src/lpm/lpm-conf.c
+src/util/testpkg.c
+src/util/vercmp.c
