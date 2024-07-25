@@ -5,7 +5,7 @@ pkgdesc="The Lingmo OS Package Manager"
 arch=('any')
 url="https://github.com/LingmoOS/lpm"
 license=('GPL-2.0')
-source=("git+https://github.com/LingmoOS/$pkgname")
+source=("https://github.com/LingmoOS/$pkgname")
 validpgpkeys=("FA4D355E2BE1BEF4A15D924EF1A83B6031E04C70")
 sha256sums=('SKIP')
 
