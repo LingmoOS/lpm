@@ -310,13 +310,13 @@ if get_option('i18n')
   subdir('scripts/po')
 endif
 
-want_doc = get_option('doc')
-ASCIIDOC = find_program('asciidoc', required : want_doc)
-A2X = find_program('a2x', required : want_doc)
-build_doc = A2X.found() and not want_doc.disabled()
-if build_doc
-  subdir('doc')
-endif
+#want_doc = get_option('doc')
+#ASCIIDOC = find_program('asciidoc', required : want_doc)
+#A2X = find_program('a2x', required : want_doc)
+#build_doc = A2X.found() and not want_doc.disabled()
+#if build_doc
+#  subdir('doc')
+#endif
 
 includes = include_directories('src/common', 'lib/libalpm')
 
@@ -488,7 +488,7 @@ message('\n    '.join([
   '',
   'Compilation options:',
   '  i18n support             : @0@'.format(get_option('i18n')),
-  '  Build docs               : @0@'.format(build_doc),
+  #'  Build docs               : @0@'.format(build_doc),
   '  debug build              : @0@'.format(get_option('buildtype') == 'debug'),
   '  Use libcurl              : @0@'.format(conf.get('HAVE_LIBCURL')),
   '  Use GPGME                : @0@'.format(conf.get('HAVE_LIBGPGME')),
