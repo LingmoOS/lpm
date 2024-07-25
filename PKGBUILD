@@ -1,8 +1,8 @@
 pkgname=lpm
 pkgver=1.0.0
-pkgrel=1
+pkgrel=2
 pkgdesc="The Lingmo OS Package Manager"
-arch=('x86_64')
+arch=('any')
 url="https://github.com/LingmoOS/lpm"
 license=('GPL-2.0')
 source=("git+https://github.com/LingmoOS/$pkgname")

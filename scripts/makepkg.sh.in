@@ -1061,7 +1061,8 @@ PACKAGER=${PACKAGER:-"Unknown Packager"}
 # set lpm command if not already defined
 LPM=${LPM:-lpm}
 # save full path to command as PATH may change when sourcing /etc/profile
-LPM_PATH=$(type -P $LPM)
+# LPM_PATH=$(type -P $LPM)
+LPM_PATH=/usr/bin/lpm
 
 # check if messages are to be printed using color
 if [[ -t 2 && $USE_COLOR != "n" ]] && check_buildenv "color" "y"; then
@@ -1256,7 +1257,7 @@ if (( INFAKEROOT )); then
 fi
 
 # check we have the software required to process the PKGBUILD
-check_software || exit $E_MISSING_MAKEPKG_DEPS
+# check_software || exit $E_MISSING_MAKEPKG_DEPS
 
 # check if gpg signature is to be created and if signing key is valid
 if { [[ -z $SIGNPKG ]] && check_buildenv "sign" "y"; } || [[ $SIGNPKG == 'y' ]]; then

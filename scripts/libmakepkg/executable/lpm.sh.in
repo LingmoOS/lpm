@@ -27,6 +27,8 @@ source "$MAKEPKG_LIBRARY/util/message.sh"
 
 executable_functions+=('executable_lpm')
 
+LPM_PATH="/usr/bin/lpm"
+
 executable_lpm() {
     if (( ! NODEPS || DEP_BIN || RMDEPS || INSTALL )); then
 		if [[ -z $LPM_PATH ]]; then

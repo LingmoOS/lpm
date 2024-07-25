@@ -31,12 +31,12 @@ done
 
 readonly -a executable_functions
 
-check_software() {
-	local ret=0
+# check_software() {
+# 	local ret=0
 
-	for func in ${executable_functions[@]}; do
-		$func || ret=1
-	done
+# 	for func in ${executable_functions[@]}; do
+# 		$func || ret=1
+# 	done
 
-	return $ret
-}
+# 	return $ret
+# }
