@@ -244,7 +244,7 @@ static void version(void)
 	printf("\n");
 	printf(" .--.                  Lingmo OS Package Manager v%s - libalpm v%s\n", PACKAGE_VERSION, alpm_version());
 	printf("/ _.-' .-.  .-.  .-.   Copyright (C) 2024 Lingmo OS Team\n");
-	printf("\\  '-. '-'  '-'  '-'  Copyright (C) 2006-2024 Pacman Development Team\n");
+	printf("\\  '-. '-'  '-'  '-'   Copyright (C) 2006-2024 Pacman Development Team\n");
 	printf(" '--'                  Copyright (C) 2002-2006 Judd Vinet\n");
 	printf(_("                       This program may be freely redistributed under\n"
 	         "                       the terms of the GNU General Public License.\n"));
