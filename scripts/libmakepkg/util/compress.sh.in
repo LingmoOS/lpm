@@ -51,6 +51,7 @@ get_compression_command() {
 
 	case "$ext" in
 		*.lpk)     fallback=(zstd -c -z -q -) ;;
+		*.tar.gz)  fallback=(gzip -c -f -n) ;;
 		# do not respect unknown COMPRESS* env vars
 		*)        array_build "$outputvar" resolvecmd; return 1 ;;
 	esac
@@ -58,6 +59,8 @@ get_compression_command() {
 	ext=${ext#*.lpk.}
 	# empty the variable for plain tar archives so we fallback to cat
 	ext=${ext#*.lpk}
+	ext=${ext#*.tar}
+	ext=${ext#*.tar.}
 
 	if [[ -n $ext ]]; then
 		extarray="COMPRESS${ext^^}[@]"
