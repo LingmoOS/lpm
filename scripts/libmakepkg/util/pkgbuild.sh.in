@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#   pkgbuild.sh - functions to extract information from PKGBUILD files
+#   pkgbuild.sh - functions to extract information from build.lpm files
 #
 #   Copyright (c) 2009-2024 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
@@ -18,8 +18,8 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-[[ -n "$LIBMAKEPKG_UTIL_PKGBUILD_SH" ]] && return
-LIBMAKEPKG_UTIL_PKGBUILD_SH=1
+[[ -n "$LIBMAKEPKG_UTIL_build.lpm_SH" ]] && return
+LIBMAKEPKG_UTIL_build.lpm_SH=1
 
 MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'@libmakepkgdir@'}
 

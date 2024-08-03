@@ -8,7 +8,7 @@ manpages = [
   { 'name': 'testpkg.8' },
   { 'name': 'lpm-key.8' },
   { 'name': 'lpm-db-upgrade.8' },
-  { 'name': 'PKGBUILD.5', 'extra_depends' : [ 'PKGBUILD-example.txt' ] },
+  { 'name': 'build.lpm.5', 'extra_depends' : [ 'build.lpm-example.txt' ] },
   { 'name': 'makepkg.conf.5' },
   { 'name': 'lpm.conf.5' },
   { 'name': 'BUILDINFO.5' },

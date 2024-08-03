@@ -5,16 +5,16 @@ pkgdesc="The Lingmo OS Package Manager"
 arch=('x86_64')
 url="https://github.com/LingmoOS/lpm"
 license=('GPL-2.0-or-later')
-# depends=('bash' 'glibc' 'libarchive' 'curl' 'gpgme' 'pacman-mirrorlist'
-#         'gettext' 'gawk' 'coreutils' 'gnupg' 'grep')
-# makedepends=('meson' 'asciidoc' 'doxygen')
-# checkdepends=('python' 'fakechroot')
-# optdepends=('perl-locale-gettext: translation support in makepkg-template')
+depends=('bash' 'glibc' 'libarchive' 'curl' 'gpgme' 'lpm-pkg-sources'
+         'gettext' 'gawk' 'coreutils' 'gnupg' 'grep')
+makedepends=('meson' 'asciidoc' 'doxygen')
+checkdepends=('python' 'fakechroot')
+optdepends=('perl-locale-gettext: translation support in makepkg-template')
 provides=('libalpm.so')
 backup=(etc/lpm.conf
         etc/makepkg.conf)
 options=('strip')
-validpgpkeys=('AC17B9A7557CB5B0EBFFDA80FA3A5CC90C59CA75')
+validpgpkeys=('41EF7182553A87AC18196A77F27F2FDA54F067D8') # Lingmo OS Team <team@lingmo.org>
 source=("git+https://github.com/LingmoOS/lpm")
 sha256sums=('SKIP')
 

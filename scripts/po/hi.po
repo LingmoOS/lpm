@@ -227,7 +227,7 @@ msgid "  -d, --nodeps     Skip all dependency checks"
 msgstr "  -d, --nodeps     आश्रित पैकेज जाँच निरस्त करें"
 
 #: scripts/makepkg.sh.in:885
-msgid "  -D, --dir <dir>  Change to directory <dir> before processing PKGBUILD"
+msgid "  -D, --dir <dir>  Change to directory <dir> before processing build.lpm"
 msgstr ""
 
 #: scripts/makepkg.sh.in:886

@@ -77,7 +77,7 @@ load_makepkg_config() {
 
 	source_makepkg_config "$MAKEPKG_CONF"
 
-	# prevent PKGBUILDs altering this directly
+	# prevent build.lpms altering this directly
 	readonly -a BUILDENV
 
 	eval "$restore_envvars"

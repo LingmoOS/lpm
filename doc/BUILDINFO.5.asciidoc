@@ -39,7 +39,7 @@ BUILDINFO file format.
 	The architecture of the package.
 
 *pkgbuild_sha256sum*::
-	The sha256sum in hex format of the PKGBUILD used to build the package.
+	The sha256sum in hex format of the build.lpm used to build the package.
 
 *packager*::
 	The details of the packager that built the package.

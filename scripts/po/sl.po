@@ -241,7 +241,7 @@ msgid "  -d, --nodeps     Skip all dependency checks"
 msgstr "-d, --nodeps Prezri vsa preverjanja odvisnosti"
 
 #: scripts/makepkg.sh.in:885
-msgid "  -D, --dir <dir>  Change to directory <dir> before processing PKGBUILD"
+msgid "  -D, --dir <dir>  Change to directory <dir> before processing build.lpm"
 msgstr ""
 
 #: scripts/makepkg.sh.in:886

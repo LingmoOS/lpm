@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#   lint_pkgbuild.sh - functions for detecting PKGBUILD errors
+#   lint_pkgbuild.sh - functions for detecting build.lpm errors
 #
 #   Copyright (c) 2015-2024 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
@@ -18,8 +18,8 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-[[ -n "$LIBMAKEPKG_LINT_PKGBUILD_SH" ]] && return
-LIBMAKEPKG_LINT_PKGBUILD_SH=1
+[[ -n "$LIBMAKEPKG_LINT_build.lpm_SH" ]] && return
+LIBMAKEPKG_LINT_build.lpm_SH=1
 
 MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'@libmakepkgdir@'}
 

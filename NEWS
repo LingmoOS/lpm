@@ -29,7 +29,7 @@ VERSION         DESCRIPTION
                   return code
                 - Document makepkg.conf.d dropin configuration
                 - Drop sudo permissions after use
-                - Prevent PKGBUILDs overriding BUILDENV
+                - Prevent build.lpms overriding BUILDENV
                 - only copy source files once when creating a debug package
               - lpm-key:
                 - Fix permissions check for non-root operations
@@ -234,22 +234,22 @@ VERSION         DESCRIPTION
                 - add support for lzip, lz4 and zst compressed packages
                   (FS#56676, FS#59081)
                 - add new checksum algorithm, b2sum
-                - various improvements to PKGBUILD linting
+                - various improvements to build.lpm linting
                 - when signing packages, report package filename on failure
                 - fix pkgver() function not aborting on errors
                 - remove checksum algorithm whirlpoolsum as it has not worked
                   for a long time
-                - reject PKGBUILDs with both split and non-split package
+                - reject build.lpms with both split and non-split package
                   functions
                 - send status messages to stderr rather than stdout (FS#17173)
                 - ensure debug buildflags are unset when they are supposed to be
                 - buildenv and executable detection, definitions for the
-                  PKGBUILD schema, and makepkg.conf loading are now part of
+                  build.lpm schema, and makepkg.conf loading are now part of
                   libmakepkg
                 - fix broken check for the fakeroot binary
                 - improve the error message for invalid dependency versioning
                 - add routine for linting $SOURCE_DATE_EPOCH
-                - fix the error code when no PKGBUILD exists
+                - fix the error code when no build.lpm exists
                 - use --unneeded when removing build deps to allow runtime-only
                   deps to work well with makepkg -sir (FS#32723)
                 - compute package sizes correctly across different filesystems
@@ -452,7 +452,7 @@ VERSION         DESCRIPTION
               - makepkg:
                 - fix building packages with only architecture-specific
                   sources (FS#48340)
-                - ignore PKGBUILD architecture for --printsrcinfo
+                - ignore build.lpm architecture for --printsrcinfo
                 - do not die on non-empty directories under !emptydirs
                   (FS#48515)
                 - preserve checksum type for architecture-specific sources
@@ -505,12 +505,12 @@ VERSION         DESCRIPTION
               - makepkg:
                 - makepkg is in the process of being split into a library. This
                   allows various areas to be extended by adding a file into
-                  libmakepkg (e.g. package/PKGBUILD checking, adjusting
+                  libmakepkg (e.g. package/build.lpm checking, adjusting
                   files before creating the final package).
-                - PKGBUILD variables checked to be arrays or not as appropriate
+                - build.lpm variables checked to be arrays or not as appropriate
                 - pkgver() and prepare() are now run with --noextract (FS#43498,
                   FS#46800)
-                - the ability to build a single package in a PKGBUILD has been
+                - the ability to build a single package in a build.lpm has been
                   removed
                 - the output when checking checksums for architecture specific
                   sources is improved (FS#43444)
@@ -518,8 +518,8 @@ VERSION         DESCRIPTION
                 - fix source package signing with SRCPKGDIR set
                 - add option to compress png images with optipng
                 - add --packagelist option, which lists all packages build from
-                  a PKGBUILD
-                - add --printsrcinfo flag to print SRCINFO file for a PKGBUILD
+                  a build.lpm
+                - add --printsrcinfo flag to print SRCINFO file for a build.lpm
                 - record build information in a .BUILDINFO file
                 - add whirlpool to list of hashing options (FS#45859)
               - makepkg-template:
@@ -549,7 +549,7 @@ VERSION         DESCRIPTION
               - Set package origin when adding to db cache
               - makepkg:
                 - Fix error when encountering an expired PGP key (FS#43269)
-                - Fix error extracting PKGBUILD attributes (FS#43387)
+                - Fix error extracting build.lpm attributes (FS#43387)
                 - Fix removal of static libraries when the shared library
                   uses the absolute path in symbolic links (FS#43395)
                 - Improve Bazaar cloning (FS#43448)
@@ -606,7 +606,7 @@ VERSION         DESCRIPTION
               - fix potential issues when handling of UTF8 filenames
                 (FS#40805, FS#40762)
               - makepkg:
-                - PKGBUILDs can now specify architecture specific sources,
+                - build.lpms can now specify architecture specific sources,
                   dependencies, etc.
                 - A .SRCINFO file is added to source packages for easy parsing
                 - VCS package building attempts to be incremental (FS#35050)
@@ -616,13 +616,13 @@ VERSION         DESCRIPTION
                 - add -C/--cleanbuild option (FS#17175)
                 - add --noarchive option
                 - remove --asroot and enforce fakeroot usage
-                - all PKGBUILDs require a package() function
-                - PKGBUILDs can no longer be read from stdin
+                - all build.lpms require a package() function
+                - build.lpms can no longer be read from stdin
                 - enable make-style environment variable overrides
                 - Read CARCH environment variable (FS#35030)
                 - makedepends and checkdepends are installed together (FS#31557)
                 - added support for sha224 checksums (FS#36776)
-                - remove warning when license is not specified in PKGBUILD
+                - remove warning when license is not specified in build.lpm
                   (FS#37011)
                 - only remove static libraries if they have a shared version
                 - prevent makepkg creating armored signatures (FS#38503)
@@ -630,13 +630,13 @@ VERSION         DESCRIPTION
                 - support the kernel.org PGP signing scheme (FS#31592)
                 - sign created source package when using --sign
                 - enforce source signatures to be trusted or have their full
-                  fingerprint listed in the validpgpkeys array of the PKGBUILD
+                  fingerprint listed in the validpgpkeys array of the build.lpm
                 - look for configuration in XDG_CONFIG_HOME/lpm/makepkg.conf
                   (FS#43030)
                 - ensure vcs tools are available when source entries require
                   them
                 - disallow pkgver/pkgrel/epoch overrides in split packages
-                - improve parsing of PKGBUILD variables (FS#40361)
+                - improve parsing of build.lpm variables (FS#40361)
               - makepkg-template - new package build templating utility
                 (FS#10375)
               - repo-add:
@@ -664,7 +664,7 @@ VERSION         DESCRIPTION
               - various translation fixes and updates (FS#34395, FS#34704,
                 FS#34716, FS#35097)
               - makepkg:
-                - improve SVN VCS PKGBUILD handling (FS#34675, FS#34636)
+                - improve SVN VCS build.lpm handling (FS#34675, FS#34636)
                 - allow "lp:" URLs for BZR sources (FS#34650)
                 - prevent pkgver() capturing stderr (FS#34974)
                 - fix attempt to remove package twice on failure (FS#34672)
@@ -711,10 +711,10 @@ VERSION         DESCRIPTION
                   FS#19476, FS#20841, FS#21098, FS#28605)
                 - split debugging symbols into separate package (FS#10975)
                 - use SKIP in checksums to skip integrity check (FS#19735)
-                - add prepare() function to PKGBUILD (FS#30582)
+                - add prepare() function to build.lpm (FS#30582)
                 - add pkgver() function to auto-update pkgver/pkgrel
                 - pkgrel must be in decimal format
-                - PKGBUILDs without package() functions are deprecated
+                - build.lpms without package() functions are deprecated
                 - support specifying CPPFLAGS in makepkg.conf
                 - support PACKAGER environment variable
                 - allow source renaming to work on signature files
@@ -739,7 +739,7 @@ VERSION         DESCRIPTION
               - pkgdelta: add ratio and package size limits
               - pactree: improve output
               - contrib:
-                - updpkgsums: update checksums in a PKGBUILD
+                - updpkgsums: update checksums in a build.lpm
                 - checkupdates: new - safely check for package updates
                 - pacsort: add --files option to support parsing filenames
                 - pacdiff: improve usability
@@ -982,7 +982,7 @@ VERSION         DESCRIPTION
               - fix null pointer dereference in architecture check (FS#21668)
               - documentation: remove unnecessary "|| return 1"
               - contrib/bacman: update package compression selection
-              - contrib/PKGBUILD.vim: add a few more license options
+              - contrib/build.lpm.vim: add a few more license options
               - translations: es, kk, sv, pt, ru updated
 3.4.1         - fix interaction of --needed and multiple repo groups (FS#20221)
               - bash completion: small fixes to prevent alias problems
@@ -1031,7 +1031,7 @@ VERSION         DESCRIPTION
                 - stricter syntax checking for backup and optdepends entries
                 - file stripping options are configurable
                 - New --pkg flag to allow building specific package(s) from
-                  split PKGBUILDs (FS#15956)
+                  split build.lpms (FS#15956)
                 - build() function is now optional (FS#15147)
                 - warn about reference to build root in a package (FS#14751)
                 - configure source package destination with SRCPKGDEST
@@ -1085,21 +1085,21 @@ VERSION         DESCRIPTION
               - documentation updates
               - repo-add: cleanups, improvements and speedup
               - makepkg:
-                - package splitting support! - see PKGBUILD-split.proto
+                - package splitting support! - see build.lpm-split.proto
                 - limit fakeroot usage with addition of package() function
                 - info is handled like man pages and not other documentation
                 - configuration option for man/info page directories
                 - added ability to automatically remove files from package
                 - configuration option for default LDFLAGS
                 - specify alternative configuration file with --config flag
-                - check all integrity checksums provided in PKGBUILD
+                - check all integrity checksums provided in build.lpm
                 - fix pkgver/pkgrel updating in SCM packages
                 - BUILDSCRIPT option removed from makepkg.conf. Now specified
                   during configure
                 - enforce no ">" or "<" in provides array
                 - package compression autodetection
-                - check PKGBUILD for CRLF line endings
-                - fix reading PKGBUILD from pipe
+                - check build.lpm for CRLF line endings
+                - fix reading build.lpm from pipe
                 - increase compatibility with BSDs & Mac OSX
               - contrib
                 - pacdiff - improvements and new -l flag for using locate
@@ -1116,7 +1116,7 @@ VERSION         DESCRIPTION
                 - replace getopt with an internal function
                 - detect incorrect usage of provides (FS#12540)
                 - fix bash substitution to work in older versions
-                - fix updating PKGBUILD and simplify logic for SCM packages
+                - fix updating build.lpm and simplify logic for SCM packages
                 - save/restore shell options before/after build() (FS#12344)
               - documentation updates and asciidoc build fix
               - existing translation updates
@@ -1199,7 +1199,7 @@ VERSION         DESCRIPTION
                 - added zipman option
                 - removed -b/--builddeps
                 - various portability fixes for BSD and Mac OS X
-                - check for valid options in PKGBUILD
+                - check for valid options in build.lpm
                 - add --allsource option
                 - remove deprecated --usesudo option
                 - handle spaces in build directory
@@ -1210,13 +1210,13 @@ VERSION         DESCRIPTION
               - MANY other bug fixes and small improvements
 3.1.4         - various small code cleanups and fixes
               - small documentation updates
-              - improvements to PKGBUILD.vim
+              - improvements to build.lpm.vim
               - translation updates - ru, zh_CN
 3.1.3         - major updates to i18n output in frontend (all UTF-8 characters
                 should now work with varying byte and char widths)
               - new Simplified Chinese translation
               - updates to testpkg utility
-              - updates to PKGBUILD.vim
+              - updates to build.lpm.vim
               - internal updates for translations - use c-format on all
                 strings, get rid of needless line numbers
 3.1.2         - updates to proto.install, add ChangeLog.proto (FS#7231)
@@ -1246,8 +1246,8 @@ VERSION         DESCRIPTION
               - ensure correct dir permissions in database (FS#9176)
               - ensure /tmp is created with correct permissions (FS#9183)
               - disallow NULL section in parseconfig (reported on forums)
-              - remove Arch-specific lpm.conf and mirrorlist from source
-              - makepkg: --holdver option for devel PKGBUILDs (FS#9194)
+              - remove Arch-specific lpm.conf and pkg_sources.list from source
+              - makepkg: --holdver option for devel build.lpms (FS#9194)
               - documentation updates (FS# 9142, 9146, 9175, 9192, 9204)
               - many translation updates
 3.1.0         - paths are now specified as absolute paths (or defaulting to
@@ -1284,7 +1284,7 @@ VERSION         DESCRIPTION
               - versioned conflicts support
               - add < and > operators for versioned dependencies and conflicts
               - bash completion updates
-              - mirrorlist updates
+              - pkg_sources.list updates
               - removed ABS script from codebase (now a separate project)
               - allow multiple lpm cache directories
               - all manpages are now generated using Asciidoc (FS#7312)
@@ -1595,7 +1595,7 @@ VERSION         DESCRIPTION
               - Added md5sum integrity checking to packages in --sync
                 mode (Aurelien Foret)
               - Memory leak fixes (Aurelien Foret)
-              - Added CARCH variable to makepkg.conf for use in PKGBUILDs
+              - Added CARCH variable to makepkg.conf for use in build.lpms
               - Added LogFile option for direct-to-file logging
               - Added -Qii handling to show modified config files
               - Allow --sync targets to specify an explicit repository to
@@ -1701,7 +1701,7 @@ VERSION         DESCRIPTION
 1.23          - Added install/upgrade/remove scripting control
 1.22          - Some manpage typo fixes
               - Added --root switch to pacsync
-              - Added --help and ability to specify a PKGBUILD to makepkg
+              - Added --help and ability to specify a build.lpm to makepkg
               - Switched default downloader to snarf
 1.21          - Added better backup control -- upgrade/add and remove
                 do different things with the -n switch

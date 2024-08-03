@@ -18,8 +18,8 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-[[ -n "$LIBMAKEPKG_LINT_PKGBUILD_FULLPKGVER_SH" ]] && return
-LIBMAKEPKG_LINT_PKGBUILD_FULLPKGVER_SH=1
+[[ -n "$LIBMAKEPKG_LINT_build.lpm_FULLPKGVER_SH" ]] && return
+LIBMAKEPKG_LINT_build.lpm_FULLPKGVER_SH=1
 
 MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'@libmakepkgdir@'}
 

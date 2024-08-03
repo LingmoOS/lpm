@@ -87,7 +87,7 @@ else
 fi
 export SOURCE_DATE_EPOCH
 
-MAKEPKG_LINT_PKGBUILD=${MAKEPKG_LINT_PKGBUILD:-1}
+MAKEPKG_LINT_build.lpm=${MAKEPKG_LINT_build.lpm:-1}
 
 LPM_OPTS=()
 
@@ -190,7 +190,7 @@ enter_fakeroot() {
 }
 
 # Automatically update pkgver variable if a pkgver() function is provided
-# Re-sources the PKGBUILD afterwards to allow for other variables that use $pkgver
+# Re-sources the build.lpm afterwards to allow for other variables that use $pkgver
 update_pkgver() {
 	msg "$(gettext "Starting %s()...")" "pkgver"
 	newpkgver=$(run_function_safe pkgver)
@@ -199,7 +199,7 @@ update_pkgver() {
 	fi
 	if ! check_pkgver "$newpkgver"; then
 		error "$(gettext "pkgver() generated an invalid version: %s")" "$newpkgver"
-		exit $E_PKGBUILD_ERROR
+		exit $E_build.lpm_ERROR
 	fi
 
 	if [[ -n $newpkgver && $newpkgver != "$pkgver" ]]; then
@@ -210,7 +210,7 @@ update_pkgver() {
 			if ! printf '%s\n' "${buildfile[@]}" > "$BUILDFILE"; then
 				error "$(gettext "Failed to update %s from %s to %s")" \
 						"pkgver" "$pkgver" "$newpkgver"
-				exit $E_PKGBUILD_ERROR
+				exit $E_build.lpm_ERROR
 			fi
 			source_safe "$BUILDFILE"
 			local fullver=$(get_full_version)
@@ -480,7 +480,7 @@ write_kv_pair() {
 	for val in "$@"; do
 		if [[ $val = *$'\n'* ]]; then
 			error "$(gettext "Invalid value for %s: %s")" "$key" "$val"
-			exit $E_PKGBUILD_ERROR
+			exit $E_build.lpm_ERROR
 		fi
 		printf "%s = %s\n" "$key" "$val"
 	done
@@ -882,7 +882,7 @@ usage() {
 	printf -- "$(gettext "  -c, --clean      Clean up work files after build")\n"
 	printf -- "$(gettext "  -C, --cleanbuild Remove %s dir before building the package")\n" "\$srcdir/"
 	printf -- "$(gettext "  -d, --nodeps     Skip all dependency checks")\n"
-	printf -- "$(gettext "  -D, --dir <dir>  Change to directory <dir> before processing PKGBUILD")\n"
+	printf -- "$(gettext "  -D, --dir <dir>  Change to directory <dir> before processing build.lpm")\n"
 	printf -- "$(gettext "  -e, --noextract  Do not extract source files (use existing %s dir)")\n" "\$srcdir/"
 	printf -- "$(gettext "  -f, --force      Overwrite existing package")\n"
 	printf -- "$(gettext "  -g, --geninteg   Generate integrity checks for source files")\n"
@@ -1132,17 +1132,17 @@ unset "${!sha256sums_@}" "${!sha384sums_@}" "${!sha512sums_@}" "${!b2sums_@}"
 BUILDFILE=${BUILDFILE:-$BUILDSCRIPT}
 if [[ ! -f $BUILDFILE ]]; then
 	error "$(gettext "%s does not exist.")" "$BUILDFILE"
-	exit $E_PKGBUILD_ERROR
+	exit $E_build.lpm_ERROR
 
 else
 	if [[ $(<"$BUILDFILE") = *$'\r'* ]]; then
 		error "$(gettext "%s contains %s characters and cannot be sourced.")" "$BUILDFILE" "CRLF"
-		exit $E_PKGBUILD_ERROR
+		exit $E_build.lpm_ERROR
 	fi
 
 	if [[ ! $BUILDFILE -ef $PWD/${BUILDFILE##*/} ]]; then
 		error "$(gettext "%s must be in the current working directory.")" "$BUILDFILE"
-		exit $E_PKGBUILD_ERROR
+		exit $E_build.lpm_ERROR
 	fi
 
 	if [[ ${BUILDFILE:0:1} != "/" ]]; then
@@ -1153,9 +1153,9 @@ fi
 
 pkgbase=${pkgbase:-${pkgname[0]}}
 
-# check the PKGBUILD for some basic requirements
-if (( MAKEPKG_LINT_PKGBUILD != 0 )); then
-	lint_pkgbuild || exit $E_PKGBUILD_ERROR
+# check the build.lpm for some basic requirements
+if (( MAKEPKG_LINT_build.lpm != 0 )); then
+	lint_pkgbuild || exit $E_build.lpm_ERROR
 fi
 
 if (( !SOURCEONLY && !PRINTSRCINFO )); then
@@ -1193,7 +1193,7 @@ if (( ${#pkgname[@]} > 1 )) || have_function package_${pkgname}; then
 	SPLITPKG=1
 fi
 
-# test for available PKGBUILD functions
+# test for available build.lpm functions
 if have_function verify; then
 	# "Hide" verify() function if not going to be run
 	if [[ $RUN_VERIFY != "n" ]] && (( ! SKIPCHECKSUMS && ! SKIPPGPCHECK )); then
@@ -1256,7 +1256,7 @@ if (( INFAKEROOT )); then
 	exit $E_OK
 fi
 
-# check we have the software required to process the PKGBUILD
+# check we have the software required to process the build.lpm
 # check_software || exit $E_MISSING_MAKEPKG_DEPS
 
 # check if gpg signature is to be created and if signing key is valid

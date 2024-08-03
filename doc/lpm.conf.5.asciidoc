@@ -234,8 +234,8 @@ contain a file that lists the servers for that repository.
 [core]
 # use this server first
 Server = ftp://ftp.archlinux.org/$repo/os/$arch
-# next use servers as defined in the mirrorlist below
-Include = {sysconfdir}/lpm.d/mirrorlist
+# next use servers as defined in the pkg_sources.list below
+Include = {sysconfdir}/lpm.d/pkg_sources.list
 --------
 
 The order of repositories in the configuration files matters; repositories

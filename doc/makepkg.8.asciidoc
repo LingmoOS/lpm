@@ -15,8 +15,8 @@ Description
 -----------
 'makepkg' is a script to automate the building of packages. The requirements for
 using the script are a build-capable *nix platform and a custom build script
-for each package you wish to build (known as a PKGBUILD). See
-linkman:PKGBUILD[5] for details on creating your own build scripts.
+for each package you wish to build (known as a build.lpm). See
+linkman:build.lpm[5] for details on creating your own build scripts.
 
 The advantage to a script-based build is that the work is only done once. Once
 you have the build script for a package, 'makepkg' will do the rest: download and
@@ -35,7 +35,7 @@ Options
 -------
 *-A, \--ignorearch*::
 	Ignore a missing or incomplete arch field in the build script. This is
-	for rebuilding packages from source when the PKGBUILD may be slightly
+	for rebuilding packages from source when the build.lpm may be slightly
 	outdated and not updated with an `arch=('yourarch')` field.
 
 *-c, \--clean*::
@@ -56,12 +56,12 @@ Options
 	use whatever source already exists in the $srcdir/ directory. This is
 	handy if you want to go into $srcdir/ and manually patch or tweak code,
 	then make a package out of the result. Keep in mind that creating a
-	patch may be a better solution to allow others to use your PKGBUILD.
+	patch may be a better solution to allow others to use your build.lpm.
 
 *\--verifysource*::
-	For each source file in the source array of PKGBUILD, download the file
+	For each source file in the source array of build.lpm, download the file
 	if required and perform the integrity checks. No extraction or build is
-	performed. Dependencies specified in the PKGBUILD will not be handled
+	performed. Dependencies specified in the build.lpm will not be handled
 	unless `--syncdeps` is used. Useful for performing subsequent offline
 	builds.
 
@@ -72,12 +72,12 @@ Options
 	overwritten.
 
 *-g, \--geninteg*::
-	For each source file in the source array of PKGBUILD, download the file
+	For each source file in the source array of build.lpm, download the file
 	if required and generate integrity checks. The integrity checks generated
-	are determined by the checks present in the PKGBUILD, falling back to the
+	are determined by the checks present in the build.lpm, falling back to the
 	value of the INTEGRITY_CHECK array in makepkg.conf(5) if these are absent.
-	This output can be redirected into your PKGBUILD for source validation
-	using "`makepkg -g >> PKGBUILD`".
+	This output can be redirected into your build.lpm for source validation
+	using "`makepkg -g >> build.lpm`".
 
 *--skipinteg*::
 	Do not perform any integrity checks (checksum and PGP) on source files.
@@ -92,7 +92,7 @@ Options
 	Output syntax and command line options.
 
 *--holdver*::
-	When using VCS sources (linkman:PKGBUILD[5]) any currently checked out source
+	When using VCS sources (linkman:build.lpm[5]) any currently checked out source
 	will not be updated to the latest revision.
 
 *-i, \--install*::
@@ -101,7 +101,7 @@ Options
 
 *-L, \--log*::
 	Enable logging. This will use the *tee* program to send the output of each
-	of the PKGBUILD functions to both the console and to a text file in the
+	of the build.lpm functions to both the console and to a text file in the
 	build directory named `pkgbase-pkgver-pkgrel-arch-<function>.log`.
 	As mentioned above, the logs will be localized so you may want to set your
 	locale accordingly if sharing the log output with others.
@@ -115,8 +115,8 @@ Options
 	in $srcdir/ before building.
 
 *-p* <buildscript>::
-	Read the package script `buildscript` instead of the `PKGBUILD` default;
-	see linkman:PKGBUILD[5]. The `buildscript` must be located in the directory
+	Read the package script `buildscript` instead of the `build.lpm` default;
+	see linkman:build.lpm[5]. The `buildscript` must be located in the directory
 	makepkg is called from.
 
 *-r, \--rmdeps*::
@@ -126,7 +126,7 @@ Options
 *-R, \--repackage*::
 	Repackage contents of the package without rebuilding the package. This
 	is useful if you forgot, for example, a dependency or install file in your
-	PKGBUILD and the build itself will not change.
+	build.lpm and the build itself will not change.
 
 *-s, \--syncdeps*::
 	Install missing dependencies using lpm. When build-time or run-time
@@ -148,7 +148,7 @@ Options
 	directory by removing $srcdir before building the package.
 
 *-D* <dir>, *\--dir* <dir> ::
-	Change to directory <dir> before reading the PKGBUILD or doing anything else.
+	Change to directory <dir> before reading the build.lpm or doing anything else.
 	
 *\--allsource*::
 	Do not actually build the package, but build a source-only tarball that
@@ -158,7 +158,7 @@ Options
 	the GPL when distributing binary packages.
 
 *\--check*::
-	Run the check() function in the PKGBUILD, overriding the setting in
+	Run the check() function in the build.lpm, overriding the setting in
 	linkman:makepkg.conf[5].
 
 *\--noarchive*::
@@ -167,13 +167,13 @@ Options
 	not use lpm.
 
 *\--nocheck*::
-	Do not run the check() function in the PKGBUILD or handle the checkdepends.
+	Do not run the check() function in the build.lpm or handle the checkdepends.
 
 *\--noprepare*::
-	Do not run the prepare() function in the PKGBUILD.
+	Do not run the prepare() function in the build.lpm.
 
 *\--noverify*::
-	Do not run the verify() function in the PKGBUILD.
+	Do not run the verify() function in the build.lpm.
 
 *\--sign*::
 	Sign the resulting package with gpg, overriding the setting in
@@ -214,9 +214,9 @@ Options
 Additional Features
 -------------------
 makepkg supports building development versions of packages without having to
-manually update the pkgver in the PKGBUILD. This was formerly done using the
-separate utility 'versionpkg'. See linkman:PKGBUILD[5] for details on how to
-set up a development PKGBUILD.
+manually update the pkgver in the build.lpm. This was formerly done using the
+separate utility 'versionpkg'. See linkman:build.lpm[5] for details on how to
+set up a development build.lpm.
 
 
 Reproducibility
@@ -297,9 +297,9 @@ Environment Variables
 **BUILDTOOLVER=**"<version>"::
 	The version of the '$BUILDTOOL' used.
 
-**MAKEPKG_LINT_PKGBUILD=**0
-	Setting to 0 disables PKGBUILD linting within makepkg. Useful on systems
-	with slow bash subshell operations, or on PKGBUILDs with extreme amounts of
+**MAKEPKG_LINT_build.lpm=**0
+	Setting to 0 disables build.lpm linting within makepkg. Useful on systems
+	with slow bash subshell operations, or on build.lpms with extreme amounts of
 	package splitting.
 
 
@@ -326,13 +326,13 @@ On exit, makepkg will return one of the following error codes.
 	User specified an invalid option.
 
 4::
-	Error in user-supplied function in PKGBUILD.
+	Error in user-supplied function in build.lpm.
 
 5::
 	Failed to create a viable package.
 
 6::
-	A source or auxiliary file specified in the PKGBUILD is
+	A source or auxiliary file specified in the build.lpm is
 	missing.
 
 7::
@@ -352,7 +352,7 @@ On exit, makepkg will return one of the following error codes.
 	location.
 
 12::
-	Error parsing PKGBUILD.
+	Error parsing build.lpm.
 
 13::
 	A package has already been built.
@@ -368,10 +368,10 @@ On exit, makepkg will return one of the following error codes.
 
 17::
 	The local repository is not a clone of the source repository
-	specified in PKGBUILD.
+	specified in build.lpm.
 
 See Also
 --------
-linkman:makepkg.conf[5], linkman:PKGBUILD[5], linkman:lpm[8]
+linkman:makepkg.conf[5], linkman:build.lpm[5], linkman:lpm[8]
 
 include::footer.asciidoc[]

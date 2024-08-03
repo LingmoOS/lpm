@@ -38,7 +38,7 @@ Options
 -------
 **DLAGENTS=(**\'protocol::/path/to/command [options]' ...**)**::
 	Sets the download agents used to fetch source files specified with a URL in
-	the linkman:PKGBUILD[5] file. Options can be specified for each command as
+	the linkman:build.lpm[5] file. Options can be specified for each command as
 	well, and any protocol can have a download agent.  Any spaces in option
 	arguments are required to be escaped to avoid being split.  Several
 	examples are provided in the default makepkg.conf.
@@ -51,7 +51,7 @@ Options
 **VCSCLIENTS=(**\'protocol::package' ...**)**::
 	Sets the packages required to fetch version controlled source files. When
 	required, makepkg will check that these packages are installed or are included
-	in the `depends` or `makedepends` arrays in the PKGBUILD.
+	in the `depends` or `makedepends` arrays in the build.lpm.
 
 **CARCH=**"carch"::
 	Specifies your computer architecture; possible values include such things
@@ -116,10 +116,10 @@ Options
 		Use ccache to cache compilation by default. This allows for faster
 		compiles if you are continuously recompiling the same packages. It can
 		be disabled for individual packages by placing `!ccache` in the
-		PKGBUILD options array.
+		build.lpm options array.
 
 	*check*;;
-		Run the check() function if present in the PKGBUILD. This can be
+		Run the check() function if present in the build.lpm. This can be
 		enabled or disabled for individual packages through the use of
 		makepkg's '\--check' and '\--nocheck' options, respectively.
 
@@ -139,7 +139,7 @@ Options
 	If this value is not set, packages will, by default, be built in
 	subdirectories of the directory that makepkg is called from. This
 	option allows setting the build location to another directory.
-	Incorrect use of `$startdir` in a PKGBUILD may cause building with
+	Incorrect use of `$startdir` in a build.lpm may cause building with
 	this option to fail.
 
 **GPGKEY=**""::
@@ -148,7 +148,7 @@ Options
 
 **OPTIONS=(**!strip docs libtool staticlibs emptydirs ...**)**::
 	This array contains options that affect default packaging. They are
-	equivalent to options that can be placed in the PKGBUILD; the defaults are
+	equivalent to options that can be placed in the build.lpm; the defaults are
 	shown here. All options should always be left in the array; to enable or
 	disable an option, simply remove or add an ``!'' at the front of the
 	option. If an option is specified multiple times, the final value takes
@@ -247,7 +247,7 @@ Options
 
 **PKGDEST=**"/path/to/directory"::
 	If this value is not set, packages will, by default, be placed in the
-	current directory (location of the linkman:PKGBUILD[5]). Many people
+	current directory (location of the linkman:build.lpm[5]). Many people
 	like to keep all their packages in one place so this option allows
 	for this behavior. A common location is ``/home/packages''.
 
@@ -302,6 +302,6 @@ Options
 
 See Also
 --------
-linkman:makepkg[8], linkman:lpm[8], linkman:PKGBUILD[5]
+linkman:makepkg[8], linkman:lpm[8], linkman:build.lpm[5]
 
 include::footer.asciidoc[]

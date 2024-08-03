@@ -234,9 +234,9 @@ msgid "  -d, --nodeps     Skip all dependency checks"
 msgstr "  -d, --nodeps     Ignora todas as verificações de dependência"
 
 #: scripts/makepkg.sh.in:885
-msgid "  -D, --dir <dir>  Change to directory <dir> before processing PKGBUILD"
+msgid "  -D, --dir <dir>  Change to directory <dir> before processing build.lpm"
 msgstr ""
-"  -D, --dir <dir>  Muda para o diretório<dir> antes de processor o PKGBUILD"
+"  -D, --dir <dir>  Muda para o diretório<dir> antes de processor o build.lpm"
 
 #: scripts/makepkg.sh.in:886
 msgid "  -e, --noextract  Do not extract source files (use existing %s dir)"

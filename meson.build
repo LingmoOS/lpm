@@ -435,9 +435,9 @@ configure_file(
   install_dir : SYSCONFDIR)
 
 install_data(
-  'proto/PKGBUILD-split.proto',
-  'proto/PKGBUILD-vcs.proto',
-  'proto/PKGBUILD.proto',
+  'proto/build.lpm-split.proto',
+  'proto/build.lpm-vcs.proto',
+  'proto/build.lpm.proto',
   'proto/proto.install',
   install_dir : join_paths(DATAROOTDIR, 'lpm'))
 
