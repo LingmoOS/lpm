@@ -297,7 +297,7 @@ Environment Variables
 **BUILDTOOLVER=**"<version>"::
 	The version of the '$BUILDTOOL' used.
 
-**MAKEPKG_LINT_build.lpm=**0
+**MAKEPKG_LINTPKGBUILD=**0
 	Setting to 0 disables build.lpm linting within makepkg. Useful on systems
 	with slow bash subshell operations, or on build.lpms with extreme amounts of
 	package splitting.

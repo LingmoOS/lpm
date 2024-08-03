@@ -18,8 +18,8 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-[[ -n "$LIBMAKEPKG_UTIL_build.lpm_SH" ]] && return
-LIBMAKEPKG_UTIL_build.lpm_SH=1
+[[ -n "$LIBMAKEPKG_UTILPKGBUILD_SH" ]] && return
+LIBMAKEPKG_UTILPKGBUILD_SH=1
 
 MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'@libmakepkgdir@'}
 

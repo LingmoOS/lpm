@@ -87,7 +87,7 @@ else
 fi
 export SOURCE_DATE_EPOCH
 
-MAKEPKG_LINT_build.lpm=${MAKEPKG_LINT_build.lpm:-1}
+MAKEPKG_LINTPKGBUILD=${MAKEPKG_LINTPKGBUILD:-1}
 
 LPM_OPTS=()
 
@@ -199,7 +199,7 @@ update_pkgver() {
 	fi
 	if ! check_pkgver "$newpkgver"; then
 		error "$(gettext "pkgver() generated an invalid version: %s")" "$newpkgver"
-		exit $E_build.lpm_ERROR
+		exit $EPKGBUILD_ERROR
 	fi
 
 	if [[ -n $newpkgver && $newpkgver != "$pkgver" ]]; then
@@ -210,7 +210,7 @@ update_pkgver() {
 			if ! printf '%s\n' "${buildfile[@]}" > "$BUILDFILE"; then
 				error "$(gettext "Failed to update %s from %s to %s")" \
 						"pkgver" "$pkgver" "$newpkgver"
-				exit $E_build.lpm_ERROR
+				exit $EPKGBUILD_ERROR
 			fi
 			source_safe "$BUILDFILE"
 			local fullver=$(get_full_version)
@@ -480,7 +480,7 @@ write_kv_pair() {
 	for val in "$@"; do
 		if [[ $val = *$'\n'* ]]; then
 			error "$(gettext "Invalid value for %s: %s")" "$key" "$val"
-			exit $E_build.lpm_ERROR
+			exit $EPKGBUILD_ERROR
 		fi
 		printf "%s = %s\n" "$key" "$val"
 	done
@@ -1132,17 +1132,17 @@ unset "${!sha256sums_@}" "${!sha384sums_@}" "${!sha512sums_@}" "${!b2sums_@}"
 BUILDFILE=${BUILDFILE:-$BUILDSCRIPT}
 if [[ ! -f $BUILDFILE ]]; then
 	error "$(gettext "%s does not exist.")" "$BUILDFILE"
-	exit $E_build.lpm_ERROR
+	exit $EPKGBUILD_ERROR
 
 else
 	if [[ $(<"$BUILDFILE") = *$'\r'* ]]; then
 		error "$(gettext "%s contains %s characters and cannot be sourced.")" "$BUILDFILE" "CRLF"
-		exit $E_build.lpm_ERROR
+		exit $EPKGBUILD_ERROR
 	fi
 
 	if [[ ! $BUILDFILE -ef $PWD/${BUILDFILE##*/} ]]; then
 		error "$(gettext "%s must be in the current working directory.")" "$BUILDFILE"
-		exit $E_build.lpm_ERROR
+		exit $EPKGBUILD_ERROR
 	fi
 
 	if [[ ${BUILDFILE:0:1} != "/" ]]; then
@@ -1154,8 +1154,8 @@ fi
 pkgbase=${pkgbase:-${pkgname[0]}}
 
 # check the build.lpm for some basic requirements
-if (( MAKEPKG_LINT_build.lpm != 0 )); then
-	lint_pkgbuild || exit $E_build.lpm_ERROR
+if (( MAKEPKG_LINTPKGBUILD != 0 )); then
+	lint_pkgbuild || exit $EPKGBUILD_ERROR
 fi
 
 if (( !SOURCEONLY && !PRINTSRCINFO )); then
