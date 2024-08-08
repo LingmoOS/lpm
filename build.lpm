@@ -44,8 +44,7 @@ package() {
 
   # install Arch specific stuff
   install -dm755 "$pkgdir/etc"
-  install -m644 "$srcdir/lpm.conf" "$pkgdir/etc"
-  install -m644 "$srcdir/lpm.conf" "$pkgdir/etc"
+  install -m644 "$srcdir/$pkgname/lpm.conf" "$pkgdir/etc"
 
   local wantsdir="$pkgdir/usr/lib/systemd/system/sockets.target.wants"
   install -dm755 "$wantsdir"
