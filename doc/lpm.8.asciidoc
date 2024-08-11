@@ -13,10 +13,10 @@ Synopsis
 
 Description
 -----------
-Pacman is a package management utility that tracks installed packages on a Linux
+Lpm is a package management utility that tracks installed packages on a Linux
 system. It features dependency support, package groups, install and uninstall
 scripts, and the ability to sync your local machine with a remote repository to
-automatically upgrade packages. Pacman packages are a zipped tar format.
+automatically upgrade packages. Lpm packages are a zipped tar format.
 
 Since version 3.0.0, lpm has been the front-end to linkman:libalpm[3], the
 ``Lingmo OS Package Management'' library. This library allows alternative
@@ -167,7 +167,7 @@ Options
 
 *\--gpgdir* <dir>::
 	Specify a directory of files used by GnuPG to verify package signatures
-	(the default is +{sysconfdir}/lpm.d/gnupg+). This directory should contain
+	(the default is +{sysconfdir}/lpm/gnupg+). This directory should contain
 	two files: `pubring.gpg` and `trustdb.gpg`. `pubring.gpg` holds the public keys
 	of all packagers. `trustdb.gpg` contains a so-called trust database, which
 	specifies that the keys are authentic and trusted. *NOTE*: This is an absolute
@@ -175,7 +175,7 @@ Options
 
 *\--hookdir* <dir>::
 	Specify a alternative directory containing hook files (the default is
-	+{sysconfdir}/lpm.d/hooks+). Multiple hook directories can be specified
+	+{sysconfdir}/lpm/hooks+). Multiple hook directories can be specified
 	with hooks in later directories taking precedence over hooks in earlier
 	directories. *NOTE*: This is an absolute path, and the root path is not
 	automatically prepended.
@@ -513,7 +513,7 @@ File Options (apply to '-F')[[FO]]
 
 Handling Config Files[[HCF]]
 ----------------------------
-Pacman uses the same logic as 'rpm' to determine action against files that are
+Lpm uses the same logic as 'rpm' to determine action against files that are
 designated to be backed up. During an upgrade, three MD5 hashes are used for
 each backup file to determine the required action: one for the original file
 installed, one for the new file that is about to be installed, and one for the

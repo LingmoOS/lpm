@@ -9,19 +9,19 @@
 [options]
 # The following paths are commented out with their default values listed.
 # If you wish to use different paths, uncomment and update the paths.
-RootDir     = @ROOTDIR@
-DBPath      = @localstatedir@/lib/lpm/
-CacheDir    = @localstatedir@/cache/lpm/pkg/
-LogFile     = @localstatedir@/log/lpm.log
-GPGDir      = @sysconfdir@/lpm.d/gnupg/
-HookDir     = @sysconfdir@/lpm.d/hooks/
+#RootDir     = @ROOTDIR@
+#DBPath      = @localstatedir@/lib/lpm/
+#CacheDir    = @localstatedir@/cache/lpm/pkg/
+#LogFile     = @localstatedir@/log/lpm.log
+#GPGDir      = @sysconfdir@/lpm/gnupg/
+#HookDir     = @sysconfdir@/lpm/hooks/
 HoldPkg     = lpm glibc
 #XferCommand = /usr/bin/curl -L -C - -f -o %o %u
 #XferCommand = /usr/bin/wget --passive-ftp -c -O %o %u
 #CleanMethod = KeepInstalled
 Architecture = auto
 
-# Pacman won't upgrade packages listed in IgnorePkg and members of IgnoreGroup
+# Lpm won't upgrade packages listed in IgnorePkg and members of IgnoreGroup
 #IgnorePkg   =
 #IgnoreGroup =
 
@@ -70,7 +70,7 @@ ParallelDownloads = 5
 #SigLevel = Required
 #Server = ftp://ftp.example.com/foobar/$repo/os/$arch/
 # The file referenced here should contain a list of 'Server = ' lines.
-#Include = @sysconfdir@/lpm.d/pkg_sources.list
+#Include = @sysconfdir@/lpm/pkg_sources.list
 
 # An example of a custom package repository.  See the lpm manpage for
 # tips on creating your own repositories.

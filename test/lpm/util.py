@@ -30,7 +30,7 @@ PM_SYNCDBPATH = "var/lib/lpm/sync"
 PM_LOCK     = "var/lib/lpm/db.lck"
 PM_CACHEDIR = "var/cache/lpm/pkg"
 PM_EXT_PKG  = ".lpk"
-PM_HOOKDIR  = "etc/lpm.d/hooks"
+PM_HOOKDIR  = "etc/lpm/hooks"
 
 # Pacman
 PACCONF     = "etc/lpm.conf"

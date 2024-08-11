@@ -416,7 +416,7 @@ An optional global directive is available when building a split package:
 
 Install/Upgrade/Remove Scripting
 --------------------------------
-Pacman has the ability to store and execute a package-specific script when it
+Lpm has the ability to store and execute a package-specific script when it
 installs, removes, or upgrades a package. This allows a package to configure
 itself after installation and perform an opposite action upon removal.
 

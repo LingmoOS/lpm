@@ -30,7 +30,7 @@ _lpm_opts_common=(
 	'--config[An alternate configuration file]:config file:_files'
 	'--confirm[Always ask for confirmation]'
 	'--debug[Display debug messages]'
-	'--gpgdir[Set an alternate directory for GnuPG (instead of @sysconfdir@/lpm.d/gnupg)]: :_files -/'
+	'--gpgdir[Set an alternate directory for GnuPG (instead of @sysconfdir@/lpm/gnupg)]: :_files -/'
 	'--hookdir[Set an alternate hook location]: :_files -/'
 	'--logfile[An alternate log file]:config file:_files'
 	'--noconfirm[Do not ask for confirmation]'
@@ -628,7 +628,7 @@ _lpm_key_longopts=(
 
 _lpm_key_options=(
 	'--config[Use an alternate config file (instead of @sysconfdir@/lpm.conf)]: :_files'
-	'--gpgdir[Set an alternate directory for GnuPG (instead of @sysconfdir@/lpm.d/gnupg)]: :_files -/'
+	'--gpgdir[Set an alternate directory for GnuPG (instead of @sysconfdir@/lpm/gnupg)]: :_files -/'
 	'--keyserver[Specify a keyserver to use if necessary]'
 )
 

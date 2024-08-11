@@ -1673,7 +1673,7 @@ VERSION         DESCRIPTION
                 - FTPAGENT setting in makepkg.conf
                 - Added --cleancache option to makepkg
 2.3.1         - Fixed the progress bar overflow
-              - Pacman does not ask "Are you sure" when you use --downloadonly
+              - Lpm does not ask "Are you sure" when you use --downloadonly
               - Switched up a couple makepkg options to be more consistent
                 with lpm's options
               - If you ^C out of a file download, the package will now be

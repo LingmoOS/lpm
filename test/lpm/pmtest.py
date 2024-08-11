@@ -216,7 +216,7 @@ class pmtest(object):
     def add_hook(self, name, content):
         if not name.endswith(".hook"):
             name = name + ".hook"
-        path = os.path.join("etc/lpm.d/hooks/", name)
+        path = os.path.join("etc/lpm/hooks/", name)
         self.filesystem.append(pmfile.pmfile(path, content))
 
     def add_script(self, name, content):

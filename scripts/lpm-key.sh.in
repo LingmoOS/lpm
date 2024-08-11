@@ -83,7 +83,7 @@ usage() {
 	printf -- "$(gettext "  --config <file>           Use an alternate config file (instead of\n\
                             '%s')")\n" "@sysconfdir@/lpm.conf"
 	printf -- "$(gettext "  --gpgdir <dir>            Set an alternate directory for GnuPG (instead\n\
-                            of '%s')")\n" "@sysconfdir@/lpm.d/gnupg"
+                            of '%s')")\n" "@sysconfdir@/lpm/gnupg"
 	printf -- "$(gettext "  --populate-from <dir>     Set an alternate directory for --populate (instead\n\
                             of '%s')")\n" "@keyringdir@"
 	printf -- "$(gettext "  --keyserver <server-url>  Specify a keyserver to use if necessary")\n"

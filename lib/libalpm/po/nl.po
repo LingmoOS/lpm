@@ -16,7 +16,7 @@
 # zenlord <zenlord@gmail.com>, 2013,2015,2019
 msgid ""
 msgstr ""
-"Project-Id-Version: Lingmo OS Pacman package manager\n"
+"Project-Id-Version: Lingmo OS Lpm package manager\n"
 "Report-Msgid-Bugs-To: https://github.com/LingmoOS/lpm/lpm/-/issues\n"
 "POT-Creation-Date: 2024-07-14 19:10+1000\n"
 "PO-Revision-Date: 2010-11-29 23:17+0000\n"

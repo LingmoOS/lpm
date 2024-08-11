@@ -239,7 +239,7 @@ Environment Variables
 
 **LPM**::
 	The command that will be used to check for missing dependencies and to
-	install and remove packages. Pacman's '-Qq', '-Rns', '-S', '-T', and '-U'
+	install and remove packages. Lpm's '-Qq', '-Rns', '-S', '-T', and '-U'
 	operations must be supported by this command. If the variable is not
 	set or empty, makepkg will fall back to `lpm'.
 
