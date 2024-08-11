@@ -212,7 +212,7 @@ API CHANGES BETWEEN 3.1 AND 3.2
 ===============================
 
 [REMOVED]
-- alpm_db_whatprovides()
+- alpmb_whatprovides()
 - alpm_splitdep (no longer public)
 - trans->targets was removed, so alpm_trans_get_targets() as well
 - error codes:
@@ -234,11 +234,11 @@ API CHANGES BETWEEN 3.1 AND 3.2
   - alpm_sync_get_removes() was added
 
 [ADDED]
-- alpm_delta_get_from_md5sum(), alpm_delta_get_to_md5sum()
+- alpmelta_get_from_md5sum(), alpmelta_get_to_md5sum()
 - alpm_miss_get_causingpkg() (new causingpkg field in pmdepmissing_t)
 - alpm_checkdbconflicts()
 - alpm_sync_newversion()
-- alpm_deptest()
+- alpmeptest()
 - error codes :
     PM_ERR_DLT_INVALID, PM_ERR_LIBARCHIVE, PM_ERR_LIBDOWNLOAD and
     PM_ERR_EXTERNAL_DOWNLOAD
@@ -263,7 +263,7 @@ API CHANGES BETWEEN 3.2 AND 3.3
 - Print URIs feature (it is the front-end's task):
   - flag: PM_TRANS_FLAG_PRINTURIS
   - event: PM_TRANS_EVT_PRINTURI
-- alpm_delta_get_from_md5sum() and alpm_delta_get_to_md5sum()
+- alpmelta_get_from_md5sum() and alpmelta_get_to_md5sum()
 - alpm_sync_sysupgrade()
 - error codes:
     PM_ERR_TRANS_COMMITING, PM_ERR_TRANS_DOWNLOADING, PM_ERR_PKG_LOAD,
@@ -276,9 +276,9 @@ API CHANGES BETWEEN 3.2 AND 3.3
   - alpm_option_get_xfercommand() and alpm_option_set_xfercommand() were removed
   - alpm_option_get_fetchcb() and alpm_option_set_fetchcb() were added
 - function renames:
-  - alpm_db_getpkgcache() -> alpm_db_get_pkgcache()
-  - alpm_db_getgrpcache() -> alpm_db_get_grpcache()
-  - alpm_dep_get_string() -> alpm_dep_compute_string()
+  - alpmb_getpkgcache() -> alpmb_get_pkgcache()
+  - alpmb_getgrpcache() -> alpmb_get_grpcache()
+  - alpmep_get_string() -> alpmep_compute_string()
   - alpm_get_md5sum() -> alpm_compute_md5sum()
   - alpm_checkdbconflicts() -> alpm_checkconflicts()
 - alpm_trans_sysupgrade() has a new enable_downgrade parameter
@@ -319,12 +319,12 @@ API CHANGES BETWEEN 3.3 AND 3.4
   - alpm_trans_get_add() can be used to list add/upgrade/sync targets
   - alpm_trans_get_remove() can be used to list to-be-removed packages
 - the type parameter of alpm_trans_init() was removed
-- the type of alpm_db_fetch callback function: mtimeold and mtimenew parameters
+- the type of alpmb_fetch callback function: mtimeold and mtimenew parameters
   were replaced by force parameter
 - unsigned short -> int changes for Boolean variables
 
 [ADDED]
-- alpm_db_set_pkgreason()
+- alpmb_set_pkgreason()
 - alpm_option_get_arch(), alpm_option_set_arch()
 - alpm_option_get_usedelta()
 - alpm_pkg_unused_deltas()
@@ -336,9 +336,9 @@ API CHANGES BETWEEN 3.4 AND 3.5
 ===============================
 
 [REMOVED]
-- alpm_db_register_local()
+- alpmb_register_local()
 - alpm_pkg_has_force()
-- alpm_depcmp()
+- alpmepcmp()
 
 [CHANGED]
 - alpm_trans_cb_progress type had some types changed from int to size_t
@@ -349,10 +349,10 @@ API CHANGES BETWEEN 3.4 AND 3.5
   - alpm_add_target() is replaced by alpm_add_pkg()
   - alpm_remove_target() is replaced by alpm_remove_pkg()
   - packages can come from:
-     - alpm_db_get_pkg() for normal targets
+     - alpmb_get_pkg() for normal targets
      - alpm_find_dbs_satisfier() for versioned provisions
      - alpm_find_grp_pkgs() for groups
-- alpm_deptest() is replaced by the more flexibile alpm_find_satisfier()
+- alpmeptest() is replaced by the more flexibile alpm_find_satisfier()
 - size_t used for alpm_list_t sizes
   - return type for alpm_list_count()
   - parameter type in alpm_list_msort() and alpm_list_nth()
@@ -378,15 +378,15 @@ API CHANGES BETWEEN 3.5 AND 4.0
 - alpm_option_set_root(), alpm_option_set_dbpath()
 - alpm_list_first()
 - alpm_grp_get_name(), alpm_grp_get_pkgs()
-- alpm_delta_get_from(), alpm_delta_get_to(), alpm_delta_get_filename(),
-    alpm_delta_get_md5sum(), alpm_delta_get_size()
+- alpmelta_get_from(), alpmelta_get_to(), alpmelta_get_filename(),
+    alpmelta_get_md5sum(), alpmelta_get_size()
 - alpm_miss_get_target(), alpm_miss_get_dep(), alpm_miss_get_causingpkg()
-- alpm_dep_get_mod(), alpm_dep_get_name(), alpm_dep_get_version()
+- alpmep_get_mod(), alpmep_get_name(), alpmep_get_version()
 - alpm_conflict_get_package1(), alpm_conflict_get_package2(),
     alpm_conflict_get_reason()
 - alpm_fileconflict_get_target(), alpm_fileconflict_get_type(),
     alpm_fileconflict_get_file(), alpm_fileconflict_get_ctarget()
-- alpm_db_get_url()
+- alpmb_get_url()
 
 [CHANGED]
 - PM_ prefixes for enum values are now ALPM_
@@ -394,10 +394,10 @@ API CHANGES BETWEEN 3.5 AND 4.0
 - alpm_initialize now has parameters: char *root, char *dbpath,
     alpm_errno_t *err and returns an alpm_handle_t struct.
 - alpm_release now takes an alpm_handle_t *.
-- alpm_db_register_sync() now requires a extra parameter of a alpm_siglevel_t.
+- alpmb_register_sync() now requires a extra parameter of a alpm_siglevel_t.
 - alpm_pkg_load() now requires an extra parameter of an alpm_siglevel_t
-- alpm_db_setserver() replaced by alpm_db_set_servers(), alpm_db_add_server(),
-    alpm_db_remove_server()
+- alpmb_setserver() replaced by alpmb_set_servers(), alpmb_add_server(),
+    alpmb_remove_server()
 - alpm_trans_init() no longer takes callbacks, set those using
     alpm_option_set_*cb() functions
 - many functions now require a first parameter of an alpm_handle_t *:
@@ -409,9 +409,9 @@ API CHANGES BETWEEN 3.5 AND 4.0
   - alpm_add_pkg
   - alpm_checkconflicts
   - alpm_checkdeps
-  - alpm_db_register_sync
-  - alpm_db_set_pkgreason
-  - alpm_db_unregister_all
+  - alpmb_register_sync
+  - alpmb_set_pkgreason
+  - alpmb_unregister_all
   - alpm_fetch_pkgurl
   - alpm_find_dbs_satisfier
   - alpm_logaction
@@ -421,10 +421,10 @@ API CHANGES BETWEEN 3.5 AND 4.0
   - alpm_sync_sysupgrade
 - several structs are no longer opaque
   - alpm_conflict_t
-  - alpm_delta_t
-  - alpm_depend_t
-  - alpm_depmissing_t
-  - alpm_depmod_t
+  - alpmelta_t
+  - alpmepend_t
+  - alpmepmissing_t
+  - alpmepmod_t
   - alpm_fileconflict_t
   - alpm_group_t
   - alpm_pkg_reason_t
@@ -435,8 +435,8 @@ API CHANGES BETWEEN 3.5 AND 4.0
 	alpm_option_{get,set}_progresscb()
 - package signing functions:
     alpm_option_get_default_siglevel(), alpm_option_set_default_siglevel(),
-    alpm_option_get_gpgdir(), alpm_option_set_gpgdir(), alpm_db_get_siglevel(),
-    alpm_siglist_cleanup(), alpm_db_check_pgp_signature(), alpm_pkg_check_pgp_signature(),
+    alpm_option_get_gpgdir(), alpm_option_set_gpgdir(), alpmb_get_siglevel(),
+    alpm_siglist_cleanup(), alpmb_check_pgp_signature(), alpm_pkg_check_pgp_signature(),
     alpm_pkg_get_origin(), alpm_pkg_get_sha256sum(), alpm_pkg_get_base64_sig()
 - list functions:
     alpm_list_to_array(), alpm_list_previous()
@@ -459,17 +459,17 @@ API CHANGES BETWEEN 4.0 AND 4.1
 [CHANGED]
 - alpm_pkgfrom_t members are now prefixed with ALPM_
 - alpm_siglevel_t - added members ALPM_SIG_PACKAGE_SET, ALPM_SIG_PACKAGE_TRUST_SET
-- alpm_depend_t - additional desc member
+- alpmepend_t - additional desc member
 - alpm_filelist_t - additional resolved_path member
 - alpm_pgpkey_t - added members length, revoked, pubkey_algo
 - alpm_logaction - added caller identifier argument
 - function renaming:
   - alpm_option_get_localdb -> alpm_get_localdb
   - alpm_option_get_syncdbs -> alpm_get_syncdbs
-  - alpm_db_register_sync -> alpm_register_syncdb
-  - alpm_db_unregister_all -> alpm_unregister_all_syncdbs
-  - alpm_db_readgroup -> alpm_db_get_group
-  - alpm_db_set_pkgreason -> alpm_pkg_set_reason (handle parameter removed)
+  - alpmb_register_sync -> alpm_register_syncdb
+  - alpmb_unregister_all -> alpm_unregister_all_syncdbs
+  - alpmb_readgroup -> alpmb_get_group
+  - alpmb_set_pkgreason -> alpm_pkg_set_reason (handle parameter removed)
 - alpm_time_t typedef used for all times
   - members of alpm_pgpkey_t
   - return types of alpm_pkg_get_builddate and alpm_pkg_get_installdate
@@ -487,9 +487,9 @@ API CHANGES BETWEEN 4.0 AND 4.1
   - alpm_option_get_remote_file_siglevel()
   - alpm_option_set_remote_file_siglevel()
 - sync database usage functions:
-  - alpm_db_usage_t
-  - alpm_db_set_usage()
-  - alpm_db_get_usage()
+  - alpmb_usage_t
+  - alpmb_set_usage()
+  - alpmb_get_usage()
 - wrapper functions for reading mtree files
   - alpm_pkg_mtree_open()
   - alpm_pkg_mtree_next()
@@ -534,13 +534,13 @@ API CHANGES BETWEEN 4.1 AND 4.2
 [ADDED]
 - memory management
   - alpm_fileconflict_free()
-  - alpm_depmissing_free()
+  - alpmepmissing_free()
   - alpm_conflict_free()
-  - alpm_dep_free()
+  - alpmep_free()
 - database usage
-  - alpm_db_usage_t
-  - alpm_db_set_usage()
-  - alpm_db_get_usage()
+  - alpmb_usage_t
+  - alpmb_set_usage()
+  - alpmb_get_usage()
 - assume installed
   - alpm_option_get_assumeinstalled()
   - alpm_option_add_assumeinstalled()
@@ -550,9 +550,9 @@ API CHANGES BETWEEN 4.1 AND 4.2
   - alpm_option_match_noupgrade()
   - alpm_option_match_noextract()
 - utility functions
-  - alpm_dep_from_string()
+  - alpmep_from_string()
   - alpm_pkg_should_ignore()
-  - alpm_decode_signature()
+  - alpmecode_signature()
   - alpm_extract_keyid()
 - flags
   - ALPM_EVENT_RETRIEVE_DONE, ALPM_EVENT_RETRIEVE_FAILED, ALPM_EVENT_PKGDOWNLOAD_START,
@@ -604,9 +604,9 @@ API CHANGES BETWEEN 5.0 AND 5.1
   - alpm_option_get_remote_file_siglevel()
   - alpm_option_set_remote_file_siglevel()
   - alpm_register_syncdb()
-  - alpm_db_get_siglevel()
-  - alpm_db_set_usage()
-  - alpm_db_get_usage()
+  - alpmb_get_siglevel()
+  - alpmb_set_usage()
+  - alpmb_get_usage()
   - alpm_pkg_load()
   - alpm_pkg_get_validation()
   - alpm_trans_get_flags()
@@ -636,7 +636,7 @@ API CHANGES BETWEEN 5.1 AND 5.2
 
 [REMOVED]
 - package delta support
-  - alpm_delta_t
+  - alpmelta_t
   - alpm_event_delta_patch_t
   - alpm_event_t union - removed alpm_event_delta_patch_t
   - ALPM_EVENT_DELTA_INTEGRITY_START, ALPM_EVENT_DELTA_INTEGRITY_DONE,
@@ -668,28 +668,28 @@ API CHANGES BETWEEN 5.2 AND 6.0
  - alpm_option_set_totaldlcb()
 
 [CHANGED]
-- alpm_db_update() now accepts a list of databases rather than a single database.
+- alpmb_update() now accepts a list of databases rather than a single database.
 - alpm_fetch_pkgurl() accepts a list of packages to download.
-- alpm_db_search() now has an additional parameter and returns success status
+- alpmb_search() now has an additional parameter and returns success status
 - ALPM_EVENT_RETRIEVE_* -> ALPM_EVENT_DB_RETRIEVE_* and ALPM_EVENT_PKG_RETRIEVE_*
 - alpm_cb_download pass event and data
 - multi architecture support
  - alpm_option_get_arch() -> alpm_option_get_architectures()
  - alpm_option_set_arch() -> alpm_option_set_architectures()
-- alpm_db_get_servers() copies parameter data
+- alpmb_get_servers() copies parameter data
 
 [ADDED]
 - parallel download support
  - alpm_option_set_parallel_downloads()
  - alpm_option_get_parallel_downloads()
 - file download events
- - alpm_download_event_type_t
- - alpm_download_event_init_t
- - alpm_download_event_progress_t
- - alpm_download_event_completed_t
+ - alpmownload_event_type_t
+ - alpmownload_event_init_t
+ - alpmownload_event_progress_t
+ - alpmownload_event_completed_t
 - download misc
  - ALPM_DOWNLOAD_RETRY
- - alpm_download_event_retry_t
+ - alpmownload_event_retry_t
  - alpm_event_pkg_retrieve_t
 - multiarchitecture support
  - alpm_option_add_architecture()
@@ -717,12 +717,12 @@ API CHANGES BETWEEN 6.0 AND 6.1
  - alpm_pkg_xdata_t
  - alpm_pkg_get_xdata()
 - accessor functions
- - alpm_db_get_handle()
+ - alpmb_get_handle()
  - alpm_pkg_get_handle()
 - cache server support
- - alpm_db_get_cache_servers()
- - alpm_db_set_cache_servers()
- - alpm_db_add_cache_server()
+ - alpmb_get_cache_servers()
+ - alpmb_set_cache_servers()
+ - alpmb_add_cache_server()
 
 API CHANGES BETWEEN 6.1 AND 7.0
 ===============================

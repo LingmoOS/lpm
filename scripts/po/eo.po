@@ -207,7 +207,7 @@ msgstr ""
 msgid "Make packages compatible for use with lpm"
 msgstr "Igu pakaĵojn kongrua por uzi kun lpm"
 
-#: scripts/makepkg.sh.in:878 scripts/lpm-db-upgrade.sh.in:41
+#: scripts/makepkg.sh.in:878 scripts/lpmb-upgrade.sh.in:41
 msgid "Usage: %s [options]"
 msgstr "Uzado: %s [opcioj]"
 
@@ -396,7 +396,7 @@ msgstr ""
 msgid "If %s is not specified, %s will look for '%s'"
 msgstr "Se %s ne estos difinita, %s serĉos '%s'"
 
-#: scripts/makepkg.sh.in:933 scripts/lpm-db-upgrade.sh.in:57
+#: scripts/makepkg.sh.in:933 scripts/lpmb-upgrade.sh.in:57
 #: scripts/lpm-key.sh.in:99 scripts/repo-add.sh.in:104
 msgid ""
 "This is free software; see the source for copying conditions.\\nThere is NO "
@@ -495,69 +495,69 @@ msgstr "La pakaĵa dosierujo estas preta."
 msgid "Finished making: %s"
 msgstr "Finis faradon de %s"
 
-#: scripts/lpm-db-upgrade.sh.in:39
-msgid "Upgrade the local lpm database to a newer format"
-msgstr "Ĝisdatigi la lokan lpm-datumbazon al nova aranĝo"
+#: scripts/lpmb-upgrade.sh.in:39
+msgid "Upgrade the local lpmatabase to a newer format"
+msgstr "Ĝisdatigi la lokan lpmatumbazon al nova aranĝo"
 
-#: scripts/lpm-db-upgrade.sh.in:43
+#: scripts/lpmb-upgrade.sh.in:43
 msgid "options:"
 msgstr "opcioj:"
 
-#: scripts/lpm-db-upgrade.sh.in:44
+#: scripts/lpmb-upgrade.sh.in:44
 msgid "  -d, --dbpath <path>  set an alternate database location"
 msgstr "  -d, --dbpath <path>  difini alternativan lokon por datumbazo"
 
-#: scripts/lpm-db-upgrade.sh.in:45
+#: scripts/lpmb-upgrade.sh.in:45
 msgid "  -h, --help           show this help message and exit"
 msgstr "  -h, --help           montri ĉi tiun helpmesaĝon kaj eliri"
 
-#: scripts/lpm-db-upgrade.sh.in:46
+#: scripts/lpmb-upgrade.sh.in:46
 msgid "  -r, --root <path>    set an alternate installation root"
 msgstr "  -r, --root <path>    elekti alian radikon por instalado"
 
-#: scripts/lpm-db-upgrade.sh.in:47
+#: scripts/lpmb-upgrade.sh.in:47
 msgid "  -V, --version        show version information and exit"
 msgstr "  -V, --version             montri informon pri versio kaj eliri"
 
-#: scripts/lpm-db-upgrade.sh.in:48
+#: scripts/lpmb-upgrade.sh.in:48
 msgid "  --config <path>      set an alternate configuration file"
 msgstr "      --config <path>  elekti alian agordan dosieron"
 
-#: scripts/lpm-db-upgrade.sh.in:49
+#: scripts/lpmb-upgrade.sh.in:49
 msgid "  --nocolor            disable colorized output messages"
 msgstr "  --nocolor            malebligi kolorajn eligajn mesaĝojn"
 
-#: scripts/lpm-db-upgrade.sh.in:122 scripts/repo-add.sh.in:396
+#: scripts/lpmb-upgrade.sh.in:122 scripts/repo-add.sh.in:396
 msgid "%s does not exist or is not a directory."
 msgstr "%s ne ekzistas aŭ ne estas dosierujo."
 
-#: scripts/lpm-db-upgrade.sh.in:126
-msgid "%s is not a lpm database directory."
+#: scripts/lpmb-upgrade.sh.in:126
+msgid "%s is not a lpmatabase directory."
 msgstr "%s ne estas datumbaza dosierujo de lpm."
 
-#: scripts/lpm-db-upgrade.sh.in:130
+#: scripts/lpmb-upgrade.sh.in:130
 msgid "You must have correct permissions to upgrade the database."
 msgstr "Vi bezonas havi la ĝustajn permesojn por ĝisdatigi la datumbazo."
 
-#: scripts/lpm-db-upgrade.sh.in:140
+#: scripts/lpmb-upgrade.sh.in:140
 msgid "Pacman lock file was found. Cannot run while lpm is running."
 msgstr ""
 "Ŝlosdosiero de lpm estis trovita. Ne eblas daŭrigi kvankam lpm "
 "funkcias."
 
-#: scripts/lpm-db-upgrade.sh.in:152
+#: scripts/lpmb-upgrade.sh.in:152
 msgid "Pre-3.5 database format detected - upgrading..."
 msgstr "Datumbazo-formato pra-3.5 detektita - ĝisdatigante..."
 
-#: scripts/lpm-db-upgrade.sh.in:159
+#: scripts/lpmb-upgrade.sh.in:159
 msgid "Done."
 msgstr "Farita."
 
-#: scripts/lpm-db-upgrade.sh.in:163
+#: scripts/lpmb-upgrade.sh.in:163
 msgid "Pre-4.2 database format detected - upgrading..."
 msgstr "Datumbazo-formato pra-4.2 detektita - ĝisdatigante..."
 
-#: scripts/lpm-db-upgrade.sh.in:185
+#: scripts/lpmb-upgrade.sh.in:185
 msgid "symlink '%s' points outside lpm root, manual repair required"
 msgstr ""
 "la simbola ligilo '%s' indikas eksteren al lpm kun ĉefuzantaj rajtoj, "
@@ -1066,7 +1066,7 @@ msgid "Held by process %s"
 msgstr "Atendante la procezon %s"
 
 #: scripts/repo-add.sh.in:418
-msgid "Repository file '%s' is not a proper lpm database."
+msgid "Repository file '%s' is not a proper lpmatabase."
 msgstr "Deponeja dosiero '%s' ne estas ĝusta datumbazo de lpm"
 
 #: scripts/repo-add.sh.in:423

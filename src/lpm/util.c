@@ -153,10 +153,10 @@ int check_syncdbs(size_t need_repos, int check_valid)
 	if(check_valid) {
 		/* ensure all known dbs are valid */
 		for(i = sync_dbs; i; i = alpm_list_next(i)) {
-			alpm_db_t *db = i->data;
-			if(alpm_db_get_valid(db)) {
+			alpmb_t *db = i->data;
+			if(alpmb_get_valid(db)) {
 				pm_printf(ALPM_LOG_ERROR, _("database '%s' is not valid (%s)\n"),
-						alpm_db_get_name(db), alpm_strerror(alpm_errno(config->handle)));
+						alpmb_get_name(db), alpm_strerror(alpm_errno(config->handle)));
 				ret = 1;
 			}
 		}
@@ -170,7 +170,7 @@ int sync_syncdbs(int level, alpm_list_t *syncs)
 	int force = (level < 2 ? 0 : 1);
 
 	multibar_move_completed_up(false);
-	ret = alpm_db_update(config->handle, syncs, force);
+	ret = alpmb_update(config->handle, syncs, force);
 	if(ret < 0) {
 		pm_printf(ALPM_LOG_ERROR, _("failed to synchronize all databases (%s)\n"),
 			alpm_strerror(alpm_errno(config->handle)));
@@ -904,9 +904,9 @@ static alpm_list_t *create_verbose_row(pm_target_t *target)
 
 	/* a row consists of the package name, */
 	if(target->install) {
-		const alpm_db_t *db = alpm_pkg_get_db(target->install);
+		const alpmb_t *db = alpm_pkg_get_db(target->install);
 		if(db) {
-			pm_asprintf(&str, "%s/%s", alpm_db_get_name(db), alpm_pkg_get_name(target->install));
+			pm_asprintf(&str, "%s/%s", alpmb_get_name(db), alpm_pkg_get_name(target->install));
 		} else {
 			pm_asprintf(&str, "%s", alpm_pkg_get_name(target->install));
 		}
@@ -1056,14 +1056,14 @@ static int pkg_cmp(const void *p1, const void *p2)
 void display_targets(void)
 {
 	alpm_list_t *i, *targets = NULL;
-	alpm_db_t *db_local = alpm_get_localdb(config->handle);
+	alpmb_t *db_local = alpm_get_localdb(config->handle);
 
 	for(i = alpm_trans_get_add(config->handle); i; i = alpm_list_next(i)) {
 		alpm_pkg_t *pkg = i->data;
 		pm_target_t *targ = calloc(1, sizeof(pm_target_t));
 		if(!targ) return;
 		targ->install = pkg;
-		targ->remove = alpm_db_get_pkg(db_local, alpm_pkg_get_name(pkg));
+		targ->remove = alpmb_get_pkg(db_local, alpm_pkg_get_name(pkg));
 		if(alpm_list_find(config->explicit_adds, pkg, pkg_cmp)) {
 			targ->is_explicit = 1;
 		}
@@ -1119,7 +1119,7 @@ static char *pkg_get_location(alpm_pkg_t *pkg)
 				}
 			}
 
-			servers = alpm_db_get_servers(alpm_pkg_get_db(pkg));
+			servers = alpmb_get_servers(alpm_pkg_get_db(pkg));
 			if(servers) {
 				pm_asprintf(&string, "%s/%s", (char *)(servers->data),
 						alpm_pkg_get_filename(pkg));
@@ -1254,9 +1254,9 @@ void print_packages(const alpm_list_t *packages)
 		/* %r : repo */
 		if(strstr(temp, "%r")) {
 			const char *repo = "local";
-			alpm_db_t *db = alpm_pkg_get_db(pkg);
+			alpmb_t *db = alpm_pkg_get_db(pkg);
 			if(db) {
-				repo = alpm_db_get_name(db);
+				repo = alpmb_get_name(db);
 			}
 			string = strreplace(temp, "%r", repo);
 			free(temp);
@@ -1274,21 +1274,21 @@ void print_packages(const alpm_list_t *packages)
 		/* %u : url */
 		PRINT_FORMAT_STRING(temp, "%u", alpm_pkg_get_url)
 		/* %C : checkdepends */
-		PRINT_FORMAT_LIST(temp, "%C", alpm_pkg_get_checkdepends, alpm_dep_compute_string)
+		PRINT_FORMAT_LIST(temp, "%C", alpm_pkg_get_checkdepends, alpmep_compute_string)
 		/* %D : depends */
-		PRINT_FORMAT_LIST(temp, "%D", alpm_pkg_get_depends, alpm_dep_compute_string)
+		PRINT_FORMAT_LIST(temp, "%D", alpm_pkg_get_depends, alpmep_compute_string)
 		/* %G : groups */
 		PRINT_FORMAT_LIST(temp, "%G", alpm_pkg_get_groups, NULL)
 		/* %H : conflicts */
-		PRINT_FORMAT_LIST(temp, "%H", alpm_pkg_get_conflicts, alpm_dep_compute_string)
+		PRINT_FORMAT_LIST(temp, "%H", alpm_pkg_get_conflicts, alpmep_compute_string)
 		/* %M : makedepends */
-		PRINT_FORMAT_LIST(temp, "%M", alpm_pkg_get_makedepends, alpm_dep_compute_string)
+		PRINT_FORMAT_LIST(temp, "%M", alpm_pkg_get_makedepends, alpmep_compute_string)
 		/* %O : optdepends */
-		PRINT_FORMAT_LIST(temp, "%O", alpm_pkg_get_optdepends, alpm_dep_compute_string)
+		PRINT_FORMAT_LIST(temp, "%O", alpm_pkg_get_optdepends, alpmep_compute_string)
 		/* %P : provides */
-		PRINT_FORMAT_LIST(temp, "%P", alpm_pkg_get_provides, alpm_dep_compute_string)
+		PRINT_FORMAT_LIST(temp, "%P", alpm_pkg_get_provides, alpmep_compute_string)
 		/* %R : replaces */
-		PRINT_FORMAT_LIST(temp, "%R", alpm_pkg_get_replaces, alpm_dep_compute_string)
+		PRINT_FORMAT_LIST(temp, "%R", alpm_pkg_get_replaces, alpmep_compute_string)
 		/* %L : license */
 		PRINT_FORMAT_LIST(temp, "%L", alpm_pkg_get_licenses, NULL)
 
@@ -1307,8 +1307,8 @@ void print_packages(const alpm_list_t *packages)
  */
 static int depend_cmp(const void *d1, const void *d2)
 {
-	const alpm_depend_t *dep1 = d1;
-	const alpm_depend_t *dep2 = d2;
+	const alpmepend_t *dep1 = d1;
+	const alpmepend_t *dep2 = d2;
 	int ret;
 
 	ret = strcmp(dep1->name, dep2->name);
@@ -1337,12 +1337,12 @@ static int depend_cmp(const void *d1, const void *d2)
 	return ret;
 }
 
-static char *make_optstring(alpm_depend_t *optdep)
+static char *make_optstring(alpmepend_t *optdep)
 {
-	alpm_db_t *localdb = alpm_get_localdb(config->handle);
-	char *optstring = alpm_dep_compute_string(optdep);
+	alpmb_t *localdb = alpm_get_localdb(config->handle);
+	char *optstring = alpmep_compute_string(optdep);
 	char *status = NULL;
-	if(alpm_find_satisfier(alpm_db_get_pkgcache(localdb), optstring)) {
+	if(alpm_find_satisfier(alpmb_get_pkgcache(localdb), optstring)) {
 		status = _(" [installed]");
 	} else if(alpm_find_satisfier(alpm_trans_get_add(config->handle), optstring)) {
 		status = _(" [pending]");
@@ -1364,7 +1364,7 @@ void display_new_optdepends(alpm_pkg_t *oldpkg, alpm_pkg_t *newpkg)
 
 	/* turn optdepends list into a text list */
 	for(i = optdeps; i; i = alpm_list_next(i)) {
-		alpm_depend_t *optdep = i->data;
+		alpmepend_t *optdep = i->data;
 		optstrings = alpm_list_add(optstrings, make_optstring(optdep));
 	}
 
@@ -1386,7 +1386,7 @@ void display_optdepends(alpm_pkg_t *pkg)
 
 	/* turn optdepends list into a text list */
 	for(i = optdeps; i; i = alpm_list_next(i)) {
-		alpm_depend_t *optdep = i->data;
+		alpmepend_t *optdep = i->data;
 		optstrings = alpm_list_add(optstrings, make_optstring(optdep));
 	}
 
@@ -1420,15 +1420,15 @@ void select_display(const alpm_list_t *pkglist)
 
 	for(i = pkglist; i; i = i->next) {
 		alpm_pkg_t *pkg = i->data;
-		alpm_db_t *db = alpm_pkg_get_db(pkg);
+		alpmb_t *db = alpm_pkg_get_db(pkg);
 
 		if(!dbname) {
-			dbname = alpm_db_get_name(db);
+			dbname = alpmb_get_name(db);
 		}
-		if(strcmp(alpm_db_get_name(db), dbname) != 0) {
+		if(strcmp(alpmb_get_name(db), dbname) != 0) {
 			display_repo_list(dbname, list, cols);
 			FREELIST(list);
-			dbname = alpm_db_get_name(db);
+			dbname = alpmb_get_name(db);
 		}
 		string = NULL;
 		pm_asprintf(&string, "%d) %s", nth, alpm_pkg_get_name(pkg));

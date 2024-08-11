@@ -213,7 +213,7 @@ msgstr "Bagian dari grup paket sudah dibuat. (gunakan %s untuk menimpa)"
 msgid "Make packages compatible for use with lpm"
 msgstr "Buat paket sesuai dengan penggunaan lpm"
 
-#: scripts/makepkg.sh.in:878 scripts/lpm-db-upgrade.sh.in:41
+#: scripts/makepkg.sh.in:878 scripts/lpmb-upgrade.sh.in:41
 msgid "Usage: %s [options]"
 msgstr "Penggunaan: %s [opsi]"
 
@@ -407,7 +407,7 @@ msgstr "--noprogressbar Jangan tunjukkan baris proses ketika mengunduh berkas"
 msgid "If %s is not specified, %s will look for '%s'"
 msgstr "Jika %s tidak dispesifikkan, %s akan mencari '%s'"
 
-#: scripts/makepkg.sh.in:933 scripts/lpm-db-upgrade.sh.in:57
+#: scripts/makepkg.sh.in:933 scripts/lpmb-upgrade.sh.in:57
 #: scripts/lpm-key.sh.in:99 scripts/repo-add.sh.in:104
 msgid ""
 "This is free software; see the source for copying conditions.\\nThere is NO "
@@ -506,69 +506,69 @@ msgstr "Direktori paket siap."
 msgid "Finished making: %s"
 msgstr "Selesai membuat: %s"
 
-#: scripts/lpm-db-upgrade.sh.in:39
-msgid "Upgrade the local lpm database to a newer format"
+#: scripts/lpmb-upgrade.sh.in:39
+msgid "Upgrade the local lpmatabase to a newer format"
 msgstr "Perbarui database lokal lpm ke format yang lebih baru"
 
-#: scripts/lpm-db-upgrade.sh.in:43
+#: scripts/lpmb-upgrade.sh.in:43
 msgid "options:"
 msgstr "Opsi:"
 
-#: scripts/lpm-db-upgrade.sh.in:44
+#: scripts/lpmb-upgrade.sh.in:44
 msgid "  -d, --dbpath <path>  set an alternate database location"
 msgstr ""
 
-#: scripts/lpm-db-upgrade.sh.in:45
+#: scripts/lpmb-upgrade.sh.in:45
 msgid "  -h, --help           show this help message and exit"
 msgstr "-h, --help perlihatkan pesan ini dan keluar"
 
-#: scripts/lpm-db-upgrade.sh.in:46
+#: scripts/lpmb-upgrade.sh.in:46
 msgid "  -r, --root <path>    set an alternate installation root"
 msgstr "-r, --root <path> atur root pemasangan alternatif"
 
-#: scripts/lpm-db-upgrade.sh.in:47
+#: scripts/lpmb-upgrade.sh.in:47
 msgid "  -V, --version        show version information and exit"
 msgstr "-V, --version perlihatkan informasi versi dan keluar"
 
-#: scripts/lpm-db-upgrade.sh.in:48
+#: scripts/lpmb-upgrade.sh.in:48
 msgid "  --config <path>      set an alternate configuration file"
 msgstr "--config <pat> atur berkas konfigurasi alternatif"
 
-#: scripts/lpm-db-upgrade.sh.in:49
+#: scripts/lpmb-upgrade.sh.in:49
 msgid "  --nocolor            disable colorized output messages"
 msgstr "--nocolor lumpuhkan pesan keluaran berwarna"
 
-#: scripts/lpm-db-upgrade.sh.in:122 scripts/repo-add.sh.in:396
+#: scripts/lpmb-upgrade.sh.in:122 scripts/repo-add.sh.in:396
 msgid "%s does not exist or is not a directory."
 msgstr "%s tidak ada atau bukan sebuah direktori."
 
-#: scripts/lpm-db-upgrade.sh.in:126
-msgid "%s is not a lpm database directory."
+#: scripts/lpmb-upgrade.sh.in:126
+msgid "%s is not a lpmatabase directory."
 msgstr "%s bukan merupakan direktori database lpm."
 
-#: scripts/lpm-db-upgrade.sh.in:130
+#: scripts/lpmb-upgrade.sh.in:130
 msgid "You must have correct permissions to upgrade the database."
 msgstr "Anda harus mempunyai izin yang tepat untuk meningkatkan database."
 
-#: scripts/lpm-db-upgrade.sh.in:140
+#: scripts/lpmb-upgrade.sh.in:140
 msgid "Pacman lock file was found. Cannot run while lpm is running."
 msgstr ""
-"Berkas pengunci lpm ditemukan. Tidak dapat mengeksekusi ketika lpm "
+"Berkas pengunci lpmitemukan. Tidak dapat mengeksekusi ketika lpm "
 "berjalan."
 
-#: scripts/lpm-db-upgrade.sh.in:152
+#: scripts/lpmb-upgrade.sh.in:152
 msgid "Pre-3.5 database format detected - upgrading..."
 msgstr "Format database pra-3.5 terdeteksi - meningkatkan..."
 
-#: scripts/lpm-db-upgrade.sh.in:159
+#: scripts/lpmb-upgrade.sh.in:159
 msgid "Done."
 msgstr "Selesai."
 
-#: scripts/lpm-db-upgrade.sh.in:163
+#: scripts/lpmb-upgrade.sh.in:163
 msgid "Pre-4.2 database format detected - upgrading..."
 msgstr "Format database Pra-4.2 terdeteksi - meningkatkan..."
 
-#: scripts/lpm-db-upgrade.sh.in:185
+#: scripts/lpmb-upgrade.sh.in:185
 msgid "symlink '%s' points outside lpm root, manual repair required"
 msgstr "symlink '%s' mengacu diluar root lpm, perbaikan manual dibutuhkan"
 
@@ -1055,7 +1055,7 @@ msgid "Held by process %s"
 msgstr "Proses ditahan oleh %s"
 
 #: scripts/repo-add.sh.in:418
-msgid "Repository file '%s' is not a proper lpm database."
+msgid "Repository file '%s' is not a proper lpmatabase."
 msgstr "Berkas repositori '%s' bukan merupakan database lpm yang layak."
 
 #: scripts/repo-add.sh.in:423

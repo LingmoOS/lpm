@@ -39,7 +39,7 @@ typedef struct {
 __attribute__((format(printf, 3, 0)))
 void _alpm_sandbox_cb_log(void *ctx, alpm_loglevel_t level, const char *fmt, va_list args);
 
-void _alpm_sandbox_cb_dl(void *ctx, const char *filename, alpm_download_event_type_t event, void *data);
+void _alpm_sandbox_cb_dl(void *ctx, const char *filename, alpmownload_event_type_t event, void *data);
 
 
 /* Functions to capture sandbox callbacks and convert them to alpm callbacks */

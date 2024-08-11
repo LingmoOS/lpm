@@ -1,6 +1,6 @@
 wrapped_scripts = [
   'makepkg.sh.in',
-  'lpm-db-upgrade.sh.in',
+  'lpmb-upgrade.sh.in',
   'lpm-key.sh.in',
   'repo-add.sh.in'
 ]

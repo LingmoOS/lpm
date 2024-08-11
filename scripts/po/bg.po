@@ -203,7 +203,7 @@ msgstr "Част от пакетна група вече е построена. 
 msgid "Make packages compatible for use with lpm"
 msgstr "Направи пакетите съвместими за използване с lpm"
 
-#: scripts/makepkg.sh.in:878 scripts/lpm-db-upgrade.sh.in:41
+#: scripts/makepkg.sh.in:878 scripts/lpmb-upgrade.sh.in:41
 msgid "Usage: %s [options]"
 msgstr "Използване: %s [опции]"
 
@@ -390,7 +390,7 @@ msgstr "--noprogressbar Не показвай прогреса при сваля
 msgid "If %s is not specified, %s will look for '%s'"
 msgstr "Ако %s не е зададен, %s ще търси за '%s'"
 
-#: scripts/makepkg.sh.in:933 scripts/lpm-db-upgrade.sh.in:57
+#: scripts/makepkg.sh.in:933 scripts/lpmb-upgrade.sh.in:57
 #: scripts/lpm-key.sh.in:99 scripts/repo-add.sh.in:104
 msgid ""
 "This is free software; see the source for copying conditions.\\nThere is NO "
@@ -491,68 +491,68 @@ msgstr "Директорията на пакета е готова."
 msgid "Finished making: %s"
 msgstr "Завърши създаването: %s"
 
-#: scripts/lpm-db-upgrade.sh.in:39
-msgid "Upgrade the local lpm database to a newer format"
+#: scripts/lpmb-upgrade.sh.in:39
+msgid "Upgrade the local lpmatabase to a newer format"
 msgstr "Надграждане на текущите бази на Pacman до новия формат"
 
-#: scripts/lpm-db-upgrade.sh.in:43
+#: scripts/lpmb-upgrade.sh.in:43
 msgid "options:"
 msgstr "опции:"
 
-#: scripts/lpm-db-upgrade.sh.in:44
+#: scripts/lpmb-upgrade.sh.in:44
 msgid "  -d, --dbpath <path>  set an alternate database location"
 msgstr "-d, --dbpath <път>  задаване на алтернативен адрес на базата "
 
-#: scripts/lpm-db-upgrade.sh.in:45
+#: scripts/lpmb-upgrade.sh.in:45
 msgid "  -h, --help           show this help message and exit"
 msgstr "--help, -h покажи това помощно съобщение и излез"
 
-#: scripts/lpm-db-upgrade.sh.in:46
+#: scripts/lpmb-upgrade.sh.in:46
 msgid "  -r, --root <path>    set an alternate installation root"
 msgstr "-r, --root <път> задаване на алтернативен инсталационен root"
 
-#: scripts/lpm-db-upgrade.sh.in:47
+#: scripts/lpmb-upgrade.sh.in:47
 msgid "  -V, --version        show version information and exit"
 msgstr "-V, --version покажи информация отностно версията и излез"
 
-#: scripts/lpm-db-upgrade.sh.in:48
+#: scripts/lpmb-upgrade.sh.in:48
 msgid "  --config <path>      set an alternate configuration file"
 msgstr "--config <път> задаване на алтернативен конфигурационен файл"
 
-#: scripts/lpm-db-upgrade.sh.in:49
+#: scripts/lpmb-upgrade.sh.in:49
 msgid "  --nocolor            disable colorized output messages"
 msgstr "--nocolor забрани оцветени изходни съобщения"
 
-#: scripts/lpm-db-upgrade.sh.in:122 scripts/repo-add.sh.in:396
+#: scripts/lpmb-upgrade.sh.in:122 scripts/repo-add.sh.in:396
 msgid "%s does not exist or is not a directory."
 msgstr "%s несъществува или не е директория."
 
-#: scripts/lpm-db-upgrade.sh.in:126
-msgid "%s is not a lpm database directory."
+#: scripts/lpmb-upgrade.sh.in:126
+msgid "%s is not a lpmatabase directory."
 msgstr "%s не е lpm датабазна директория."
 
-#: scripts/lpm-db-upgrade.sh.in:130
+#: scripts/lpmb-upgrade.sh.in:130
 msgid "You must have correct permissions to upgrade the database."
 msgstr "Трябват в нужните права за надграждане на базата от данни."
 
-#: scripts/lpm-db-upgrade.sh.in:140
+#: scripts/lpmb-upgrade.sh.in:140
 msgid "Pacman lock file was found. Cannot run while lpm is running."
 msgstr ""
 "Открит е заключващ файл на Pacman. Не може да се пусне докато той работи."
 
-#: scripts/lpm-db-upgrade.sh.in:152
+#: scripts/lpmb-upgrade.sh.in:152
 msgid "Pre-3.5 database format detected - upgrading..."
 msgstr "Pre-3.5 database засечен формат - надграждане..."
 
-#: scripts/lpm-db-upgrade.sh.in:159
+#: scripts/lpmb-upgrade.sh.in:159
 msgid "Done."
 msgstr "Готово."
 
-#: scripts/lpm-db-upgrade.sh.in:163
+#: scripts/lpmb-upgrade.sh.in:163
 msgid "Pre-4.2 database format detected - upgrading..."
 msgstr "Pre-4.2 database засечен формат - надграждане..."
 
-#: scripts/lpm-db-upgrade.sh.in:185
+#: scripts/lpmb-upgrade.sh.in:185
 msgid "symlink '%s' points outside lpm root, manual repair required"
 msgstr "symlink '%s' сочи извън lpm root, необходима е ръчна намеса"
 
@@ -1042,7 +1042,7 @@ msgid "Held by process %s"
 msgstr "Задържан от процес %s"
 
 #: scripts/repo-add.sh.in:418
-msgid "Repository file '%s' is not a proper lpm database."
+msgid "Repository file '%s' is not a proper lpmatabase."
 msgstr "Хранилищен файл '%s' неизглежда като lpm датабаза."
 
 #: scripts/repo-add.sh.in:423

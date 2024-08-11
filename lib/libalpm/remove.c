@@ -94,8 +94,8 @@ static int remove_prepare_cascade(alpm_handle_t *handle, alpm_list_t *lp)
 	while(lp) {
 		alpm_list_t *i;
 		for(i = lp; i; i = i->next) {
-			alpm_depmissing_t *miss = i->data;
-			alpm_pkg_t *info = _alpm_db_get_pkgfromcache(handle->db_local, miss->target);
+			alpmepmissing_t *miss = i->data;
+			alpm_pkg_t *info = _alpmb_get_pkgfromcache(handle->db_local, miss->target);
 			if(info) {
 				alpm_pkg_t *copy;
 				if(!alpm_pkg_find(trans->remove, info->name)) {
@@ -111,9 +111,9 @@ static int remove_prepare_cascade(alpm_handle_t *handle, alpm_list_t *lp)
 						_("could not find %s in database -- skipping\n"), miss->target);
 			}
 		}
-		alpm_list_free_inner(lp, (alpm_list_fn_free)alpm_depmissing_free);
+		alpm_list_free_inner(lp, (alpm_list_fn_free)alpmepmissing_free);
 		alpm_list_free(lp);
-		lp = alpm_checkdeps(handle, _alpm_db_get_pkgcache(handle->db_local),
+		lp = alpm_checkdeps(handle, _alpmb_get_pkgcache(handle->db_local),
 				trans->remove, NULL, 1);
 	}
 	return 0;
@@ -133,7 +133,7 @@ static void remove_prepare_keep_needed(alpm_handle_t *handle, alpm_list_t *lp)
 	while(lp != NULL) {
 		alpm_list_t *i;
 		for(i = lp; i; i = i->next) {
-			alpm_depmissing_t *miss = i->data;
+			alpmepmissing_t *miss = i->data;
 			void *vpkg;
 			alpm_pkg_t *pkg = alpm_pkg_find(trans->remove, miss->causingpkg);
 			if(pkg == NULL) {
@@ -148,9 +148,9 @@ static void remove_prepare_keep_needed(alpm_handle_t *handle, alpm_list_t *lp)
 				_alpm_pkg_free(pkg);
 			}
 		}
-		alpm_list_free_inner(lp, (alpm_list_fn_free)alpm_depmissing_free);
+		alpm_list_free_inner(lp, (alpm_list_fn_free)alpmepmissing_free);
 		alpm_list_free(lp);
-		lp = alpm_checkdeps(handle, _alpm_db_get_pkgcache(handle->db_local),
+		lp = alpm_checkdeps(handle, _alpmb_get_pkgcache(handle->db_local),
 				trans->remove, NULL, 1);
 	}
 }
@@ -165,15 +165,15 @@ static void remove_notify_needed_optdepends(alpm_handle_t *handle, alpm_list_t *
 {
 	alpm_list_t *i;
 
-	for(i = _alpm_db_get_pkgcache(handle->db_local); i; i = alpm_list_next(i)) {
+	for(i = _alpmb_get_pkgcache(handle->db_local); i; i = alpm_list_next(i)) {
 		alpm_pkg_t *pkg = i->data;
 		alpm_list_t *optdeps = alpm_pkg_get_optdepends(pkg);
 
 		if(optdeps && !alpm_pkg_find(lp, pkg->name)) {
 			alpm_list_t *j;
 			for(j = optdeps; j; j = alpm_list_next(j)) {
-				alpm_depend_t *optdep = j->data;
-				char *optstring = alpm_dep_compute_string(optdep);
+				alpmepend_t *optdep = j->data;
+				char *optstring = alpmep_compute_string(optdep);
 				if(alpm_find_satisfier(lp, optstring)) {
 					alpm_event_optdep_removal_t event = {
 						.type = ALPM_EVENT_OPTDEP_REMOVAL,
@@ -192,7 +192,7 @@ static void remove_notify_needed_optdepends(alpm_handle_t *handle, alpm_list_t *
  * @brief Transaction preparation for remove actions.
  *
  * This functions takes a pointer to a alpm_list_t which will be
- * filled with a list of alpm_depmissing_t* objects representing
+ * filled with a list of alpmepmissing_t* objects representing
  * the packages blocking the transaction.
  *
  * @param handle the context handle
@@ -204,7 +204,7 @@ int _alpm_remove_prepare(alpm_handle_t *handle, alpm_list_t **data)
 {
 	alpm_list_t *lp;
 	alpm_trans_t *trans = handle->trans;
-	alpm_db_t *db = handle->db_local;
+	alpmb_t *db = handle->db_local;
 	alpm_event_t event;
 
 	if((trans->flags & ALPM_TRANS_FLAG_RECURSE)
@@ -221,7 +221,7 @@ int _alpm_remove_prepare(alpm_handle_t *handle, alpm_list_t **data)
 		EVENT(handle, &event);
 
 		_alpm_log(handle, ALPM_LOG_DEBUG, "looking for unsatisfied dependencies\n");
-		lp = alpm_checkdeps(handle, _alpm_db_get_pkgcache(db), trans->remove, NULL, 1);
+		lp = alpm_checkdeps(handle, _alpmb_get_pkgcache(db), trans->remove, NULL, 1);
 		if(lp != NULL) {
 
 			if(trans->flags & ALPM_TRANS_FLAG_CASCADE) {
@@ -237,7 +237,7 @@ int _alpm_remove_prepare(alpm_handle_t *handle, alpm_list_t **data)
 					*data = lp;
 				} else {
 					alpm_list_free_inner(lp,
-							(alpm_list_fn_free)alpm_depmissing_free);
+							(alpm_list_fn_free)alpmepmissing_free);
 					alpm_list_free(lp);
 				}
 				RET_ERR(handle, ALPM_ERR_UNSATISFIED_DEPS, -1);
@@ -496,7 +496,7 @@ static int unlink_file(alpm_handle_t *handle, alpm_pkg_t *oldpkg,
 			/* one last check- does any other package own this file? */
 			alpm_list_t *local, *local_pkgs;
 			int found = 0;
-			local_pkgs = _alpm_db_get_pkgcache(handle->db_local);
+			local_pkgs = _alpmb_get_pkgcache(handle->db_local);
 			for(local = local_pkgs; local && !found; local = local->next) {
 				alpm_pkg_t *local_pkg = local->data;
 				alpm_filelist_t *filelist;
@@ -744,7 +744,7 @@ int _alpm_remove_single_package(alpm_handle_t *handle,
 				pkgname, pkgver);
 	}
 	/* remove the package from the cache */
-	if(_alpm_db_remove_pkgfromcache(handle->db_local, oldpkg) == -1) {
+	if(_alpmb_remove_pkgfromcache(handle->db_local, oldpkg) == -1) {
 		_alpm_log(handle, ALPM_LOG_ERROR, _("could not remove entry '%s' from cache\n"),
 				pkgname);
 	}

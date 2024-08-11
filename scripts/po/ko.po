@@ -213,7 +213,7 @@ msgstr ""
 msgid "Make packages compatible for use with lpm"
 msgstr "Pacman 사용과 호환되는 꾸러미를 만듭니다."
 
-#: scripts/makepkg.sh.in:878 scripts/lpm-db-upgrade.sh.in:41
+#: scripts/makepkg.sh.in:878 scripts/lpmb-upgrade.sh.in:41
 msgid "Usage: %s [options]"
 msgstr "사용법: %s  <옵션>"
 
@@ -401,7 +401,7 @@ msgstr ""
 msgid "If %s is not specified, %s will look for '%s'"
 msgstr "%s를 지정하지 않으면, %s는 %s를 찾습니다"
 
-#: scripts/makepkg.sh.in:933 scripts/lpm-db-upgrade.sh.in:57
+#: scripts/makepkg.sh.in:933 scripts/lpmb-upgrade.sh.in:57
 #: scripts/lpm-key.sh.in:99 scripts/repo-add.sh.in:104
 msgid ""
 "This is free software; see the source for copying conditions.\\nThere is NO "
@@ -502,68 +502,68 @@ msgstr "꾸러미 디렉터리가 준비되었습니다."
 msgid "Finished making: %s"
 msgstr "만들기 완료: %s"
 
-#: scripts/lpm-db-upgrade.sh.in:39
-msgid "Upgrade the local lpm database to a newer format"
+#: scripts/lpmb-upgrade.sh.in:39
+msgid "Upgrade the local lpmatabase to a newer format"
 msgstr "가지고 있는 lpm 데이터베이스를 새로운 형식으로 업그레이드합니다"
 
-#: scripts/lpm-db-upgrade.sh.in:43
+#: scripts/lpmb-upgrade.sh.in:43
 msgid "options:"
 msgstr "옵션:"
 
-#: scripts/lpm-db-upgrade.sh.in:44
+#: scripts/lpmb-upgrade.sh.in:44
 msgid "  -d, --dbpath <path>  set an alternate database location"
 msgstr "  -d, --dbpath <path>  대체 데이터베이스 경로를 설정합니다"
 
-#: scripts/lpm-db-upgrade.sh.in:45
+#: scripts/lpmb-upgrade.sh.in:45
 msgid "  -h, --help           show this help message and exit"
 msgstr "  -h, --help           이 도움말 메시지를 보이고 나갑니다"
 
-#: scripts/lpm-db-upgrade.sh.in:46
+#: scripts/lpmb-upgrade.sh.in:46
 msgid "  -r, --root <path>    set an alternate installation root"
 msgstr "  -r, --root <path>    대체 설치 최상위 경로를 설정합니다"
 
-#: scripts/lpm-db-upgrade.sh.in:47
+#: scripts/lpmb-upgrade.sh.in:47
 msgid "  -V, --version        show version information and exit"
 msgstr "  -V, --version        버전 정보를 보이고 나갑니다"
 
-#: scripts/lpm-db-upgrade.sh.in:48
+#: scripts/lpmb-upgrade.sh.in:48
 msgid "  --config <path>      set an alternate configuration file"
 msgstr "  --config <path>      대체 구성 파일을 설정합니다"
 
-#: scripts/lpm-db-upgrade.sh.in:49
+#: scripts/lpmb-upgrade.sh.in:49
 msgid "  --nocolor            disable colorized output messages"
 msgstr "  --nocolor            출력 메시지의 색 구분 기능을 끕니다"
 
-#: scripts/lpm-db-upgrade.sh.in:122 scripts/repo-add.sh.in:396
+#: scripts/lpmb-upgrade.sh.in:122 scripts/repo-add.sh.in:396
 msgid "%s does not exist or is not a directory."
 msgstr "%s가 존재하지 않거나 디렉터리가 아닙니다."
 
-#: scripts/lpm-db-upgrade.sh.in:126
-msgid "%s is not a lpm database directory."
+#: scripts/lpmb-upgrade.sh.in:126
+msgid "%s is not a lpmatabase directory."
 msgstr "%s는 lpm 데이터베이스 디렉터리가 아닙니다."
 
-#: scripts/lpm-db-upgrade.sh.in:130
+#: scripts/lpmb-upgrade.sh.in:130
 msgid "You must have correct permissions to upgrade the database."
 msgstr "데이터베이스를 업그레이드하려면 권한을 올바르게 고쳐야 합니다."
 
-#: scripts/lpm-db-upgrade.sh.in:140
+#: scripts/lpmb-upgrade.sh.in:140
 msgid "Pacman lock file was found. Cannot run while lpm is running."
 msgstr ""
 "lpm 잠금 파일이 있습니다. lpm이 실행중인 동안에는 실행할 수 없습니다."
 
-#: scripts/lpm-db-upgrade.sh.in:152
+#: scripts/lpmb-upgrade.sh.in:152
 msgid "Pre-3.5 database format detected - upgrading..."
 msgstr "3.5 이전 데이터베이스 형식을 찾았습니다 - 업그레이드 중..."
 
-#: scripts/lpm-db-upgrade.sh.in:159
+#: scripts/lpmb-upgrade.sh.in:159
 msgid "Done."
 msgstr "완료했습니다."
 
-#: scripts/lpm-db-upgrade.sh.in:163
+#: scripts/lpmb-upgrade.sh.in:163
 msgid "Pre-4.2 database format detected - upgrading..."
 msgstr "4.2 이전 데이터베이스 형식을 감지했습니다 - 업그레이드 중..."
 
-#: scripts/lpm-db-upgrade.sh.in:185
+#: scripts/lpmb-upgrade.sh.in:185
 msgid "symlink '%s' points outside lpm root, manual repair required"
 msgstr ""
 "심볼릭 연결 '%s'가 lpm 최상위 디렉터리 바깥을 가리킵니다. 수동 조치 필요"
@@ -1059,7 +1059,7 @@ msgid "Held by process %s"
 msgstr "%s 프로세스가 유지중입니다"
 
 #: scripts/repo-add.sh.in:418
-msgid "Repository file '%s' is not a proper lpm database."
+msgid "Repository file '%s' is not a proper lpmatabase."
 msgstr "'%s' 저장소 파일은 적당한 lpm 데이터베이스가 아닙니다."
 
 #: scripts/repo-add.sh.in:423

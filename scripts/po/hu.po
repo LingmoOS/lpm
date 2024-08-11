@@ -215,7 +215,7 @@ msgstr ""
 msgid "Make packages compatible for use with lpm"
 msgstr "Csomagok kompatibilitássá tétele lpm-nel történő használathoz"
 
-#: scripts/makepkg.sh.in:878 scripts/lpm-db-upgrade.sh.in:41
+#: scripts/makepkg.sh.in:878 scripts/lpmb-upgrade.sh.in:41
 msgid "Usage: %s [options]"
 msgstr "Használat: %s [opciók]"
 
@@ -413,7 +413,7 @@ msgstr "  --noprogressbar  Ne mutasson folyamatsávot a fájlok letöltése köz
 msgid "If %s is not specified, %s will look for '%s'"
 msgstr "Ha %s nincs megadva, %s a '%s'-et fogja keresni"
 
-#: scripts/makepkg.sh.in:933 scripts/lpm-db-upgrade.sh.in:57
+#: scripts/makepkg.sh.in:933 scripts/lpmb-upgrade.sh.in:57
 #: scripts/lpm-key.sh.in:99 scripts/repo-add.sh.in:104
 msgid ""
 "This is free software; see the source for copying conditions.\\nThere is NO "
@@ -516,69 +516,69 @@ msgstr "A csomagkönyvtár kész."
 msgid "Finished making: %s"
 msgstr "Létrehozás befejezve: %s"
 
-#: scripts/lpm-db-upgrade.sh.in:39
-msgid "Upgrade the local lpm database to a newer format"
+#: scripts/lpmb-upgrade.sh.in:39
+msgid "Upgrade the local lpmatabase to a newer format"
 msgstr "A helyi lpm adatbázis frissítése egy újabb formátumra"
 
-#: scripts/lpm-db-upgrade.sh.in:43
+#: scripts/lpmb-upgrade.sh.in:43
 msgid "options:"
 msgstr "opciók:"
 
-#: scripts/lpm-db-upgrade.sh.in:44
+#: scripts/lpmb-upgrade.sh.in:44
 msgid "  -d, --dbpath <path>  set an alternate database location"
 msgstr "  -d, --dbpath <path>  alternatív adatbázishely beállítása"
 
-#: scripts/lpm-db-upgrade.sh.in:45
+#: scripts/lpmb-upgrade.sh.in:45
 msgid "  -h, --help           show this help message and exit"
 msgstr "  -h, --help           megjeleníti ezt a súgót, majd kilép"
 
-#: scripts/lpm-db-upgrade.sh.in:46
+#: scripts/lpmb-upgrade.sh.in:46
 msgid "  -r, --root <path>    set an alternate installation root"
 msgstr "  -r, --root <útvonal> alternatív telepítési gyökérkönyvtár beállítása"
 
-#: scripts/lpm-db-upgrade.sh.in:47
+#: scripts/lpmb-upgrade.sh.in:47
 msgid "  -V, --version        show version information and exit"
 msgstr "  -V, --version        megjeleníti a verzióinformációt, majd kilép"
 
-#: scripts/lpm-db-upgrade.sh.in:48
+#: scripts/lpmb-upgrade.sh.in:48
 msgid "  --config <path>      set an alternate configuration file"
 msgstr "  --config <útvonal>   egy alternatív konfigurációs fájl beállítása"
 
-#: scripts/lpm-db-upgrade.sh.in:49
+#: scripts/lpmb-upgrade.sh.in:49
 msgid "  --nocolor            disable colorized output messages"
 msgstr "  --nocolor            színezett kimeneti üzenetek kikapcsolása"
 
-#: scripts/lpm-db-upgrade.sh.in:122 scripts/repo-add.sh.in:396
+#: scripts/lpmb-upgrade.sh.in:122 scripts/repo-add.sh.in:396
 msgid "%s does not exist or is not a directory."
 msgstr "A %s nem létezik vagy nem egy könyvtár."
 
-#: scripts/lpm-db-upgrade.sh.in:126
-msgid "%s is not a lpm database directory."
+#: scripts/lpmb-upgrade.sh.in:126
+msgid "%s is not a lpmatabase directory."
 msgstr "A %s nem egy lpm adatbáziskönyvtár."
 
-#: scripts/lpm-db-upgrade.sh.in:130
+#: scripts/lpmb-upgrade.sh.in:130
 msgid "You must have correct permissions to upgrade the database."
 msgstr "Megfelelő jogosultságok kellenek az adatbázis frissítéséhez."
 
-#: scripts/lpm-db-upgrade.sh.in:140
+#: scripts/lpmb-upgrade.sh.in:140
 msgid "Pacman lock file was found. Cannot run while lpm is running."
 msgstr ""
 "Pacman zárolófájlt találtam. Ez az eszköz nem futtatható, miközben a lpm "
 "fut."
 
-#: scripts/lpm-db-upgrade.sh.in:152
+#: scripts/lpmb-upgrade.sh.in:152
 msgid "Pre-3.5 database format detected - upgrading..."
 msgstr "3.5 verzió előtti adatbázist észleltem - frissítés..."
 
-#: scripts/lpm-db-upgrade.sh.in:159
+#: scripts/lpmb-upgrade.sh.in:159
 msgid "Done."
 msgstr "Kész."
 
-#: scripts/lpm-db-upgrade.sh.in:163
+#: scripts/lpmb-upgrade.sh.in:163
 msgid "Pre-4.2 database format detected - upgrading..."
 msgstr "4.2-es verzió előtti adatbázis-formátumot találtam - frissítés..."
 
-#: scripts/lpm-db-upgrade.sh.in:185
+#: scripts/lpmb-upgrade.sh.in:185
 msgid "symlink '%s' points outside lpm root, manual repair required"
 msgstr ""
 "a '%s' szimbolikus link a lpm gyökérkönyvtáron kívülre mutat, kézi "
@@ -1092,7 +1092,7 @@ msgid "Held by process %s"
 msgstr "A(z) %s folyamat használja"
 
 #: scripts/repo-add.sh.in:418
-msgid "Repository file '%s' is not a proper lpm database."
+msgid "Repository file '%s' is not a proper lpmatabase."
 msgstr "A(z) '%s' tárolófájl nem egy megfelelő lpm adatbázis."
 
 #: scripts/repo-add.sh.in:423

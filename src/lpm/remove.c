@@ -38,10 +38,10 @@ static int fnmatch_cmp(const void *pattern, const void *string)
 static int remove_target(const char *target)
 {
 	alpm_pkg_t *pkg;
-	alpm_db_t *db_local = alpm_get_localdb(config->handle);
+	alpmb_t *db_local = alpm_get_localdb(config->handle);
 	alpm_list_t *p;
 
-	if((pkg = alpm_db_get_pkg(db_local, target)) != NULL) {
+	if((pkg = alpmb_get_pkg(db_local, target)) != NULL) {
 		if(alpm_remove_pkg(config->handle, pkg) == -1) {
 			alpm_errno_t err = alpm_errno(config->handle);
 			pm_printf(ALPM_LOG_ERROR, "'%s': %s\n", target, alpm_strerror(err));
@@ -52,7 +52,7 @@ static int remove_target(const char *target)
 	}
 
 		/* fallback to group */
-	alpm_group_t *grp = alpm_db_get_group(db_local, target);
+	alpm_group_t *grp = alpmb_get_group(db_local, target);
 	if(grp == NULL) {
 		pm_printf(ALPM_LOG_ERROR, _("target not found: %s\n"), target);
 		return -1;
@@ -114,12 +114,12 @@ int lpm_remove(alpm_list_t *targets)
 		switch(err) {
 			case ALPM_ERR_UNSATISFIED_DEPS:
 				for(i = data; i; i = alpm_list_next(i)) {
-					alpm_depmissing_t *miss = i->data;
-					char *depstring = alpm_dep_compute_string(miss->depend);
+					alpmepmissing_t *miss = i->data;
+					char *depstring = alpmep_compute_string(miss->depend);
 					colon_printf(_("removing %s breaks dependency '%s' required by %s\n"),
 							miss->causingpkg, depstring, miss->target);
 					free(depstring);
-					alpm_depmissing_free(miss);
+					alpmepmissing_free(miss);
 				}
 				break;
 			default:

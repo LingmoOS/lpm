@@ -475,7 +475,7 @@ int _alpm_check_diskspace(alpm_handle_t *handle)
 
 		pkg = targ->data;
 		/* is this package already installed? */
-		local_pkg = _alpm_db_get_pkgfromcache(handle->db_local, pkg->name);
+		local_pkg = _alpmb_get_pkgfromcache(handle->db_local, pkg->name);
 		if(local_pkg) {
 			calculate_removed_size(handle, mount_points, local_pkg);
 		}

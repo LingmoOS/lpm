@@ -488,8 +488,8 @@ msgstr ""
 
 #: src/lpm/conf.c:876
 #, c-format
-msgid "try running lpm-db-upgrade\n"
-msgstr "Prova att köra lpm-db-upgrade\n"
+msgid "try running lpmb-upgrade\n"
+msgstr "Prova att köra lpmb-upgrade\n"
 
 #: src/lpm/conf.c:894
 #, c-format
@@ -543,35 +543,35 @@ msgid "config file %s, line %d: All directives must belong to a section.\n"
 msgstr ""
 "konfigurationsfil %s, rad %d: Alla direktiv måste tillhöra en sektion.\n"
 
-#: src/lpm/database.c:50 src/lpm/files.c:335 src/lpm/query.c:434
+#: src/lpmatabase.c:50 src/lpm/files.c:335 src/lpm/query.c:434
 #: src/lpm/remove.c:85 src/lpm/sync.c:970 src/lpm/upgrade.c:76
 #, c-format
 msgid "no targets specified (use -h for help)\n"
 msgstr "inga mål specifierade (använd -h för hjälp)\n"
 
-#: src/lpm/database.c:59
+#: src/lpmatabase.c:59
 #, c-format
 msgid "no install reason specified (use -h for help)\n"
 msgstr "ingen installationsanledning specifierad (använd -h för hjälp)\n"
 
-#: src/lpm/database.c:73
+#: src/lpmatabase.c:73
 #, c-format
 msgid "could not set install reason for package %s (%s)\n"
 msgstr "kunde inte sätta installationsanledning för paketet %s (%s)\n"
 
-#: src/lpm/database.c:79
+#: src/lpmatabase.c:79
 #, c-format
 msgid "%s: install reason has been set to 'installed as dependency'\n"
 msgstr ""
 "%s: installationsanledning har blivit satt till 'installerad som beroende'\n"
 
-#: src/lpm/database.c:81
+#: src/lpmatabase.c:81
 #, c-format
 msgid "%s: install reason has been set to 'explicitly installed'\n"
 msgstr ""
 "%s: installationsanledning har blivit satt till 'uttryckligt installerad\n"
 
-#: src/lpm/database.c:296
+#: src/lpmatabase.c:296
 #, c-format
 msgid "No database errors have been found!\n"
 msgstr "Inga databasfel har hittats!\n"
@@ -1906,7 +1906,7 @@ msgstr "  -l, --repo-list     Visa en lista över konfigurerade förråd\n"
 #: src/lpm/lpm-conf.c:51
 #, c-format
 msgid "  -h, --help           display this help information\n"
-msgstr "-h, --help visa det här hjälpmeddelandet\n"
+msgstr "-h, --help visa det här hjälpmdelandet\n"
 
 #: src/lpm/lpm-conf.c:52
 #, c-format

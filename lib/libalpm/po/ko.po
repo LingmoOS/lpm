@@ -58,7 +58,7 @@ msgstr "%s 추출 시 경고 발생 (%s)\n"
 msgid "could not extract %s (%s)\n"
 msgstr "%s를 추출할 수 없습니다. (%s)\n"
 
-#: lib/libalpm/add.c:159 lib/libalpm/dload.c:707 lib/libalpm/remove.c:550
+#: lib/libalpm/add.c:159 lib/libalpmload.c:707 lib/libalpm/remove.c:550
 #, c-format
 msgid "could not rename %s to %s (%s)\n"
 msgstr "%s의 이름을 %s로 바꾸지 못했습니다.(%s)\n"
@@ -176,7 +176,7 @@ msgstr "%s 꾸러미에 알 수 없는 설치 이유: %s\n"
 
 #: lib/libalpm/be_local.c:743 lib/libalpm/be_local.c:856
 #: lib/libalpm/be_local.c:996 lib/libalpm/be_local.c:1102
-#: lib/libalpm/diskspace.c:135 lib/libalpm/dload.c:792 lib/libalpm/util.c:273
+#: lib/libalpmiskspace.c:135 lib/libalpmload.c:792 lib/libalpm/util.c:273
 #: lib/libalpm/util.c:289
 #, c-format
 msgid "could not open file %s: %s\n"
@@ -288,158 +288,158 @@ msgstr "알 수 없는 데이터베이스 파일: %s\n"
 msgid "%s: unknown key '%s' in sync database\n"
 msgstr "%s: 알 수 없는 '%s' 키가 동기화 데이터베이스에 있습니다\n"
 
-#: lib/libalpm/db.c:413
+#: lib/libalpmb.c:413
 #, c-format
 msgid "database path is undefined\n"
 msgstr "데이터베이스 경로가 정의되지 않았습니다.\n"
 
-#: lib/libalpm/deps.c:184
+#: lib/libalpmeps.c:184
 #, c-format
 msgid "dependency cycle detected:\n"
 msgstr "순환 의존성이 감지되었습니다:\n"
 
-#: lib/libalpm/deps.c:187
+#: lib/libalpmeps.c:187
 #, c-format
 msgid "%s will be removed after its %s dependency\n"
 msgstr "%s는 의존성 %s보다 뒤에 삭제될 것입니다.\n"
 
-#: lib/libalpm/deps.c:191
+#: lib/libalpmeps.c:191
 #, c-format
 msgid "%s will be installed before its %s dependency\n"
 msgstr "%s는 의존성 %s보다 앞에 설치될 것입니다.\n"
 
-#: lib/libalpm/deps.c:666 lib/libalpm/deps.c:697
+#: lib/libalpmeps.c:666 lib/libalpmeps.c:697
 #, c-format
 msgid "ignoring package %s-%s\n"
 msgstr "%s-%s 꾸러미를 무시함\n"
 
-#: lib/libalpm/deps.c:842
+#: lib/libalpmeps.c:842
 #, c-format
 msgid "cannot resolve \"%s\", a dependency of \"%s\"\n"
 msgstr "\"%2$s\"의 의존성 \"%1$s\"를 해결할 수 없습니다.\n"
 
-#: lib/libalpm/diskspace.c:78
+#: lib/libalpmiskspace.c:78
 #, c-format
 msgid "could not get filesystem information for %s: %s\n"
 msgstr "%s에 대한 파일 시스템 정보를 가져올 수 없습니다: %s\n"
 
-#: lib/libalpm/diskspace.c:108
+#: lib/libalpmiskspace.c:108
 #, c-format
 msgid "could not open file: %s: %s\n"
 msgstr "파일을 열 수 없습니다: %s: %s\n"
 
-#: lib/libalpm/diskspace.c:154 lib/libalpm/diskspace.c:167
+#: lib/libalpmiskspace.c:154 lib/libalpmiskspace.c:167
 #, c-format
 msgid "could not get filesystem information\n"
 msgstr "파일 시스템 정보를 가져올 수 없습니다.\n"
 
-#: lib/libalpm/diskspace.c:254
+#: lib/libalpmiskspace.c:254
 #, c-format
 msgid "could not get file information for %s\n"
 msgstr "%s의 파일 정보를 얻을 수 없습니다\n"
 
-#: lib/libalpm/diskspace.c:268 lib/libalpm/diskspace.c:327
+#: lib/libalpmiskspace.c:268 lib/libalpmiskspace.c:327
 #, c-format
 msgid "could not determine mount point for file %s\n"
 msgstr "파일 %s에 대한 마운트 지점을 확인하지 못했습니다.\n"
 
-#: lib/libalpm/diskspace.c:366
+#: lib/libalpmiskspace.c:366
 #, c-format
 msgid "Partition %s too full: %jd blocks needed, %ju blocks free\n"
 msgstr "파티션 %s이 너무 찼습니다: %jd 블록 필요, %ju 블록 빔\n"
 
-#: lib/libalpm/diskspace.c:391 lib/libalpm/diskspace.c:445
+#: lib/libalpmiskspace.c:391 lib/libalpmiskspace.c:445
 #, c-format
 msgid "could not determine filesystem mount points\n"
 msgstr "파일 시스템 마운트 지점을 확인할 수 없습니다.\n"
 
-#: lib/libalpm/diskspace.c:397
+#: lib/libalpmiskspace.c:397
 #, c-format
 msgid "could not determine cachedir mount point %s\n"
 msgstr "캐시 디렉터리 마운트 지점 %s를 확인할 수 없습니다.\n"
 
-#: lib/libalpm/diskspace.c:450
+#: lib/libalpmiskspace.c:450
 #, c-format
 msgid "could not determine root mount point %s\n"
 msgstr "루트 마운트 지점 %s를 확인할 수 없습니다.\n"
 
-#: lib/libalpm/diskspace.c:498
+#: lib/libalpmiskspace.c:498
 #, c-format
 msgid "Partition %s is mounted read only\n"
 msgstr "파티션 %s가 읽기 전용으로 마운트되었습니다.\n"
 
-#: lib/libalpm/dload.c:107
+#: lib/libalpmload.c:107
 #, c-format
 msgid "failed to create temporary file for download\n"
 msgstr "다운로드를 위한 임시파일을 만드는 데 실패하였습니다.\n"
 
-#: lib/libalpm/dload.c:198
+#: lib/libalpmload.c:198
 #, c-format
 msgid ""
 "too many errors from %s, skipping for the remainder of this transaction\n"
 msgstr "너무 많은 오류, 서버: %s, 이 처리의 나머지를 위해서 건너뜀\n"
 
-#: lib/libalpm/dload.c:215
+#: lib/libalpmload.c:215
 #, c-format
 msgid "fatal error from %s, skipping for the remainder of this transaction\n"
 msgstr "%s에 치명 오류: 이 트랜잭션의 나머지는 건너뜁니다\n"
 
-#: lib/libalpm/dload.c:310
+#: lib/libalpmload.c:310
 #, c-format
 msgid "disk"
 msgstr "디스크"
 
-#: lib/libalpm/dload.c:532 lib/libalpm/dload.c:570 lib/libalpm/dload.c:583
+#: lib/libalpmload.c:532 lib/libalpmload.c:570 lib/libalpmload.c:583
 #, c-format
 msgid "failed retrieving file '%s' from %s : %s\n"
 msgstr "파일 '%s'를 %s에서 가져오는 데 실패 : %s\n"
 
-#: lib/libalpm/dload.c:562
+#: lib/libalpmload.c:562
 #, c-format
 msgid "failed retrieving file '%s' from %s : expected download size exceeded\n"
 msgstr "파일 '%s'를 %s에서 가져오는 데 실패 : 예상 내려받기 크기 초과\n"
 
-#: lib/libalpm/dload.c:685
+#: lib/libalpmload.c:685
 #, c-format
 msgid "%s appears to be truncated: %jd/%jd bytes\n"
 msgstr "%s가 잘린 것 같습니다.: %jd/%jd 바이트\n"
 
-#: lib/libalpm/dload.c:776
+#: lib/libalpmload.c:776
 #, c-format
 msgid "url '%s' is invalid\n"
 msgstr "url '%s'가 잘못되었습니다.\n"
 
-#: lib/libalpm/dload.c:864
+#: lib/libalpmload.c:864
 #, c-format
 msgid "failed to setup a download payload for %s\n"
 msgstr "다운로드 페이로드를 구성하지 못함, 대상: %s\n"
 
-#: lib/libalpm/dload.c:876
+#: lib/libalpmload.c:876
 #, c-format
 msgid "curl returned error %d from transfer\n"
 msgstr "curl이 전송 중 오류 %d을 돌려 줌\n"
 
-#: lib/libalpm/dload.c:900
+#: lib/libalpmload.c:900
 #, c-format
 msgid "curl transfer error: %d\n"
 msgstr "curl 전송 오류: %d\n"
 
-#: lib/libalpm/dload.c:963
+#: lib/libalpmload.c:963
 #, c-format
 msgid "could not chdir to download directory %s\n"
 msgstr "%s 다운로드 디렉터리로 이동할 수 없습니다\n"
 
-#: lib/libalpm/dload.c:968
+#: lib/libalpmload.c:968
 #, c-format
 msgid "switching to sandbox user '%s' failed!\n"
 msgstr ""
 
-#: lib/libalpm/dload.c:1361 lib/libalpm/sync.c:861
+#: lib/libalpmload.c:1361 lib/libalpm/sync.c:861
 #, c-format
 msgid "failed to retrieve some files\n"
 msgstr "일부 파일을 가져오지 못했습니다.\n"
 
-#: lib/libalpm/dload.c:1384
+#: lib/libalpmload.c:1384
 #, c-format
 msgid "download completed successfully but no file in the cache\n"
 msgstr "다운로드를 성공적으로 완료하였지만 캐시에 파일이 없음\n"

@@ -71,10 +71,10 @@ conf.set_quoted('LIB_VERSION', libalpm_version)
 conf.set_quoted('SYSHOOKDIR', join_paths(DATAROOTDIR, 'libalpm/hooks/'))
 conf.set_quoted('CONFFILE', join_paths(SYSCONFDIR, 'lpm.conf'))
 conf.set_quoted('DBPATH', join_paths(LOCALSTATEDIR, 'lib/lpm/'))
-conf.set_quoted('GPGDIR', join_paths(SYSCONFDIR, 'lpm.d/gnupg/'))
+conf.set_quoted('GPGDIR', join_paths(SYSCONFDIR, 'lpm/gnupg/'))
 conf.set_quoted('LOGFILE', join_paths(LOCALSTATEDIR, 'log/lpm.log'))
 conf.set_quoted('CACHEDIR', join_paths(LOCALSTATEDIR, 'cache/lpm/pkg/'))
-conf.set_quoted('HOOKDIR', join_paths(SYSCONFDIR, 'lpm.d/hooks/'))
+conf.set_quoted('HOOKDIR', join_paths(SYSCONFDIR, 'lpm/hooks/'))
 conf.set_quoted('ROOTDIR', ROOTDIR)
 
 libintl = dependency('', required: false)
@@ -327,7 +327,7 @@ libcommon = static_library(
   gnu_symbol_visibility : 'hidden',
   install : false)
 
-alpm_deps = [crypto_provider, libarchive, libcurl, libintl, gpgme]
+alpmeps = [crypto_provider, libarchive, libcurl, libintl, gpgme]
 
 libalpm_a = static_library(
   'alpm_objlib',
@@ -336,14 +336,14 @@ libalpm_a = static_library(
   objects : libcommon.extract_all_objects(recursive: true),
   include_directories : includes,
   gnu_symbol_visibility : 'hidden',
-  dependencies : alpm_deps)
+  dependencies : alpmeps)
 
 libalpm = library(
   'alpm',
   version : libalpm_version,
   objects: libalpm_a.extract_all_objects(recursive: true),
   include_directories : includes,
-  dependencies : alpm_deps,
+  dependencies : alpmeps,
   install : true)
 
 install_headers(

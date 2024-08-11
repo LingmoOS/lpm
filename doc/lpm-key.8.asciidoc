@@ -21,7 +21,7 @@ update the key trust database.
 
 More complex keyring management can be achieved using GnuPG directly combined with
 the '\--homedir' option pointing at the lpm keyring (located in
-+{sysconfdir}/lpm.d/gnupg+ by default).
++{sysconfdir}/lpm/gnupg+ by default).
 
 Invoking lpm-key consists of supplying an operation with any potential
 options and targets to operate on. Depending on the operation, a 'target' may

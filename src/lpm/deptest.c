@@ -27,17 +27,17 @@
 #include "lpm.h"
 #include "conf.h"
 
-int lpm_deptest(alpm_list_t *targets)
+int lpmeptest(alpm_list_t *targets)
 {
 	alpm_list_t *i;
 	alpm_list_t *deps = NULL;
-	alpm_db_t *localdb = alpm_get_localdb(config->handle);
-	alpm_list_t *pkgcache = alpm_db_get_pkgcache(localdb);
+	alpmb_t *localdb = alpm_get_localdb(config->handle);
+	alpm_list_t *pkgcache = alpmb_get_pkgcache(localdb);
 
 	for(i = targets; i; i = alpm_list_next(i)) {
 		char *target = i->data;
 
-		if(!alpm_db_get_pkg(localdb, target) &&
+		if(!alpmb_get_pkg(localdb, target) &&
 				!alpm_find_satisfier(pkgcache, target)) {
 			deps = alpm_list_add(deps, target);
 		}

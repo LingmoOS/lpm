@@ -41,7 +41,7 @@
 static int change_install_reason(alpm_list_t *targets)
 {
 	alpm_list_t *i;
-	alpm_db_t *db_local;
+	alpmb_t *db_local;
 	int ret = 0;
 
 	alpm_pkgreason_t reason;
@@ -68,7 +68,7 @@ static int change_install_reason(alpm_list_t *targets)
 	db_local = alpm_get_localdb(config->handle);
 	for(i = targets; i; i = alpm_list_next(i)) {
 		char *pkgname = i->data;
-		alpm_pkg_t *pkg = alpm_db_get_pkg(db_local, pkgname);
+		alpm_pkg_t *pkg = alpmb_get_pkg(db_local, pkgname);
 		if(!pkg || alpm_pkg_set_reason(pkg, reason)) {
 			pm_printf(ALPM_LOG_ERROR, _("could not set install reason for package %s (%s)\n"),
 							pkgname, alpm_strerror(alpm_errno(config->handle)));
@@ -98,14 +98,14 @@ static int check_db_missing_deps(alpm_list_t *pkglist)
 	/* check dependencies */
 	data = alpm_checkdeps(config->handle, NULL, NULL, pkglist, 0);
 	for(i = data; i; i = alpm_list_next(i)) {
-		alpm_depmissing_t *miss = i->data;
-		char *depstring = alpm_dep_compute_string(miss->depend);
+		alpmepmissing_t *miss = i->data;
+		char *depstring = alpmep_compute_string(miss->depend);
 		pm_printf(ALPM_LOG_ERROR, "missing '%s' dependency for '%s'\n",
 				depstring, miss->target);
 		free(depstring);
 		ret = 1;
 	}
-	alpm_list_free_inner(data, (alpm_list_fn_free)alpm_depmissing_free);
+	alpm_list_free_inner(data, (alpm_list_fn_free)alpmepmissing_free);
 	alpm_list_free(data);
 	return ret;
 }
@@ -244,7 +244,7 @@ static int check_db_local_filelist_conflicts(alpm_list_t *pkglist)
  */
 static int check_db_local(void) {
 	int ret = 0;
-	alpm_db_t *db = NULL;
+	alpmb_t *db = NULL;
 	alpm_list_t *pkglist;
 
 	ret = check_db_local_files();
@@ -253,7 +253,7 @@ static int check_db_local(void) {
 	}
 
 	db = alpm_get_localdb(config->handle);
-	pkglist = alpm_db_get_pkgcache(db);
+	pkglist = alpmb_get_pkgcache(db);
 	ret += check_db_missing_deps(pkglist);
 	ret += check_db_local_package_conflicts(pkglist);
 	ret += check_db_local_filelist_conflicts(pkglist);
@@ -272,7 +272,7 @@ static int check_db_sync(void) {
 
 	dblist = alpm_get_syncdbs(config->handle);
 	for(i = dblist; i; i = alpm_list_next(i)) {
-		pkglist = alpm_db_get_pkgcache(i->data);
+		pkglist = alpmb_get_pkgcache(i->data);
 		syncpkglist = alpm_list_join(syncpkglist, alpm_list_copy(pkglist));
 	}
 	ret = check_db_missing_deps(syncpkglist);
@@ -281,7 +281,7 @@ static int check_db_sync(void) {
 	return ret;
 }
 
-int lpm_database(alpm_list_t *targets)
+int lpmatabase(alpm_list_t *targets)
 {
 	int ret = 0;
 

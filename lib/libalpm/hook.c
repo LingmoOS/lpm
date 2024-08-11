@@ -506,7 +506,7 @@ static alpm_list_t *_alpm_strlist_dedup(alpm_list_t *list)
 
 static int _alpm_hook_run_hook(alpm_handle_t *handle, struct _alpm_hook_t *hook)
 {
-	alpm_list_t *i, *pkgs = _alpm_db_get_pkgcache(handle->db_local);
+	alpm_list_t *i, *pkgs = _alpmb_get_pkgcache(handle->db_local);
 
 	for(i = hook->depends; i; i = i->next) {
 		if(!alpm_find_satisfier(pkgs, i->data)) {

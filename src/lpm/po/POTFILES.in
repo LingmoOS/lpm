@@ -6,8 +6,8 @@
 src/lpm/callback.c
 src/lpm/check.c
 src/lpm/conf.c
-src/lpm/database.c
-src/lpm/deptest.c
+src/lpmatabase.c
+src/lpmeptest.c
 src/lpm/files.c
 #src/lpm/ini.c
 src/lpm/package.c

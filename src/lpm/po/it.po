@@ -496,8 +496,8 @@ msgstr ""
 
 #: src/lpm/conf.c:876
 #, c-format
-msgid "try running lpm-db-upgrade\n"
-msgstr "prova ad avviare lpm-db-upgrade\n"
+msgid "try running lpmb-upgrade\n"
+msgstr "prova ad avviare lpmb-upgrade\n"
 
 #: src/lpm/conf.c:894
 #, c-format
@@ -557,40 +557,40 @@ msgstr ""
 "file di configurazione %s, linea %d: tutte le direttive devono appartenere "
 "ad una sezione.\n"
 
-#: src/lpm/database.c:50 src/lpm/files.c:335 src/lpm/query.c:434
+#: src/lpmatabase.c:50 src/lpm/files.c:335 src/lpm/query.c:434
 #: src/lpm/remove.c:85 src/lpm/sync.c:970 src/lpm/upgrade.c:76
 #, c-format
 msgid "no targets specified (use -h for help)\n"
 msgstr "non è stato specificato nessun pacchetto (usa -h per un aiuto)\n"
 
-#: src/lpm/database.c:59
+#: src/lpmatabase.c:59
 #, c-format
 msgid "no install reason specified (use -h for help)\n"
 msgstr ""
 "non è stato specificato nessun motivo per l'installazione (usa -h per un "
 "aiuto)\n"
 
-#: src/lpm/database.c:73
+#: src/lpmatabase.c:73
 #, c-format
 msgid "could not set install reason for package %s (%s)\n"
 msgstr ""
 "impossibile impostare un motivo per l'installazione del pacchetto %s (%s)\n"
 
-#: src/lpm/database.c:79
+#: src/lpmatabase.c:79
 #, c-format
 msgid "%s: install reason has been set to 'installed as dependency'\n"
 msgstr ""
 "%s: il motivo dell'installazione è stato impostato come 'installato come "
 "dipendenza'\n"
 
-#: src/lpm/database.c:81
+#: src/lpmatabase.c:81
 #, c-format
 msgid "%s: install reason has been set to 'explicitly installed'\n"
 msgstr ""
 "%s: il motivo dell'installazione è stato impostato come 'installato "
 "esplicitamente'\n"
 
-#: src/lpm/database.c:296
+#: src/lpmatabase.c:296
 #, c-format
 msgid "No database errors have been found!\n"
 msgstr "Non sono stati trovati errori nel database!\n"

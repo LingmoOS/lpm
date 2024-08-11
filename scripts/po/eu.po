@@ -204,7 +204,7 @@ msgstr ""
 msgid "Make packages compatible for use with lpm"
 msgstr "Paketeak Pacman erabiltzeko bateragarriak egin"
 
-#: scripts/makepkg.sh.in:878 scripts/lpm-db-upgrade.sh.in:41
+#: scripts/makepkg.sh.in:878 scripts/lpmb-upgrade.sh.in:41
 msgid "Usage: %s [options]"
 msgstr "Erabilera: %s [aukerak]"
 
@@ -403,7 +403,7 @@ msgstr ""
 msgid "If %s is not specified, %s will look for '%s'"
 msgstr "%s zehaztu ez bada, %sek %s bilatuko du"
 
-#: scripts/makepkg.sh.in:933 scripts/lpm-db-upgrade.sh.in:57
+#: scripts/makepkg.sh.in:933 scripts/lpmb-upgrade.sh.in:57
 #: scripts/lpm-key.sh.in:99 scripts/repo-add.sh.in:104
 msgid ""
 "This is free software; see the source for copying conditions.\\nThere is NO "
@@ -502,71 +502,71 @@ msgstr "Pakete direktorioa prest dago."
 msgid "Finished making: %s"
 msgstr "Egiten bukatua: %s"
 
-#: scripts/lpm-db-upgrade.sh.in:39
-msgid "Upgrade the local lpm database to a newer format"
-msgstr "Bertsioberritu lpm datu-base lokala formatu berriago batetara"
+#: scripts/lpmb-upgrade.sh.in:39
+msgid "Upgrade the local lpmatabase to a newer format"
+msgstr "Bertsioberritu lpmatu-base lokala formatu berriago batetara"
 
-#: scripts/lpm-db-upgrade.sh.in:43
+#: scripts/lpmb-upgrade.sh.in:43
 msgid "options:"
 msgstr "aukerak:"
 
-#: scripts/lpm-db-upgrade.sh.in:44
+#: scripts/lpmb-upgrade.sh.in:44
 msgid "  -d, --dbpath <path>  set an alternate database location"
 msgstr "-d, --dbpath <path> ezarri beste datu-base kokapen bat"
 
-#: scripts/lpm-db-upgrade.sh.in:45
+#: scripts/lpmb-upgrade.sh.in:45
 msgid "  -h, --help           show this help message and exit"
 msgstr "-h, --help bistaratu laguntza mezu hau eta irten"
 
-#: scripts/lpm-db-upgrade.sh.in:46
+#: scripts/lpmb-upgrade.sh.in:46
 msgid "  -r, --root <path>    set an alternate installation root"
 msgstr "-r, --root <bidea> ezarri beste instalazio erro bat"
 
-#: scripts/lpm-db-upgrade.sh.in:47
+#: scripts/lpmb-upgrade.sh.in:47
 msgid "  -V, --version        show version information and exit"
 msgstr "-V, --version bistaratu bertsio informazioa eta irten"
 
-#: scripts/lpm-db-upgrade.sh.in:48
+#: scripts/lpmb-upgrade.sh.in:48
 msgid "  --config <path>      set an alternate configuration file"
 msgstr "--config <bidea>  ezarri beste konfigurazio fitxategi bat"
 
-#: scripts/lpm-db-upgrade.sh.in:49
+#: scripts/lpmb-upgrade.sh.in:49
 msgid "  --nocolor            disable colorized output messages"
 msgstr "--nocolor desgaitu koloredun irteera mezuak"
 
-#: scripts/lpm-db-upgrade.sh.in:122 scripts/repo-add.sh.in:396
+#: scripts/lpmb-upgrade.sh.in:122 scripts/repo-add.sh.in:396
 msgid "%s does not exist or is not a directory."
 msgstr "%s ez dago edo ez da direktorio bat."
 
-#: scripts/lpm-db-upgrade.sh.in:126
-msgid "%s is not a lpm database directory."
-msgstr "%s ez da lpm datu-base direktorio bat."
+#: scripts/lpmb-upgrade.sh.in:126
+msgid "%s is not a lpmatabase directory."
+msgstr "%s ez da lpmatu-base direktorio bat."
 
-#: scripts/lpm-db-upgrade.sh.in:130
+#: scripts/lpmb-upgrade.sh.in:130
 msgid "You must have correct permissions to upgrade the database."
 msgstr "Baimen egokiak izan behar dituzu datu-basea eguneratzeko."
 
-#: scripts/lpm-db-upgrade.sh.in:140
+#: scripts/lpmb-upgrade.sh.in:140
 msgid "Pacman lock file was found. Cannot run while lpm is running."
 msgstr ""
 "Pacman blokeo fitxategia aurkitu da. Ezin da hau erabili lpm erabiltzen "
 "dn bitartean."
 
-#: scripts/lpm-db-upgrade.sh.in:152
+#: scripts/lpmb-upgrade.sh.in:152
 msgid "Pre-3.5 database format detected - upgrading..."
 msgstr ""
 "3.5 bertsio aurreko datu-base formatua aurkitu da - bertsio berritzen..."
 
-#: scripts/lpm-db-upgrade.sh.in:159
+#: scripts/lpmb-upgrade.sh.in:159
 msgid "Done."
 msgstr "Egina."
 
-#: scripts/lpm-db-upgrade.sh.in:163
+#: scripts/lpmb-upgrade.sh.in:163
 msgid "Pre-4.2 database format detected - upgrading..."
 msgstr ""
 "4.2 bertsio aurreko datu-base formatua aurkitu da - bertsio berritzen..."
 
-#: scripts/lpm-db-upgrade.sh.in:185
+#: scripts/lpmb-upgrade.sh.in:185
 msgid "symlink '%s' points outside lpm root, manual repair required"
 msgstr ""
 "'%s' esteka sinbolikoak lpm errotik kanpora bideratzen du, eskuzko "
@@ -1081,8 +1081,8 @@ msgid "Held by process %s"
 msgstr "%s prozesuak eutsita"
 
 #: scripts/repo-add.sh.in:418
-msgid "Repository file '%s' is not a proper lpm database."
-msgstr "'%s' biltegi fitxategia ez da behar bezalako lpm datu-base bat."
+msgid "Repository file '%s' is not a proper lpmatabase."
+msgstr "'%s' biltegi fitxategia ez da behar bezalako lpmatu-base bat."
 
 #: scripts/repo-add.sh.in:423
 msgid "Extracting %s to a temporary location..."

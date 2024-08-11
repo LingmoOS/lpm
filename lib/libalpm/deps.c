@@ -35,7 +35,7 @@
 #include "handle.h"
 #include "trans.h"
 
-void SYMEXPORT alpm_dep_free(alpm_depend_t *dep)
+void SYMEXPORT alpmep_free(alpmepend_t *dep)
 {
 	ASSERT(dep != NULL, return);
 	FREE(dep->name);
@@ -44,28 +44,28 @@ void SYMEXPORT alpm_dep_free(alpm_depend_t *dep)
 	FREE(dep);
 }
 
-static alpm_depmissing_t *depmiss_new(const char *target, alpm_depend_t *dep,
+static alpmepmissing_t *depmiss_new(const char *target, alpmepend_t *dep,
 		const char *causingpkg)
 {
-	alpm_depmissing_t *miss;
+	alpmepmissing_t *miss;
 
-	CALLOC(miss, 1, sizeof(alpm_depmissing_t), return NULL);
+	CALLOC(miss, 1, sizeof(alpmepmissing_t), return NULL);
 
 	STRDUP(miss->target, target, goto error);
-	miss->depend = _alpm_dep_dup(dep);
+	miss->depend = _alpmep_dup(dep);
 	STRDUP(miss->causingpkg, causingpkg, goto error);
 
 	return miss;
 
 error:
-	alpm_depmissing_free(miss);
+	alpmepmissing_free(miss);
 	return NULL;
 }
 
-void SYMEXPORT alpm_depmissing_free(alpm_depmissing_t *miss)
+void SYMEXPORT alpmepmissing_free(alpmepmissing_t *miss)
 {
 	ASSERT(miss != NULL, return);
-	alpm_dep_free(miss->depend);
+	alpmep_free(miss->depend);
 	FREE(miss->target);
 	FREE(miss->causingpkg);
 	FREE(miss);
@@ -76,20 +76,20 @@ static int _alpm_pkg_depends_on(alpm_pkg_t *pkg1, alpm_pkg_t *pkg2)
 {
 	alpm_list_t *i;
 	for(i = alpm_pkg_get_depends(pkg1); i; i = i->next) {
-		if(_alpm_depcmp(pkg2, i->data)) {
+		if(_alpmepcmp(pkg2, i->data)) {
 			return 1;
 		}
 	}
 	return 0;
 }
 
-static alpm_pkg_t *find_dep_satisfier(alpm_list_t *pkgs, alpm_depend_t *dep)
+static alpm_pkg_t *find_dep_satisfier(alpm_list_t *pkgs, alpmepend_t *dep)
 {
 	alpm_list_t *i;
 
 	for(i = pkgs; i; i = i->next) {
 		alpm_pkg_t *pkg = i->data;
-		if(_alpm_depcmp(pkg, dep)) {
+		if(_alpmepcmp(pkg, dep)) {
 			return pkg;
 		}
 	}
@@ -107,7 +107,7 @@ static alpm_list_t *dep_graph_init(alpm_handle_t *handle,
 	alpm_list_t *i, *j;
 	alpm_list_t *vertices = NULL;
 	alpm_list_t *localpkgs = alpm_list_diff(
-			alpm_db_get_pkgcache(handle->db_local), targets, _alpm_pkg_cmp);
+			alpmb_get_pkgcache(handle->db_local), targets, _alpm_pkg_cmp);
 
 	if(ignore) {
 		alpm_list_t *oldlocal = localpkgs;
@@ -288,12 +288,12 @@ static int no_dep_version(alpm_handle_t *handle)
 
 alpm_pkg_t SYMEXPORT *alpm_find_satisfier(alpm_list_t *pkgs, const char *depstring)
 {
-	alpm_depend_t *dep = alpm_dep_from_string(depstring);
+	alpmepend_t *dep = alpmep_from_string(depstring);
 	if(!dep) {
 		return NULL;
 	}
 	alpm_pkg_t *pkg = find_dep_satisfier(pkgs, dep);
-	alpm_dep_free(dep);
+	alpmep_free(dep);
 	return pkg;
 }
 
@@ -326,8 +326,8 @@ alpm_list_t SYMEXPORT *alpm_checkdeps(alpm_handle_t *handle,
 				tp->name, tp->version);
 
 		for(j = alpm_pkg_get_depends(tp); j; j = j->next) {
-			alpm_depend_t *depend = j->data;
-			alpm_depmod_t orig_mod = depend->mod;
+			alpmepend_t *depend = j->data;
+			alpmepmod_t orig_mod = depend->mod;
 			if(nodepversion) {
 				depend->mod = ALPM_DEP_MOD_ANY;
 			}
@@ -336,10 +336,10 @@ alpm_list_t SYMEXPORT *alpm_checkdeps(alpm_handle_t *handle,
 			/* 3. we check the dependency ignore list */
 			if(!find_dep_satisfier(upgrade, depend) &&
 					!find_dep_satisfier(dblist, depend) &&
-					!_alpm_depcmp_provides(depend, handle->assumeinstalled)) {
+					!_alpmepcmp_provides(depend, handle->assumeinstalled)) {
 				/* Unsatisfied dependency in the upgrade list */
-				alpm_depmissing_t *miss;
-				char *missdepstring = alpm_dep_compute_string(depend);
+				alpmepmissing_t *miss;
+				char *missdepstring = alpmep_compute_string(depend);
 				_alpm_log(handle, ALPM_LOG_DEBUG, "checkdeps: missing dependency '%s' for package '%s'\n",
 						missdepstring, tp->name);
 				free(missdepstring);
@@ -356,8 +356,8 @@ alpm_list_t SYMEXPORT *alpm_checkdeps(alpm_handle_t *handle,
 		for(i = dblist; i; i = i->next) {
 			alpm_pkg_t *lp = i->data;
 			for(j = alpm_pkg_get_depends(lp); j; j = j->next) {
-				alpm_depend_t *depend = j->data;
-				alpm_depmod_t orig_mod = depend->mod;
+				alpmepend_t *depend = j->data;
+				alpmepmod_t orig_mod = depend->mod;
 				if(nodepversion) {
 					depend->mod = ALPM_DEP_MOD_ANY;
 				}
@@ -369,9 +369,9 @@ alpm_list_t SYMEXPORT *alpm_checkdeps(alpm_handle_t *handle,
 				if(causingpkg &&
 						!find_dep_satisfier(upgrade, depend) &&
 						!find_dep_satisfier(dblist, depend) &&
-						!_alpm_depcmp_provides(depend, handle->assumeinstalled)) {
-					alpm_depmissing_t *miss;
-					char *missdepstring = alpm_dep_compute_string(depend);
+						!_alpmepcmp_provides(depend, handle->assumeinstalled)) {
+					alpmepmissing_t *miss;
+					char *missdepstring = alpmep_compute_string(depend);
 					_alpm_log(handle, ALPM_LOG_DEBUG, "checkdeps: transaction would break '%s' dependency of '%s'\n",
 							missdepstring, lp->name);
 					free(missdepstring);
@@ -389,7 +389,7 @@ alpm_list_t SYMEXPORT *alpm_checkdeps(alpm_handle_t *handle,
 	return baddeps;
 }
 
-static int dep_vercmp(const char *version1, alpm_depmod_t mod,
+static int dep_vercmp(const char *version1, alpmepmod_t mod,
 		const char *version2)
 {
 	int equal = 0;
@@ -410,7 +410,7 @@ static int dep_vercmp(const char *version1, alpm_depmod_t mod,
 	return equal;
 }
 
-int _alpm_depcmp_literal(alpm_pkg_t *pkg, alpm_depend_t *dep)
+int _alpmepcmp_literal(alpm_pkg_t *pkg, alpmepend_t *dep)
 {
 	if(pkg->name_hash != dep->name_hash
 			|| strcmp(pkg->name, dep->name) != 0) {
@@ -425,14 +425,14 @@ int _alpm_depcmp_literal(alpm_pkg_t *pkg, alpm_depend_t *dep)
  * @param provisions provision list
  * @return 1 if provider is found, 0 otherwise
  */
-int _alpm_depcmp_provides(alpm_depend_t *dep, alpm_list_t *provisions)
+int _alpmepcmp_provides(alpmepend_t *dep, alpm_list_t *provisions)
 {
 	int satisfy = 0;
 	alpm_list_t *i;
 
 	/* check provisions, name and version if available */
 	for(i = provisions; i && !satisfy; i = i->next) {
-		alpm_depend_t *provision = i->data;
+		alpmepend_t *provision = i->data;
 
 		if(dep->mod == ALPM_DEP_MOD_ANY) {
 			/* any version will satisfy the requirement */
@@ -449,15 +449,15 @@ int _alpm_depcmp_provides(alpm_depend_t *dep, alpm_list_t *provisions)
 	return satisfy;
 }
 
-int _alpm_depcmp(alpm_pkg_t *pkg, alpm_depend_t *dep)
+int _alpmepcmp(alpm_pkg_t *pkg, alpmepend_t *dep)
 {
-	return _alpm_depcmp_literal(pkg, dep)
-		|| _alpm_depcmp_provides(dep, alpm_pkg_get_provides(pkg));
+	return _alpmepcmp_literal(pkg, dep)
+		|| _alpmepcmp_provides(dep, alpm_pkg_get_provides(pkg));
 }
 
-alpm_depend_t SYMEXPORT *alpm_dep_from_string(const char *depstring)
+alpmepend_t SYMEXPORT *alpmep_from_string(const char *depstring)
 {
-	alpm_depend_t *depend;
+	alpmepend_t *depend;
 	const char *ptr, *version, *desc;
 	size_t deplen;
 
@@ -465,7 +465,7 @@ alpm_depend_t SYMEXPORT *alpm_dep_from_string(const char *depstring)
 		return NULL;
 	}
 
-	CALLOC(depend, 1, sizeof(alpm_depend_t), return NULL);
+	CALLOC(depend, 1, sizeof(alpmepend_t), return NULL);
 
 	/* Note the extra space in ": " to avoid matching the epoch */
 	if((desc = strstr(depstring, ": ")) != NULL) {
@@ -518,14 +518,14 @@ alpm_depend_t SYMEXPORT *alpm_dep_from_string(const char *depstring)
 	return depend;
 
 error:
-	alpm_dep_free(depend);
+	alpmep_free(depend);
 	return NULL;
 }
 
-alpm_depend_t *_alpm_dep_dup(const alpm_depend_t *dep)
+alpmepend_t *_alpmep_dup(const alpmepend_t *dep)
 {
-	alpm_depend_t *newdep;
-	CALLOC(newdep, 1, sizeof(alpm_depend_t), return NULL);
+	alpmepend_t *newdep;
+	CALLOC(newdep, 1, sizeof(alpmepend_t), return NULL);
 
 	STRDUP(newdep->name, dep->name, goto error);
 	STRDUP(newdep->version, dep->version, goto error);
@@ -536,7 +536,7 @@ alpm_depend_t *_alpm_dep_dup(const alpm_depend_t *dep)
 	return newdep;
 
 error:
-	alpm_dep_free(newdep);
+	alpmep_free(newdep);
 	return NULL;
 }
 
@@ -576,7 +576,7 @@ static void _alpm_select_depends(alpm_list_t **from, alpm_list_t **to,
  * @param include_explicit if 0, explicitly installed packages are not included
  * @return 0 on success, -1 on errors
  */
-int _alpm_recursedeps(alpm_db_t *db, alpm_list_t **targs, int include_explicit)
+int _alpm_recursedeps(alpmb_t *db, alpm_list_t **targs, int include_explicit)
 {
 	alpm_list_t *i, *keep, *rem = NULL;
 
@@ -584,7 +584,7 @@ int _alpm_recursedeps(alpm_db_t *db, alpm_list_t **targs, int include_explicit)
 		return -1;
 	}
 
-	keep = alpm_list_copy(_alpm_db_get_pkgcache(db));
+	keep = alpm_list_copy(_alpmb_get_pkgcache(db));
 	for(i = *targs; i; i = i->next) {
 		keep = alpm_list_remove(keep, i->data, _alpm_pkg_cmp, NULL);
 	}
@@ -633,7 +633,7 @@ int _alpm_recursedeps(alpm_db_t *db, alpm_list_t **targs, int include_explicit)
  *        packages.
  * @return the resolved package
  **/
-static alpm_pkg_t *resolvedep(alpm_handle_t *handle, alpm_depend_t *dep,
+static alpm_pkg_t *resolvedep(alpm_handle_t *handle, alpmepend_t *dep,
 		alpm_list_t *dbs, alpm_list_t *excluding, int prompt)
 {
 	alpm_list_t *i, *j;
@@ -645,14 +645,14 @@ static alpm_pkg_t *resolvedep(alpm_handle_t *handle, alpm_depend_t *dep,
 	/* 1. literals */
 	for(i = dbs; i; i = i->next) {
 		alpm_pkg_t *pkg;
-		alpm_db_t *db = i->data;
+		alpmb_t *db = i->data;
 
 		if(!(db->usage & (ALPM_DB_USAGE_INSTALL|ALPM_DB_USAGE_UPGRADE))) {
 			continue;
 		}
 
-		pkg = _alpm_db_get_pkgfromcache(db, dep->name);
-		if(pkg && _alpm_depcmp_literal(pkg, dep)
+		pkg = _alpmb_get_pkgfromcache(db, dep->name);
+		if(pkg && _alpmepcmp_literal(pkg, dep)
 				&& !alpm_pkg_find(excluding, pkg->name)) {
 			if(alpm_pkg_should_ignore(handle, pkg)) {
 				alpm_question_install_ignorepkg_t question = {
@@ -676,14 +676,14 @@ static alpm_pkg_t *resolvedep(alpm_handle_t *handle, alpm_depend_t *dep,
 	}
 	/* 2. satisfiers (skip literals here) */
 	for(i = dbs; i; i = i->next) {
-		alpm_db_t *db = i->data;
+		alpmb_t *db = i->data;
 		if(!(db->usage & (ALPM_DB_USAGE_INSTALL|ALPM_DB_USAGE_UPGRADE))) {
 			continue;
 		}
-		for(j = _alpm_db_get_pkgcache(db); j; j = j->next) {
+		for(j = _alpmb_get_pkgcache(db); j; j = j->next) {
 			alpm_pkg_t *pkg = j->data;
 			if((pkg->name_hash != dep->name_hash || strcmp(pkg->name, dep->name) != 0)
-					&& _alpm_depcmp_provides(dep, alpm_pkg_get_provides(pkg))
+					&& _alpmepcmp_provides(dep, alpm_pkg_get_provides(pkg))
 					&& !alpm_pkg_find(excluding, pkg->name)) {
 				if(alpm_pkg_should_ignore(handle, pkg)) {
 					alpm_question_install_ignorepkg_t question = {
@@ -706,7 +706,7 @@ static alpm_pkg_t *resolvedep(alpm_handle_t *handle, alpm_depend_t *dep,
 						pkg->name, dep->name);
 
 				/* provide is already installed so return early instead of prompting later */
-				if(_alpm_db_get_pkgfromcache(handle->db_local, pkg->name)) {
+				if(_alpmb_get_pkgfromcache(handle->db_local, pkg->name)) {
 					alpm_list_free(providers);
 					return pkg;
 				}
@@ -751,16 +751,16 @@ static alpm_pkg_t *resolvedep(alpm_handle_t *handle, alpm_depend_t *dep,
 alpm_pkg_t SYMEXPORT *alpm_find_dbs_satisfier(alpm_handle_t *handle,
 		alpm_list_t *dbs, const char *depstring)
 {
-	alpm_depend_t *dep;
+	alpmepend_t *dep;
 	alpm_pkg_t *pkg;
 
 	CHECK_HANDLE(handle, return NULL);
 	ASSERT(dbs, RET_ERR(handle, ALPM_ERR_WRONG_ARGS, NULL));
 
-	dep = alpm_dep_from_string(depstring);
+	dep = alpmep_from_string(depstring);
 	ASSERT(dep, return NULL);
 	pkg = resolvedep(handle, dep, dbs, NULL, 1);
-	alpm_dep_free(dep);
+	alpmep_free(dep);
 	return pkg;
 }
 
@@ -813,12 +813,12 @@ int _alpm_resolvedeps(alpm_handle_t *handle, alpm_list_t *localpkgs,
 	targ = NULL;
 
 	for(j = deps; j; j = j->next) {
-		alpm_depmissing_t *miss = j->data;
-		alpm_depend_t *missdep = miss->depend;
+		alpmepmissing_t *miss = j->data;
+		alpmepend_t *missdep = miss->depend;
 		/* check if one of the packages in the [*packages] list already satisfies
 		 * this dependency */
 		if(find_dep_satisfier(*packages, missdep)) {
-			alpm_depmissing_free(miss);
+			alpmepmissing_free(miss);
 			continue;
 		}
 		/* check if one of the packages in the [preferred] list already satisfies
@@ -832,12 +832,12 @@ int _alpm_resolvedeps(alpm_handle_t *handle, alpm_list_t *localpkgs,
 			_alpm_log(handle, ALPM_LOG_DEBUG,
 					"pulling dependency %s (needed by %s)\n",
 					spkg->name, pkg->name);
-			alpm_depmissing_free(miss);
+			alpmepmissing_free(miss);
 		} else if(resolvedep(handle, missdep, (targ = alpm_list_add(NULL, handle->db_local)), rem, 0)) {
-			alpm_depmissing_free(miss);
+			alpmepmissing_free(miss);
 		} else {
 			handle->pm_errno = ALPM_ERR_UNSATISFIED_DEPS;
-			char *missdepstring = alpm_dep_compute_string(missdep);
+			char *missdepstring = alpmep_compute_string(missdep);
 			_alpm_log(handle, ALPM_LOG_WARNING,
 					_("cannot resolve \"%s\", a dependency of \"%s\"\n"),
 					missdepstring, pkg->name);
@@ -862,7 +862,7 @@ int _alpm_resolvedeps(alpm_handle_t *handle, alpm_list_t *localpkgs,
 	return ret;
 }
 
-char SYMEXPORT *alpm_dep_compute_string(const alpm_depend_t *dep)
+char SYMEXPORT *alpmep_compute_string(const alpmepend_t *dep)
 {
 	const char *name, *opr, *ver, *desc_delim, *desc;
 	char *str;

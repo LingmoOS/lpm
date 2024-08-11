@@ -54,8 +54,8 @@ extern "C" {
  * @section see_also See Also
  * \b libalpm_list(3),
  * \b libalpm_cb(3),
- * \b libalpm_databases(3),
- * \b libalpm_depends(3),
+ * \b libalpmatabases(3),
+ * \b libalpmepends(3),
  * \b libalpm_errors(3),
  * \b libalpm_files(3),
  * \b libalpm_groups(3),
@@ -88,7 +88,7 @@ typedef struct _alpm_handle_t alpm_handle_t;
  *
  * To use a database, it must first be registered via \link alpm_register_syncdb \endlink.
  * If the database is already present in dbpath then it will be usable. Otherwise,
- * the database needs to be downloaded using \link alpm_db_update \endlink. Even if the
+ * the database needs to be downloaded using \link alpmb_update \endlink. Even if the
  * source of the database is the local filesystem.
  *
  * After this, the database can be used to query packages and groups. Any packages or groups
@@ -96,9 +96,9 @@ typedef struct _alpm_handle_t alpm_handle_t;
  * the user. They will be freed when the database is unregistered.
  *
  * Databases are automatically unregistered when the \link alpm_handle_t \endlink is released.
- * @ingroup libalpm_databases
+ * @ingroup libalpmatabases
  */
-typedef struct _alpm_db_t alpm_db_t;
+typedef struct _alpmb_t alpmb_t;
 
 
 /** A package.
@@ -186,7 +186,7 @@ typedef struct _alpm_group_t {
 /** Find group members across a list of databases.
  * If a member exists in several databases, only the first database is used.
  * IgnorePkg is also handled.
- * @param dbs the list of alpm_db_t *
+ * @param dbs the list of alpmb_t *
  * @param name the name of the group
  * @return the list of alpm_pkg_t * (caller is responsible for alpm_list_free)
  */
@@ -349,7 +349,7 @@ const char *alpm_strerror(alpm_errno_t err);
  * Creates handle, connects to database and creates lockfile.
  * This must be called before any other functions are called.
  * @param root the root path for all filesystem operations
- * @param dbpath the absolute path to the libalpm database
+ * @param dbpath the absolute path to the libalpmatabase
  * @param err an optional variable to hold any error return codes
  * @return a context handle on success, NULL on error, err will be set if provided
  */
@@ -498,7 +498,7 @@ int alpm_pkg_check_pgp_signature(alpm_pkg_t *pkg, alpm_siglist_t *siglist);
  * @param siglist a pointer to storage for signature results
  * @return 0 if valid, -1 if an error occurred or signature is invalid
  */
-int alpm_db_check_pgp_signature(alpm_db_t *db, alpm_siglist_t *siglist);
+int alpmb_check_pgp_signature(alpmb_t *db, alpm_siglist_t *siglist);
 
 /**
  * Clean up and free a signature result list.
@@ -516,7 +516,7 @@ int alpm_siglist_cleanup(alpm_siglist_t *siglist);
  * @param data_len the length of the returned data
  * @return 0 on success, -1 on failure to properly decode
  */
-int alpm_decode_signature(const char *base64_data,
+int alpmecode_signature(const char *base64_data,
 		unsigned char **data, size_t *data_len);
 
 /**
@@ -536,14 +536,14 @@ int alpm_extract_keyid(alpm_handle_t *handle, const char *identifier,
 /** @} */
 
 
-/** @addtogroup libalpm_depends Dependency
+/** @addtogroup libalpmepends Dependency
  * @brief Functions dealing with libalpm's dependency and conflict
  * information.
  * @{
  */
 
 /** Types of version constraints in dependency specs. */
-typedef enum _alpm_depmod_t {
+typedef enum _alpmepmod_t {
         /** No version constraint */
         ALPM_DEP_MOD_ANY = 1,
         /** Test version equality (package=x.y.z) */
@@ -556,7 +556,7 @@ typedef enum _alpm_depmod_t {
         ALPM_DEP_MOD_GT,
         /** Test for less than some version (package<x.y.z) */
         ALPM_DEP_MOD_LT
-} alpm_depmod_t;
+} alpmepmod_t;
 
 /**
  * File conflict type.
@@ -574,7 +574,7 @@ typedef enum _alpm_fileconflicttype_t {
  *
  * This type is used throughout libalpm, not just for dependencies
  * but also conflicts and providers. */
-typedef struct _alpm_depend_t {
+typedef struct _alpmepend_t {
 	/**  Name of the provider to satisfy this dependency */
 	char *name;
 	/**  Version of the provider to match against (optional) */
@@ -584,19 +584,19 @@ typedef struct _alpm_depend_t {
 	/** A hash of name (used internally to speed up conflict checks) */
 	unsigned long name_hash;
 	/** How the version should match against the provider */
-	alpm_depmod_t mod;
-} alpm_depend_t;
+	alpmepmod_t mod;
+} alpmepend_t;
 
 /** Missing dependency. */
-typedef struct _alpm_depmissing_t {
+typedef struct _alpmepmissing_t {
 	/** Name of the package that has the dependency */
 	char *target;
 	/** The dependency that was wanted */
-	alpm_depend_t *depend;
+	alpmepend_t *depend;
 	/** If the depmissing was caused by a conflict, the name of the package
 	 * that would be installed, causing the satisfying package to be removed */
 	char *causingpkg;
-} alpm_depmissing_t;
+} alpmepmissing_t;
 
 /** A conflict that has occurred between two packages. */
 typedef struct _alpm_conflict_t {
@@ -605,7 +605,7 @@ typedef struct _alpm_conflict_t {
 	/** The second package */
 	alpm_pkg_t *package2;
 	/** The conflict */
-	alpm_depend_t *reason;
+	alpmepend_t *reason;
 } alpm_conflict_t;
 
 /** File conflict.
@@ -631,7 +631,7 @@ typedef struct _alpm_fileconflict_t {
  * @param remove an alpm_list_t* of packages to be removed
  * @param upgrade an alpm_list_t* of packages to be upgraded (remove-then-upgrade)
  * @param reversedeps handles the backward dependencies
- * @return an alpm_list_t* of alpm_depmissing_t pointers.
+ * @return an alpm_list_t* of alpmepmissing_t pointers.
  */
 alpm_list_t *alpm_checkdeps(alpm_handle_t *handle, alpm_list_t *pkglist,
 		alpm_list_t *remove, alpm_list_t *upgrade, int reversedeps);
@@ -652,7 +652,7 @@ alpm_pkg_t *alpm_find_satisfier(alpm_list_t *pkgs, const char *depstring);
  * The dependency can include versions with depmod operators.
  *
  * @param handle the context handle
- * @param dbs an alpm_list_t* of alpm_db_t where the satisfyer will be searched
+ * @param dbs an alpm_list_t* of alpmb_t where the satisfyer will be searched
  * @param depstring package or provision name, versioned or not
  * @return a alpm_pkg_t* satisfying depstring
  */
@@ -672,19 +672,19 @@ alpm_list_t *alpm_checkconflicts(alpm_handle_t *handle, alpm_list_t *pkglist);
  * @param dep a dependency info structure
  * @return a formatted string, e.g. "glibc>=2.12"
  */
-char *alpm_dep_compute_string(const alpm_depend_t *dep);
+char *alpmep_compute_string(const alpmepend_t *dep);
 
 /** Return a newly allocated dependency information parsed from a string
- *\link alpm_dep_free should be used to free the dependency \endlink
+ *\link alpmep_free should be used to free the dependency \endlink
  * @param depstring a formatted string, e.g. "glibc=2.12"
  * @return a dependency info structure
  */
-alpm_depend_t *alpm_dep_from_string(const char *depstring);
+alpmepend_t *alpmep_from_string(const char *depstring);
 
 /** Free a dependency info structure
  * @param dep struct to free
  */
-void alpm_dep_free(alpm_depend_t *dep);
+void alpmep_free(alpmepend_t *dep);
 
 /** Free a fileconflict and its members.
  * @param conflict the fileconflict to free
@@ -694,7 +694,7 @@ void alpm_fileconflict_free(alpm_fileconflict_t *conflict);
 /** Free a depmissing and its members
  * @param miss the depmissing to free
  * */
-void alpm_depmissing_free(alpm_depmissing_t *miss);
+void alpmepmissing_free(alpmepmissing_t *miss);
 
 /**
  * Free a conflict and its members.
@@ -703,7 +703,7 @@ void alpm_depmissing_free(alpm_depmissing_t *miss);
 void alpm_conflict_free(alpm_conflict_t *conflict);
 
 
-/* End of libalpm_depends */
+/* End of libalpmepends */
 /** @} */
 
 
@@ -837,7 +837,7 @@ typedef struct _alpm_event_optdep_removal_t {
 	/** Package with the optdep */
 	alpm_pkg_t *pkg;
 	/** Optdep being removed */
-	alpm_depend_t *optdep;
+	alpmepend_t *optdep;
 } alpm_event_optdep_removal_t;
 
 /** A scriptlet was ran. */
@@ -1023,7 +1023,7 @@ typedef struct _alpm_question_replace_t {
 	/** Package to replace with.*/
 	alpm_pkg_t *newpkg;
 	/** DB of newpkg */
-	alpm_db_t *newdb;
+	alpmb_t *newdb;
 } alpm_question_replace_t;
 
 /** Should a conflicting package be removed? */
@@ -1067,7 +1067,7 @@ typedef struct _alpm_question_select_provider_t {
 	/** List of alpm_pkg_t* as possible providers */
 	alpm_list_t *providers;
 	/** What providers provide for */
-	alpm_depend_t *depend;
+	alpmepend_t *depend;
 } alpm_question_select_provider_t;
 
 /** Should a key be imported? */
@@ -1165,7 +1165,7 @@ typedef void (*alpm_cb_progress)(void *ctx, alpm_progress_t progress, const char
 /** File download events.
  * These events are reported by ALPM via download callback.
  */
-typedef enum _alpm_download_event_type_t {
+typedef enum _alpmownload_event_type_t {
 	/** A download was started */
 	ALPM_DOWNLOAD_INIT,
 	/** A download made progress */
@@ -1174,30 +1174,30 @@ typedef enum _alpm_download_event_type_t {
 	ALPM_DOWNLOAD_RETRY,
 	/** A download completed */
 	ALPM_DOWNLOAD_COMPLETED
-} alpm_download_event_type_t;
+} alpmownload_event_type_t;
 
 /** Context struct for when a download starts. */
-typedef struct _alpm_download_event_init_t {
+typedef struct _alpmownload_event_init_t {
 	/** whether this file is optional and thus the errors could be ignored */
 	int optional;
-} alpm_download_event_init_t;
+} alpmownload_event_init_t;
 
 /** Context struct for when a download progresses. */
-typedef struct _alpm_download_event_progress_t {
+typedef struct _alpmownload_event_progress_t {
 	/** Amount of data downloaded */
 	off_t downloaded;
 	/** Total amount need to be downloaded */
 	off_t total;
-} alpm_download_event_progress_t;
+} alpmownload_event_progress_t;
 
 /** Context struct for when a download retries. */
-typedef struct _alpm_download_event_retry_t {
+typedef struct _alpmownload_event_retry_t {
 	/** If the download will resume or start over */
 	int resume;
-} alpm_download_event_retry_t;
+} alpmownload_event_retry_t;
 
 /** Context struct for when a download completes. */
-typedef struct _alpm_download_event_completed_t {
+typedef struct _alpmownload_event_completed_t {
 	/** Total bytes in file */
 	off_t total;
 	/** download result code:
@@ -1206,16 +1206,16 @@ typedef struct _alpm_download_event_completed_t {
 	 *   -1 - error
 	 */
 	int result;
-} alpm_download_event_completed_t;
+} alpmownload_event_completed_t;
 
 /** Type of download progress callbacks.
  * @param ctx user-provided context
  * @param filename the name of the file being downloaded
  * @param event the event type
- * @param data the event data of type alpm_download_event_*_t
+ * @param data the event data of type alpmownload_event_*_t
  */
 typedef void (*alpm_cb_download)(void *ctx, const char *filename,
-		alpm_download_event_type_t event, void *data);
+		alpmownload_event_type_t event, void *data);
 
 
 /** A callback for downloading files
@@ -1233,7 +1233,7 @@ typedef int (*alpm_cb_fetch)(void *ctx, const char *url, const char *localpath,
 /** @} */
 
 
-/** @addtogroup libalpm_databases Database
+/** @addtogroup libalpmatabases Database
  * @brief Functions to query and manipulate the database of libalpm.
  * @{
  */
@@ -1244,14 +1244,14 @@ typedef int (*alpm_cb_fetch)(void *ctx, const char *url, const char *localpath,
  * libalpm functions.
  * @return a reference to the local database
  */
-alpm_db_t *alpm_get_localdb(alpm_handle_t *handle);
+alpmb_t *alpm_get_localdb(alpm_handle_t *handle);
 
 /** Get the list of sync databases.
- * Returns a list of alpm_db_t structures, one for each registered
+ * Returns a list of alpmb_t structures, one for each registered
  * sync database.
  *
  * @param handle the context handle
- * @return a reference to an internal list of alpm_db_t structures
+ * @return a reference to an internal list of alpmb_t structures
  */
 alpm_list_t *alpm_get_syncdbs(alpm_handle_t *handle);
 
@@ -1262,9 +1262,9 @@ alpm_list_t *alpm_get_syncdbs(alpm_handle_t *handle);
  * @param treename the name of the sync repository
  * @param level what level of signature checking to perform on the
  * database; note that this must be a '.sig' file type verification
- * @return an alpm_db_t* on success (the value), NULL on error
+ * @return an alpmb_t* on success (the value), NULL on error
  */
-alpm_db_t *alpm_register_syncdb(alpm_handle_t *handle, const char *treename,
+alpmb_t *alpm_register_syncdb(alpm_handle_t *handle, const char *treename,
 		int level);
 
 /** Unregister all package databases.
@@ -1281,19 +1281,19 @@ int alpm_unregister_all_syncdbs(alpm_handle_t *handle);
  * @param db pointer to the package database to unregister
  * @return 0 on success, -1 on error (pm_errno is set accordingly)
  */
-int alpm_db_unregister(alpm_db_t *db);
+int alpmb_unregister(alpmb_t *db);
 
 /** Get the handle of a package database.
  * @param db pointer to the package database
  * @return the alpm handle that the package database belongs to
  */
-alpm_handle_t *alpm_db_get_handle(alpm_db_t *db);
+alpm_handle_t *alpmb_get_handle(alpmb_t *db);
 
 /** Get the name of a package database.
  * @param db pointer to the package database
  * @return the name of the package database, NULL on error
  */
-const char *alpm_db_get_name(const alpm_db_t *db);
+const char *alpmb_get_name(const alpmb_t *db);
 
 /** Get the signature verification level for a database.
  * Will return the default verification level if this database is set up
@@ -1301,7 +1301,7 @@ const char *alpm_db_get_name(const alpm_db_t *db);
  * @param db pointer to the package database
  * @return the signature verification level
  */
-int alpm_db_get_siglevel(alpm_db_t *db);
+int alpmb_get_siglevel(alpmb_t *db);
 
 /** Check the validity of a database.
  * This is most useful for sync databases and verifying signature status.
@@ -1309,7 +1309,7 @@ int alpm_db_get_siglevel(alpm_db_t *db);
  * @param db pointer to the package database
  * @return 0 if valid, -1 if invalid (pm_errno is set accordingly)
  */
-int alpm_db_get_valid(alpm_db_t *db);
+int alpmb_get_valid(alpmb_t *db);
 
 /** @name Server accessors
  * @{
@@ -1319,21 +1319,21 @@ int alpm_db_get_valid(alpm_db_t *db);
  * @param db pointer to the database to get the servers from
  * @return a char* list of servers
  */
-alpm_list_t *alpm_db_get_servers(const alpm_db_t *db);
+alpm_list_t *alpmb_get_servers(const alpmb_t *db);
 
 /** Sets the list of servers for the database to use.
  * @param db the database to set the servers. The list will be duped and
  * the original will still need to be freed by the caller.
  * @param servers a char* list of servers.
  */
-int alpm_db_set_servers(alpm_db_t *db, alpm_list_t *servers);
+int alpmb_set_servers(alpmb_t *db, alpm_list_t *servers);
 
 /** Add a download server to a database.
  * @param db database pointer
  * @param url url of the server
  * @return 0 on success, -1 on error (pm_errno is set accordingly)
  */
-int alpm_db_add_server(alpm_db_t *db, const char *url);
+int alpmb_add_server(alpmb_t *db, const char *url);
 
 /** Remove a download server from a database.
  * @param db database pointer
@@ -1341,27 +1341,27 @@ int alpm_db_add_server(alpm_db_t *db, const char *url);
  * @return 0 on success, 1 on server not present,
  * -1 on error (pm_errno is set accordingly)
  */
-int alpm_db_remove_server(alpm_db_t *db, const char *url);
+int alpmb_remove_server(alpmb_t *db, const char *url);
 
 /** Get the list of cache servers assigned to this db.
  * @param db pointer to the database to get the servers from
  * @return a char* list of servers
  */
-alpm_list_t *alpm_db_get_cache_servers(const alpm_db_t *db);
+alpm_list_t *alpmb_get_cache_servers(const alpmb_t *db);
 
 /** Sets the list of cache servers for the database to use.
  * @param db the database to set the servers. The list will be duped and
  * the original will still need to be freed by the caller.
  * @param servers a char* list of servers.
  */
-int alpm_db_set_cache_servers(alpm_db_t *db, alpm_list_t *servers);
+int alpmb_set_cache_servers(alpmb_t *db, alpm_list_t *servers);
 
 /** Add a download cache server to a database.
  * @param db database pointer
  * @param url url of the server
  * @return 0 on success, -1 on error (pm_errno is set accordingly)
  */
-int alpm_db_add_cache_server(alpm_db_t *db, const char *url);
+int alpmb_add_cache_server(alpmb_t *db, const char *url);
 
 /** Remove a download cache server from a database.
  * @param db database pointer
@@ -1369,7 +1369,7 @@ int alpm_db_add_cache_server(alpm_db_t *db, const char *url);
  * @return 0 on success, 1 on server not present,
  * -1 on error (pm_errno is set accordingly)
  */
-int alpm_db_remove_cache_server(alpm_db_t *db, const char *url);
+int alpmb_remove_cache_server(alpmb_t *db, const char *url);
 
 /* End of server accessors */
 /** @} */
@@ -1386,14 +1386,14 @@ int alpm_db_remove_cache_server(alpm_db_t *db, const char *url);
  * Example:
  * @code
  * alpm_list_t *dbs = alpm_get_syncdbs(config->handle);
- * ret = alpm_db_update(config->handle, dbs, force);
+ * ret = alpmb_update(config->handle, dbs, force);
  * if(ret < 0) {
  *     pm_printf(ALPM_LOG_ERROR, _("failed to synchronize all databases (%s)\n"),
  *         alpm_strerror(alpm_errno(config->handle)));
  * }
  * @endcode
  *
- * @note After a successful update, the \link alpm_db_get_pkgcache()
+ * @note After a successful update, the \link alpmb_get_pkgcache()
  * package cache \endlink will be invalidated
  * @param handle the context handle
  * @param dbs list of package databases to update
@@ -1402,7 +1402,7 @@ int alpm_db_remove_cache_server(alpm_db_t *db, const char *url);
  * @return 0 on success, -1 on error (pm_errno is set accordingly),
  * 1 if all databases are up to to date
  */
-int alpm_db_update(alpm_handle_t *handle, alpm_list_t *dbs, int force);
+int alpmb_update(alpm_handle_t *handle, alpm_list_t *dbs, int force);
 
 /** Get a package entry from a package database.
  * Looking up a package is O(1) and will be significantly faster than
@@ -1411,14 +1411,14 @@ int alpm_db_update(alpm_handle_t *handle, alpm_list_t *dbs, int force);
  * @param name of the package
  * @return the package entry on success, NULL on error
  */
-alpm_pkg_t *alpm_db_get_pkg(alpm_db_t *db, const char *name);
+alpm_pkg_t *alpmb_get_pkg(alpmb_t *db, const char *name);
 
 /** Get the package cache of a package database.
  * This is a list of all packages the db contains.
  * @param db pointer to the package database to get the package from
  * @return the list of packages on success, NULL on error
  */
-alpm_list_t *alpm_db_get_pkgcache(alpm_db_t *db);
+alpm_list_t *alpmb_get_pkgcache(alpmb_t *db);
 
 /** Get a group entry from a package database.
  * Looking up a group is O(1) and will be significantly faster than
@@ -1427,13 +1427,13 @@ alpm_list_t *alpm_db_get_pkgcache(alpm_db_t *db);
  * @param name of the group
  * @return the groups entry on success, NULL on error
  */
-alpm_group_t *alpm_db_get_group(alpm_db_t *db, const char *name);
+alpm_group_t *alpmb_get_group(alpmb_t *db, const char *name);
 
 /** Get the group cache of a package database.
  * @param db pointer to the package database to get the group from
  * @return the list of groups on success, NULL on error
  */
-alpm_list_t *alpm_db_get_groupcache(alpm_db_t *db);
+alpm_list_t *alpmb_get_groupcache(alpmb_t *db);
 
 /** Searches a database with regular expressions.
  * @param db pointer to the package database to search in
@@ -1442,11 +1442,11 @@ alpm_list_t *alpm_db_get_groupcache(alpm_db_t *db);
  * regular expressions - must point to an empty (NULL) alpm_list_t *.
  * @return 0 on success, -1 on error (pm_errno is set accordingly)
  */
-int alpm_db_search(alpm_db_t *db, const alpm_list_t *needles,
+int alpmb_search(alpmb_t *db, const alpm_list_t *needles,
 		alpm_list_t **ret);
 
 /** The usage level of a database. */
-typedef enum _alpm_db_usage_t {
+typedef enum _alpmb_usage_t {
        /** Enable refreshes for this database */
        ALPM_DB_USAGE_SYNC = 1,
        /** Enable search for this database */
@@ -1457,7 +1457,7 @@ typedef enum _alpm_db_usage_t {
        ALPM_DB_USAGE_UPGRADE = (1 << 3),
        /** Enable all usage levels */
        ALPM_DB_USAGE_ALL = (1 << 4) - 1,
-} alpm_db_usage_t;
+} alpmb_usage_t;
 
 /** @name Usage accessors
  * @{
@@ -1465,23 +1465,23 @@ typedef enum _alpm_db_usage_t {
 
 /** Sets the usage of a database.
  * @param db pointer to the package database to set the status for
- * @param usage a bitmask of alpm_db_usage_t values
+ * @param usage a bitmask of alpmb_usage_t values
  * @return 0 on success, or -1 on error
  */
-int alpm_db_set_usage(alpm_db_t *db, int usage);
+int alpmb_set_usage(alpmb_t *db, int usage);
 
 /** Gets the usage of a database.
  * @param db pointer to the package database to get the status of
- * @param usage pointer to an alpm_db_usage_t to store db's status
+ * @param usage pointer to an alpmb_usage_t to store db's status
  * @return 0 on success, or -1 on error
  */
-int alpm_db_get_usage(alpm_db_t *db, int *usage);
+int alpmb_get_usage(alpmb_t *db, int *usage);
 
 /* End of usage accessors */
 /** @} */
 
 
-/* End of libalpm_databases */
+/* End of libalpmatabases */
 /** @} */
 
 
@@ -2095,7 +2095,7 @@ int alpm_option_remove_ignoregroup(alpm_handle_t *handle, const char *grp);
 
 /** Gets the list of dependencies that are assumed to be met
  * @param handle the context handle
- * @return a list of alpm_depend_t*
+ * @return a list of alpmepend_t*
  */
 alpm_list_t *alpm_option_get_assumeinstalled(alpm_handle_t *handle);
 
@@ -2104,11 +2104,11 @@ alpm_list_t *alpm_option_get_assumeinstalled(alpm_handle_t *handle);
  * @param dep the dependency to add
  * @return 0 on success, -1 on error (pm_errno is set accordingly)
  */
-int alpm_option_add_assumeinstalled(alpm_handle_t *handle, const alpm_depend_t *dep);
+int alpm_option_add_assumeinstalled(alpm_handle_t *handle, const alpmepend_t *dep);
 
 /** Sets the list of dependencies that are assumed to be met
  * @param handle the context handle
- * @param deps a list of *alpm_depend_t
+ * @param deps a list of *alpmepend_t
  * The list will be duped and the original will still need to be freed by the caller.
  * @return 0 on success, -1 on error (pm_errno is set accordingly)
  */
@@ -2119,7 +2119,7 @@ int alpm_option_set_assumeinstalled(alpm_handle_t *handle, alpm_list_t *deps);
  * @param dep the dep to remove
  * @return 0 on success, -1 on error (pm_errno is set accordingly)
  */
-int alpm_option_remove_assumeinstalled(alpm_handle_t *handle, const alpm_depend_t *dep);
+int alpm_option_remove_assumeinstalled(alpm_handle_t *handle, const alpmepend_t *dep);
 /* End of assunmeinstalled accessors */
 /** @} */
 
@@ -2275,7 +2275,7 @@ int alpm_option_set_disable_dl_timeout(alpm_handle_t *handle, unsigned short dis
 
 
 /** @name Accessors for parallel downloads
- * \link alpm_db_update \endlink, \link alpm_fetch_pkgurl \endlink and
+ * \link alpmb_update \endlink, \link alpm_fetch_pkgurl \endlink and
  * \link alpm_trans_commit \endlink can all download packages in parallel.
  * This setting configures how many packages can be downloaded in parallel,
  *
@@ -2578,45 +2578,45 @@ alpm_list_t *alpm_pkg_get_licenses(alpm_pkg_t *pkg);
  */
 alpm_list_t *alpm_pkg_get_groups(alpm_pkg_t *pkg);
 
-/** Returns the list of package dependencies as alpm_depend_t.
+/** Returns the list of package dependencies as alpmepend_t.
  * @param pkg a pointer to package
- * @return a reference to an internal list of alpm_depend_t structures.
+ * @return a reference to an internal list of alpmepend_t structures.
  */
 alpm_list_t *alpm_pkg_get_depends(alpm_pkg_t *pkg);
 
 /** Returns the list of package optional dependencies.
  * @param pkg a pointer to package
- * @return a reference to an internal list of alpm_depend_t structures.
+ * @return a reference to an internal list of alpmepend_t structures.
  */
 alpm_list_t *alpm_pkg_get_optdepends(alpm_pkg_t *pkg);
 
 /** Returns a list of package check dependencies
  * @param pkg a pointer to package
- * @return a reference to an internal list of alpm_depend_t structures.
+ * @return a reference to an internal list of alpmepend_t structures.
  */
 alpm_list_t *alpm_pkg_get_checkdepends(alpm_pkg_t *pkg);
 
 /** Returns a list of package make dependencies
  * @param pkg a pointer to package
- * @return a reference to an internal list of alpm_depend_t structures.
+ * @return a reference to an internal list of alpmepend_t structures.
  */
 alpm_list_t *alpm_pkg_get_makedepends(alpm_pkg_t *pkg);
 
 /** Returns the list of packages conflicting with pkg.
  * @param pkg a pointer to package
- * @return a reference to an internal list of alpm_depend_t structures.
+ * @return a reference to an internal list of alpmepend_t structures.
  */
 alpm_list_t *alpm_pkg_get_conflicts(alpm_pkg_t *pkg);
 
 /** Returns the list of packages provided by pkg.
  * @param pkg a pointer to package
- * @return a reference to an internal list of alpm_depend_t structures.
+ * @return a reference to an internal list of alpmepend_t structures.
  */
 alpm_list_t *alpm_pkg_get_provides(alpm_pkg_t *pkg);
 
 /** Returns the list of packages to be replaced by pkg.
  * @param pkg a pointer to package
- * @return a reference to an internal list of alpm_depend_t structures.
+ * @return a reference to an internal list of alpmepend_t structures.
  */
 alpm_list_t *alpm_pkg_get_replaces(alpm_pkg_t *pkg);
 
@@ -2636,12 +2636,12 @@ alpm_filelist_t *alpm_pkg_get_files(alpm_pkg_t *pkg);
 alpm_list_t *alpm_pkg_get_backup(alpm_pkg_t *pkg);
 
 /** Returns the database containing pkg.
- * Returns a pointer to the alpm_db_t structure the package is
+ * Returns a pointer to the alpmb_t structure the package is
  * originating from, or NULL if the package was loaded from a file.
  * @param pkg a pointer to package
  * @return a pointer to the DB containing pkg, or NULL.
  */
-alpm_db_t *alpm_pkg_get_db(alpm_pkg_t *pkg);
+alpmb_t *alpm_pkg_get_db(alpm_pkg_t *pkg);
 
 /** Returns the base64 encoded package signature.
  * @param pkg a pointer to package
@@ -2852,7 +2852,7 @@ int alpm_trans_init(alpm_handle_t *handle, int flags);
 /** Prepare a transaction.
  * @param handle the context handle
  * @param data the address of an alpm_list where a list
- * of alpm_depmissing_t objects is dumped (conflicting packages)
+ * of alpmepmissing_t objects is dumped (conflicting packages)
  * @return 0 on success, -1 on error (pm_errno is set accordingly)
  */
 int alpm_trans_prepare(alpm_handle_t *handle, alpm_list_t **data);
@@ -2923,7 +2923,7 @@ int alpm_remove_pkg(alpm_handle_t *handle, alpm_pkg_t *pkg);
  * If the same package appears multiple dbs only the first will be checked
  *
  * This only checks the syncdb for a newer version. It does not access the network at all.
- * See \link alpm_db_update \endlink to update a database.
+ * See \link alpmb_update \endlink to update a database.
  */
 alpm_pkg_t *alpm_sync_get_new_version(alpm_pkg_t *pkg, alpm_list_t *dbs_sync);
 

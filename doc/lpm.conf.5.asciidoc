@@ -35,7 +35,7 @@ NoUpgrade = etc/passwd etc/group etc/shadow
 NoUpgrade = etc/fstab
 
 [core]
-Include = /etc/lpm.d/core
+Include = /etc/lpm/core
 
 [custom]
 Server = file:///home/pkgs
@@ -73,7 +73,7 @@ Options
 *HookDir =* /path/to/hook/dir::
 	Add directories to search for alpm hooks in addition to the system hook
 	directory (+{datarootdir}/libalpm/hooks/+).  The default is
-	+{sysconfdir}/lpm.d/hooks+.  Multiple directories can be specified with
+	+{sysconfdir}/lpm/hooks+.  Multiple directories can be specified with
 	hooks in later directories taking precedence over hooks in earlier
 	directories.  *NOTE*: this is an absolute path, the root path is not
 	automatically prepended.  For more information on the alpm hooks, see
@@ -81,7 +81,7 @@ Options
 
 *GPGDir =* /path/to/gpg/dir::
 	Overrides the default location of the directory containing configuration
-	files for GnuPG. The default is +{sysconfdir}/lpm.d/gnupg/+.
+	files for GnuPG. The default is +{sysconfdir}/lpm/gnupg/+.
 	This directory should contain two files: `pubring.gpg` and `trustdb.gpg`.
 	`pubring.gpg` holds the public keys of all packagers. `trustdb.gpg`
 	contains a so-called trust database, which specifies that the keys are
@@ -235,7 +235,7 @@ contain a file that lists the servers for that repository.
 # use this server first
 Server = ftp://ftp.archlinux.org/$repo/os/$arch
 # next use servers as defined in the pkg_sources.list below
-Include = {sysconfdir}/lpm.d/pkg_sources.list
+Include = {sysconfdir}/lpm/pkg_sources.list
 --------
 
 The order of repositories in the configuration files matters; repositories

@@ -219,25 +219,25 @@ static int parse_descfile(alpm_handle_t *handle, struct archive *a, alpm_pkg_t *
 				/* size in the raw package is uncompressed (installed) size */
 				newpkg->isize = _alpm_strtoofft(ptr);
 			} else if(strcmp(key, "depend") == 0) {
-				alpm_depend_t *dep = alpm_dep_from_string(ptr);
+				alpmepend_t *dep = alpmep_from_string(ptr);
 				newpkg->depends = alpm_list_add(newpkg->depends, dep);
 			} else if(strcmp(key, "optdepend") == 0) {
-				alpm_depend_t *optdep = alpm_dep_from_string(ptr);
+				alpmepend_t *optdep = alpmep_from_string(ptr);
 				newpkg->optdepends = alpm_list_add(newpkg->optdepends, optdep);
 			} else if(strcmp(key, "makedepend") == 0) {
-				alpm_depend_t *makedep = alpm_dep_from_string(ptr);
+				alpmepend_t *makedep = alpmep_from_string(ptr);
 				newpkg->makedepends = alpm_list_add(newpkg->makedepends, makedep);
 			} else if(strcmp(key, "checkdepend") == 0) {
-				alpm_depend_t *checkdep = alpm_dep_from_string(ptr);
+				alpmepend_t *checkdep = alpmep_from_string(ptr);
 				newpkg->checkdepends = alpm_list_add(newpkg->checkdepends, checkdep);
 			} else if(strcmp(key, "conflict") == 0) {
-				alpm_depend_t *conflict = alpm_dep_from_string(ptr);
+				alpmepend_t *conflict = alpmep_from_string(ptr);
 				newpkg->conflicts = alpm_list_add(newpkg->conflicts, conflict);
 			} else if(strcmp(key, "replaces") == 0) {
-				alpm_depend_t *replace = alpm_dep_from_string(ptr);
+				alpmepend_t *replace = alpmep_from_string(ptr);
 				newpkg->replaces = alpm_list_add(newpkg->replaces, replace);
 			} else if(strcmp(key, "provides") == 0) {
-				alpm_depend_t *provide = alpm_dep_from_string(ptr);
+				alpmepend_t *provide = alpmep_from_string(ptr);
 				newpkg->provides = alpm_list_add(newpkg->provides, provide);
 			} else if(strcmp(key, "backup") == 0) {
 				alpm_backup_t *backup;

@@ -209,7 +209,7 @@ static alpm_list_t *_cache_get_xdata(alpm_pkg_t *pkg)
  */
 static void *_cache_changelog_open(alpm_pkg_t *pkg)
 {
-	alpm_db_t *db = alpm_pkg_get_db(pkg);
+	alpmb_t *db = alpm_pkg_get_db(pkg);
 	char *clfile = _alpm_local_db_pkgpath(db, pkg, "changelog");
 	FILE *f = fopen(clfile, "r");
 	free(clfile);
@@ -252,7 +252,7 @@ static struct archive *_cache_mtree_open(alpm_pkg_t *pkg)
 {
 	struct archive *mtree;
 
-	alpm_db_t *db = alpm_pkg_get_db(pkg);
+	alpmb_t *db = alpm_pkg_get_db(pkg);
 	char *mtfile = _alpm_local_db_pkgpath(db, pkg, "mtree");
 
 	if(access(mtfile, F_OK) != 0) {
@@ -367,10 +367,10 @@ static const struct pkg_operations local_pkg_ops = {
 	.force_load = _cache_force_load,
 };
 
-static int checkdbdir(alpm_db_t *db)
+static int checkdbdir(alpmb_t *db)
 {
 	struct stat buf;
-	const char *path = _alpm_db_path(db);
+	const char *path = _alpmb_path(db);
 
 	if(stat(path, &buf) != 0) {
 		_alpm_log(db->handle, ALPM_LOG_DEBUG, "database dir '%s' does not exist, creating it\n",
@@ -408,7 +408,7 @@ static int is_dir(const char *path, struct dirent *entry)
 	return 0;
 }
 
-static int local_db_add_version(alpm_db_t UNUSED *db, const char *dbpath)
+static int local_db_add_version(alpmb_t UNUSED *db, const char *dbpath)
 {
 	char dbverpath[PATH_MAX];
 	FILE *dbverfile;
@@ -427,7 +427,7 @@ static int local_db_add_version(alpm_db_t UNUSED *db, const char *dbpath)
 	return 0;
 }
 
-static int local_db_create(alpm_db_t *db, const char *dbpath)
+static int local_db_create(alpmb_t *db, const char *dbpath)
 {
 	if(mkdir(dbpath, 0755) != 0) {
 		_alpm_log(db->handle, ALPM_LOG_ERROR, _("could not create directory %s: %s\n"),
@@ -441,7 +441,7 @@ static int local_db_create(alpm_db_t *db, const char *dbpath)
 	return 0;
 }
 
-static int local_db_validate(alpm_db_t *db)
+static int local_db_validate(alpmb_t *db)
 {
 	struct dirent *ent = NULL;
 	const char *dbpath;
@@ -458,7 +458,7 @@ static int local_db_validate(alpm_db_t *db)
 		return -1;
 	}
 
-	dbpath = _alpm_db_path(db);
+	dbpath = _alpmb_path(db);
 	if(dbpath == NULL) {
 		RET_ERR(db->handle, ALPM_ERR_DB_OPEN, -1);
 	}
@@ -530,7 +530,7 @@ version_error:
 	return -1;
 }
 
-static int local_db_populate(alpm_db_t *db)
+static int local_db_populate(alpmb_t *db)
 {
 	size_t est_count;
 	size_t count = 0;
@@ -546,9 +546,9 @@ static int local_db_populate(alpm_db_t *db)
 		RET_ERR(db->handle, ALPM_ERR_DB_NOT_FOUND, -1);
 	}
 
-	dbpath = _alpm_db_path(db);
+	dbpath = _alpmb_path(db);
 	if(dbpath == NULL) {
-		/* pm_errno set in _alpm_db_path() */
+		/* pm_errno set in _alpmb_path() */
 		return -1;
 	}
 
@@ -666,14 +666,14 @@ static alpm_pkgreason_t _read_pkgreason(alpm_handle_t *handle, const char *pkgna
 }
 
 /* Note: the return value must be freed by the caller */
-char *_alpm_local_db_pkgpath(alpm_db_t *db, alpm_pkg_t *info,
+char *_alpm_local_db_pkgpath(alpmb_t *db, alpm_pkg_t *info,
 		const char *filename)
 {
 	size_t len;
 	char *pkgpath;
 	const char *dbpath;
 
-	dbpath = _alpm_db_path(db);
+	dbpath = _alpmb_path(db);
 	len = strlen(dbpath) + strlen(info->name) + strlen(info->version) + 3;
 	len += filename ? strlen(filename) : 0;
 	MALLOC(pkgpath, len, RET_ERR(db->handle, ALPM_ERR_MEMORY, NULL));
@@ -707,14 +707,14 @@ char *_alpm_local_db_pkgpath(alpm_db_t *db, alpm_pkg_t *info,
 		if(!feof(fp)) goto error; else break; \
 	} \
 	if(_alpm_strip_newline(line, 0) == 0) break; \
-	f = alpm_list_add(f, alpm_dep_from_string(line)); \
+	f = alpm_list_add(f, alpmep_from_string(line)); \
 } while(1) /* note the while(1) and not (0) */
 
 static int local_db_read(alpm_pkg_t *info, int inforeq)
 {
 	FILE *fp = NULL;
 	char line[1024] = {0};
-	alpm_db_t *db = info->origin_data.db;
+	alpmb_t *db = info->origin_data.db;
 
 	/* bitmask logic here:
 	 * infolevel: 00001111
@@ -930,7 +930,7 @@ error:
 	return -1;
 }
 
-int _alpm_local_db_prepare(alpm_db_t *db, alpm_pkg_t *info)
+int _alpm_local_db_prepare(alpmb_t *db, alpm_pkg_t *info)
 {
 	mode_t oldmask;
 	int retval = 0;
@@ -963,7 +963,7 @@ static void write_deps(FILE *fp, const char *header, alpm_list_t *deplist)
 	fputs(header, fp);
 	fputc('\n', fp);
 	for(lp = deplist; lp; lp = lp->next) {
-		char *depstring = alpm_dep_compute_string(lp->data);
+		char *depstring = alpmep_compute_string(lp->data);
 		fputs(depstring, fp);
 		fputc('\n', fp);
 		free(depstring);
@@ -971,7 +971,7 @@ static void write_deps(FILE *fp, const char *header, alpm_list_t *deplist)
 	fputc('\n', fp);
 }
 
-int _alpm_local_db_write(alpm_db_t *db, alpm_pkg_t *info, int inforeq)
+int _alpm_local_db_write(alpmb_t *db, alpm_pkg_t *info, int inforeq)
 {
 	FILE *fp = NULL;
 	mode_t oldmask;
@@ -1136,7 +1136,7 @@ cleanup:
 	return retval;
 }
 
-int _alpm_local_db_remove(alpm_db_t *db, alpm_pkg_t *info)
+int _alpm_local_db_remove(alpmb_t *db, alpm_pkg_t *info)
 {
 	int ret = 0;
 	DIR *dirp;
@@ -1208,16 +1208,16 @@ int SYMEXPORT alpm_pkg_set_reason(alpm_pkg_t *pkg, alpm_pkgreason_t reason)
 static const struct db_operations local_db_ops = {
 	.validate         = local_db_validate,
 	.populate         = local_db_populate,
-	.unregister       = _alpm_db_unregister,
+	.unregister       = _alpmb_unregister,
 };
 
-alpm_db_t *_alpm_db_register_local(alpm_handle_t *handle)
+alpmb_t *_alpmb_register_local(alpm_handle_t *handle)
 {
-	alpm_db_t *db;
+	alpmb_t *db;
 
 	_alpm_log(handle, ALPM_LOG_DEBUG, "registering local database\n");
 
-	db = _alpm_db_new("local", 1);
+	db = _alpmb_new("local", 1);
 	if(db == NULL) {
 		handle->pm_errno = ALPM_ERR_DB_CREATE;
 		return NULL;
@@ -1228,7 +1228,7 @@ alpm_db_t *_alpm_db_register_local(alpm_handle_t *handle)
 
 	if(local_db_validate(db)) {
 		/* pm_errno set in local_db_validate() */
-		_alpm_db_free(db);
+		_alpmb_free(db);
 		return NULL;
 	}
 

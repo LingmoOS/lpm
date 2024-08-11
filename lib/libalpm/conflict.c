@@ -44,7 +44,7 @@
  * @brief Creates a new conflict.
  */
 static alpm_conflict_t *conflict_new(alpm_pkg_t *pkg1, alpm_pkg_t *pkg2,
-		alpm_depend_t *reason)
+		alpmepend_t *reason)
 {
 	alpm_conflict_t *conflict;
 
@@ -125,14 +125,14 @@ static int conflict_isin(alpm_conflict_t *needle, alpm_list_t *haystack)
  * @return 0 on success, -1 on error
  */
 static int add_conflict(alpm_handle_t *handle, alpm_list_t **baddeps,
-		alpm_pkg_t *pkg1, alpm_pkg_t *pkg2, alpm_depend_t *reason)
+		alpm_pkg_t *pkg1, alpm_pkg_t *pkg2, alpmepend_t *reason)
 {
 	alpm_conflict_t *conflict = conflict_new(pkg1, pkg2, reason);
 	if(!conflict) {
 		return -1;
 	}
 	if(!conflict_isin(conflict, *baddeps)) {
-		char *conflict_str = alpm_dep_compute_string(reason);
+		char *conflict_str = alpmep_compute_string(reason);
 		*baddeps = alpm_list_add(*baddeps, conflict);
 		_alpm_log(handle, ALPM_LOG_DEBUG, "package %s conflicts with %s (by %s)\n",
 				pkg1->name, pkg2->name, conflict_str);
@@ -171,7 +171,7 @@ static void check_conflict(alpm_handle_t *handle,
 		alpm_list_t *j;
 
 		for(j = alpm_pkg_get_conflicts(pkg1); j; j = j->next) {
-			alpm_depend_t *conflict = j->data;
+			alpmepend_t *conflict = j->data;
 			alpm_list_t *k;
 
 			for(k = list2; k; k = k->next) {
@@ -183,7 +183,7 @@ static void check_conflict(alpm_handle_t *handle,
 					continue;
 				}
 
-				if(_alpm_depcmp(pkg2, conflict)) {
+				if(_alpmepcmp(pkg2, conflict)) {
 					if(order >= 0) {
 						add_conflict(handle, baddeps, pkg1, pkg2, conflict);
 					} else {
@@ -216,7 +216,7 @@ alpm_list_t *_alpm_innerconflicts(alpm_handle_t *handle, alpm_list_t *packages)
 /**
  * @brief Returns a list of conflicts between a db and a list of packages.
  */
-alpm_list_t *_alpm_outerconflicts(alpm_db_t *db, alpm_list_t *packages)
+alpm_list_t *_alpm_outerconflicts(alpmb_t *db, alpm_list_t *packages)
 {
 	alpm_list_t *baddeps = NULL;
 
@@ -224,7 +224,7 @@ alpm_list_t *_alpm_outerconflicts(alpm_db_t *db, alpm_list_t *packages)
 		return NULL;
 	}
 
-	alpm_list_t *dblist = alpm_list_diff(_alpm_db_get_pkgcache(db),
+	alpm_list_t *dblist = alpm_list_diff(_alpmb_get_pkgcache(db),
 			packages, _alpm_pkg_cmp);
 
 	/* two checks to be done here for conflicts */
@@ -360,10 +360,10 @@ static int dir_belongsto_pkgs(alpm_handle_t *handle, const char *dirpath,
 	return 1;
 }
 
-static alpm_list_t *alpm_db_find_file_owners(alpm_db_t* db, const char *path)
+static alpm_list_t *alpmb_find_file_owners(alpmb_t* db, const char *path)
 {
 	alpm_list_t *i, *owners = NULL;
-	for(i = alpm_db_get_pkgcache(db); i; i = i->next) {
+	for(i = alpmb_get_pkgcache(db); i; i = i->next) {
 		if(alpm_filelist_contains(alpm_pkg_get_files(i->data), path)) {
 			owners = alpm_list_add(owners, i->data);
 		}
@@ -374,7 +374,7 @@ static alpm_list_t *alpm_db_find_file_owners(alpm_db_t* db, const char *path)
 static alpm_pkg_t *_alpm_find_file_owner(alpm_handle_t *handle, const char *path)
 {
 	alpm_list_t *i;
-	for(i = alpm_db_get_pkgcache(handle->db_local); i; i = i->next) {
+	for(i = alpmb_get_pkgcache(handle->db_local); i; i = i->next) {
 		if(alpm_filelist_contains(alpm_pkg_get_files(i->data), path)) {
 			return i->data;
 		}
@@ -401,7 +401,7 @@ static int _alpm_can_overwrite_file(alpm_handle_t *handle, const char *path, con
  *
  * @return list of file conflicts
  */
-alpm_list_t *_alpm_db_find_fileconflicts(alpm_handle_t *handle,
+alpm_list_t *_alpmb_find_fileconflicts(alpm_handle_t *handle,
 		alpm_list_t *upgrade, alpm_list_t *rem)
 {
 	alpm_list_t *i, *conflicts = NULL;
@@ -477,7 +477,7 @@ alpm_list_t *_alpm_db_find_fileconflicts(alpm_handle_t *handle,
 		/* CHECK 2: check every target against the filesystem */
 		_alpm_log(handle, ALPM_LOG_DEBUG, "searching for filesystem conflicts: %s\n",
 				p1->name);
-		dbpkg = _alpm_db_get_pkgfromcache(handle->db_local, p1->name);
+		dbpkg = _alpmb_get_pkgfromcache(handle->db_local, p1->name);
 
 		/* Do two different checks here. If the package is currently installed,
 		 * then only check files that are new in the new package. If the package
@@ -579,7 +579,7 @@ alpm_list_t *_alpm_db_find_fileconflicts(alpm_handle_t *handle,
 					 * so they can be compared directly */
 					continue;
 				}
-				localp2 = _alpm_db_get_pkgfromcache(handle->db_local, p2->name);
+				localp2 = _alpmb_get_pkgfromcache(handle->db_local, p2->name);
 
 				/* localp2->files will be removed (target conflicts are handled by CHECK 1) */
 				if(localp2 && alpm_filelist_contains(alpm_pkg_get_files(localp2), relative_path)) {
@@ -616,7 +616,7 @@ alpm_list_t *_alpm_db_find_fileconflicts(alpm_handle_t *handle,
 				char *dir = malloc(dir_len);
 				snprintf(dir, dir_len, "%s/", relative_path);
 
-				owners = alpm_db_find_file_owners(handle->db_local, dir);
+				owners = alpmb_find_file_owners(handle->db_local, dir);
 				if(owners) {
 					alpm_list_t *pkgs = NULL, *diff;
 
@@ -643,7 +643,7 @@ alpm_list_t *_alpm_db_find_fileconflicts(alpm_handle_t *handle,
 
 			/* is the file unowned and in the backup list of the new package? */
 			if(!resolved_conflict && _alpm_needbackup(relative_path, p1)) {
-				alpm_list_t *local_pkgs = _alpm_db_get_pkgcache(handle->db_local);
+				alpm_list_t *local_pkgs = _alpmb_get_pkgcache(handle->db_local);
 				int found = 0;
 				for(k = local_pkgs; k && !found; k = k->next) {
 					if(alpm_filelist_contains(alpm_pkg_get_files(k->data), relative_path)) {

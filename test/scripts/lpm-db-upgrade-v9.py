@@ -1,4 +1,4 @@
-self.description = "lpm-db-upgrade DB version 9 (symlink support removal)"
+self.description = "lpmb-upgrade DB version 9 (symlink support removal)"
 
 self.filesystem = [ "mnt_real/subdir/", "mnt -> mnt_real/subdir/", "bar -> ./" ]
 
@@ -9,7 +9,7 @@ fpkg.backup = ["mnt/foo"]
 self.addpkg2db("local", fpkg)
 self.dbver = 8
 
-self.cmd = ["lpm-db-upgrade",
+self.cmd = ["lpmb-upgrade",
         "--root", self.rootdir(),
         "--dbpath", self.dbdir(),
         "--config", self.configfile() ]

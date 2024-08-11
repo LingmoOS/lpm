@@ -462,8 +462,8 @@ msgstr ""
 
 #: src/lpm/conf.c:876
 #, c-format
-msgid "try running lpm-db-upgrade\n"
-msgstr "lpm-db-upgrade निष्पादित करें\n"
+msgid "try running lpmb-upgrade\n"
+msgstr "lpmb-upgrade निष्पादित करें\n"
 
 #: src/lpm/conf.c:894
 #, c-format
@@ -515,33 +515,33 @@ msgstr "विन्यास फाइल %s रीड करना विफ�
 msgid "config file %s, line %d: All directives must belong to a section.\n"
 msgstr "विन्यास फाइल %s, पंक्ति %d: सभी निदेशों का अनुभाग से संबंधित होना आवश्यक।\n"
 
-#: src/lpm/database.c:50 src/lpm/files.c:335 src/lpm/query.c:434
+#: src/lpmatabase.c:50 src/lpm/files.c:335 src/lpm/query.c:434
 #: src/lpm/remove.c:85 src/lpm/sync.c:970 src/lpm/upgrade.c:76
 #, c-format
 msgid "no targets specified (use -h for help)\n"
 msgstr "कोई लक्ष्य निर्दिष्ट नहीं (सहायता हेतु -h उपयोग करें)\n"
 
-#: src/lpm/database.c:59
+#: src/lpmatabase.c:59
 #, c-format
 msgid "no install reason specified (use -h for help)\n"
 msgstr "कोई इंस्टॉल कारण निर्दिष्ट नहीं (सहायता हेतु -h उपयोग करें)\n"
 
-#: src/lpm/database.c:73
+#: src/lpmatabase.c:73
 #, c-format
 msgid "could not set install reason for package %s (%s)\n"
 msgstr "%s पैकेज हेतु इंस्टॉल कारण सेट करना विफल (%s)\n"
 
-#: src/lpm/database.c:79
+#: src/lpmatabase.c:79
 #, c-format
 msgid "%s: install reason has been set to 'installed as dependency'\n"
 msgstr "%s : इंस्टॉल कारण 'आश्रित पैकेज इंस्टॉल' सेट\n"
 
-#: src/lpm/database.c:81
+#: src/lpmatabase.c:81
 #, c-format
 msgid "%s: install reason has been set to 'explicitly installed'\n"
 msgstr "%s: इंस्टॉल कारण 'स्पष्ट इंस्टॉल' सेट\n"
 
-#: src/lpm/database.c:296
+#: src/lpmatabase.c:296
 #, c-format
 msgid "No database errors have been found!\n"
 msgstr "कोई डेटाबेस त्रुटि नहीं!\n"

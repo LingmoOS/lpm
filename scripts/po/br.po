@@ -208,7 +208,7 @@ msgstr ""
 msgid "Make packages compatible for use with lpm"
 msgstr "Lakait ar pakadoù kenglotus evit an implij gant lpm"
 
-#: scripts/makepkg.sh.in:878 scripts/lpm-db-upgrade.sh.in:41
+#: scripts/makepkg.sh.in:878 scripts/lpmb-upgrade.sh.in:41
 msgid "Usage: %s [options]"
 msgstr "Implij : %s [dibarzhioù]"
 
@@ -400,7 +400,7 @@ msgstr ""
 msgid "If %s is not specified, %s will look for '%s'"
 msgstr "Ma n'eo ket erspizet %s e vo klasket gant %s war-lec'h '%s'"
 
-#: scripts/makepkg.sh.in:933 scripts/lpm-db-upgrade.sh.in:57
+#: scripts/makepkg.sh.in:933 scripts/lpmb-upgrade.sh.in:57
 #: scripts/lpm-key.sh.in:99 scripts/repo-add.sh.in:104
 msgid ""
 "This is free software; see the source for copying conditions.\\nThere is NO "
@@ -499,69 +499,69 @@ msgstr "Prest eo ar pakad kavlec'hioù."
 msgid "Finished making: %s"
 msgstr "Echuet eo savadur %s"
 
-#: scripts/lpm-db-upgrade.sh.in:39
-msgid "Upgrade the local lpm database to a newer format"
+#: scripts/lpmb-upgrade.sh.in:39
+msgid "Upgrade the local lpmatabase to a newer format"
 msgstr "Hizivaat ar stlennvon lpm lec'hel evit ur mentrezh nevezoc'h"
 
-#: scripts/lpm-db-upgrade.sh.in:43
+#: scripts/lpmb-upgrade.sh.in:43
 msgid "options:"
 msgstr "dibarzhioù :"
 
-#: scripts/lpm-db-upgrade.sh.in:44
+#: scripts/lpmb-upgrade.sh.in:44
 msgid "  -d, --dbpath <path>  set an alternate database location"
 msgstr "  -d, --dbpath <path>  arventennañ ul lec'hiadur stlennvon all"
 
-#: scripts/lpm-db-upgrade.sh.in:45
+#: scripts/lpmb-upgrade.sh.in:45
 msgid "  -h, --help           show this help message and exit"
 msgstr "-h, --help diskouez ar gemennadenn skoazell-mañ ha kuitaat"
 
-#: scripts/lpm-db-upgrade.sh.in:46
+#: scripts/lpmb-upgrade.sh.in:46
 msgid "  -r, --root <path>    set an alternate installation root"
 msgstr "-r, --root <treug> arventennañ ur gwrizienn staliañ a-eil"
 
-#: scripts/lpm-db-upgrade.sh.in:47
+#: scripts/lpmb-upgrade.sh.in:47
 msgid "  -V, --version        show version information and exit"
 msgstr "  -V, --version Diskouez an titouroù handelv ha kuitaat"
 
-#: scripts/lpm-db-upgrade.sh.in:48
+#: scripts/lpmb-upgrade.sh.in:48
 msgid "  --config <path>      set an alternate configuration file"
 msgstr "--config <treug> arventennañ ur restr kefluniañ a-eil"
 
-#: scripts/lpm-db-upgrade.sh.in:49
+#: scripts/lpmb-upgrade.sh.in:49
 msgid "  --nocolor            disable colorized output messages"
 msgstr "--nocolor Diweredekaat ar c'hemennadennoù ec'hankad livet"
 
-#: scripts/lpm-db-upgrade.sh.in:122 scripts/repo-add.sh.in:396
+#: scripts/lpmb-upgrade.sh.in:122 scripts/repo-add.sh.in:396
 msgid "%s does not exist or is not a directory."
 msgstr "N'eus ket eus %s, pe n'eo ket ur c'havlec'h"
 
-#: scripts/lpm-db-upgrade.sh.in:126
-msgid "%s is not a lpm database directory."
+#: scripts/lpmb-upgrade.sh.in:126
+msgid "%s is not a lpmatabase directory."
 msgstr "%s n'eo ket ur c'havlec'h stlennvon lpm."
 
-#: scripts/lpm-db-upgrade.sh.in:130
+#: scripts/lpmb-upgrade.sh.in:130
 msgid "You must have correct permissions to upgrade the database."
 msgstr "An aotreoù a-zere eo ret deoc'h kaout evit hizivaat ar stlennvon."
 
-#: scripts/lpm-db-upgrade.sh.in:140
+#: scripts/lpmb-upgrade.sh.in:140
 msgid "Pacman lock file was found. Cannot run while lpm is running."
 msgstr ""
 "Kavet eo bet ar restr morailh lpm. N'haller ket lañsañ ket m'emañ lañset "
 "Pacman."
 
-#: scripts/lpm-db-upgrade.sh.in:152
+#: scripts/lpmb-upgrade.sh.in:152
 msgid "Pre-3.5 database format detected - upgrading..."
 msgstr "Dinoet eo bet ur stlennvon gant ur mentrezh rak-3.5 - hizivadenn..."
 
-#: scripts/lpm-db-upgrade.sh.in:159
+#: scripts/lpmb-upgrade.sh.in:159
 msgid "Done."
 msgstr "Graet eo."
 
-#: scripts/lpm-db-upgrade.sh.in:163
+#: scripts/lpmb-upgrade.sh.in:163
 msgid "Pre-4.2 database format detected - upgrading..."
 msgstr "Dinoet eo bet ur stlennvon gant ur mentrezh rak-4.2 - hizivadenn..."
 
-#: scripts/lpm-db-upgrade.sh.in:185
+#: scripts/lpmb-upgrade.sh.in:185
 msgid "symlink '%s' points outside lpm root, manual repair required"
 msgstr ""
 "an ere arouezus %s a za davet ur poent e diavaez gwrizienn lpm, ret eo "
@@ -1065,7 +1065,7 @@ msgid "Held by process %s"
 msgstr "Paouezet gant c'hewerier %s"
 
 #: scripts/repo-add.sh.in:418
-msgid "Repository file '%s' is not a proper lpm database."
+msgid "Repository file '%s' is not a proper lpmatabase."
 msgstr "Ar restr mirlec'h '%s' n'eo ket ur stlennvon lpm reizh."
 
 #: scripts/repo-add.sh.in:423

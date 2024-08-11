@@ -9,7 +9,7 @@ lpm is a utility which manages software packages in Linux. It uses simple
 compressed files as a package format, and maintains a text-based package
 database (more of a hierarchy), just in case some hand tweaking is necessary.
 
-lpm does not strive to "do everything." It will add, remove and upgrade
+lpmoes not strive to "do everything." It will add, remove and upgrade
 packages in the system, and it will allow you to query the package database for
 installed packages, files and owners. It also attempts to handle dependencies
 automatically and can download packages from a remote server.
@@ -60,7 +60,7 @@ configuration files dealing with lpm.
 
 Changelog
 ~~~~~~~~~
-For a good idea of what is going on in lpm development, take a look at the
+For a good idea of what is going on in lpmevelopment, take a look at the
 link:https://github.com/LingmoOS/lpm/lpm[Git summary page] for the
 project.
 
@@ -214,7 +214,7 @@ Development
 
 Mailing List
 ~~~~~~~~~~~~
-There is a mailing list devoted to lpm development, hosted by Lingmo OS.
+There is a mailing list devoted to lpmevelopment, hosted by Lingmo OS.
 link:https://lists.archlinux.org/listinfo/pacman-dev/[Subscribe] or
 link:https://lists.archlinux.org/pipermail/pacman-dev/[view the archives].
 

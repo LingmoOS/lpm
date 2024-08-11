@@ -68,7 +68,7 @@ static char *get_sync_dir(alpm_handle_t *handle)
 	return syncpath;
 }
 
-static int sync_db_validate(alpm_db_t *db)
+static int sync_db_validate(alpmb_t *db)
 {
 	int siglevel;
 	const char *dbpath;
@@ -81,9 +81,9 @@ static int sync_db_validate(alpm_db_t *db)
 		return -1;
 	}
 
-	dbpath = _alpm_db_path(db);
+	dbpath = _alpmb_path(db);
 	if(!dbpath) {
-		/* pm_errno set in _alpm_db_path() */
+		/* pm_errno set in _alpmb_path() */
 		return -1;
 	}
 
@@ -103,7 +103,7 @@ static int sync_db_validate(alpm_db_t *db)
 
 	/* this takes into account the default verification level if UNKNOWN
 	 * was assigned to this db */
-	siglevel = alpm_db_get_siglevel(db);
+	siglevel = alpmb_get_siglevel(db);
 
 	if(siglevel & ALPM_SIG_DATABASE) {
 		int retry, ret;
@@ -136,7 +136,7 @@ valid:
 	return 0;
 }
 
-int SYMEXPORT alpm_db_update(alpm_handle_t *handle, alpm_list_t *dbs, int force) {
+int SYMEXPORT alpmb_update(alpm_handle_t *handle, alpm_list_t *dbs, int force) {
 	char *syncpath;
 	char *temporary_syncpath;
 	const char *dbext = handle->dbext;
@@ -165,7 +165,7 @@ int SYMEXPORT alpm_db_update(alpm_handle_t *handle, alpm_list_t *dbs, int force)
 	}
 
 	for(i = dbs; i; i = i->next) {
-		alpm_db_t *db = i->data;
+		alpmb_t *db = i->data;
 		int dbforce = force;
 		struct dload_payload *payload = NULL;
 		size_t len;
@@ -183,7 +183,7 @@ int SYMEXPORT alpm_db_update(alpm_handle_t *handle, alpm_list_t *dbs, int force)
 			dbforce = 1;
 		}
 
-		siglevel = alpm_db_get_siglevel(db);
+		siglevel = alpmb_get_siglevel(db);
 
 		CALLOC(payload, 1, sizeof(*payload), GOTO_ERR(handle, ALPM_ERR_MEMORY, cleanup));
 		payload->servers = db->servers;
@@ -194,12 +194,12 @@ int SYMEXPORT alpm_db_update(alpm_handle_t *handle, alpm_list_t *dbs, int force)
 		snprintf(payload->filepath, len, "%s%s", db->treename, dbext);
 
 		STRDUP(payload->remote_name, payload->filepath,
-			_alpm_dload_payload_reset(payload); FREE(payload);
+			_alpmload_payload_reset(payload); FREE(payload);
 			GOTO_ERR(handle, ALPM_ERR_MEMORY, cleanup));
 		payload->destfile_name = _alpm_get_fullpath(temporary_syncpath, payload->remote_name, "");
 		payload->tempfile_name = _alpm_get_fullpath(temporary_syncpath, payload->remote_name, ".part");
 		if(!payload->destfile_name || !payload->tempfile_name) {
-			_alpm_dload_payload_reset(payload);
+			_alpmload_payload_reset(payload);
 			FREE(payload);
 			GOTO_ERR(handle, ALPM_ERR_MEMORY, cleanup);
 		}
@@ -220,7 +220,7 @@ int SYMEXPORT alpm_db_update(alpm_handle_t *handle, alpm_list_t *dbs, int force)
 
 	event.type = ALPM_EVENT_DB_RETRIEVE_START;
 	EVENT(handle, &event);
-	ret = _alpm_download(handle, payloads, syncpath, temporary_syncpath);
+	ret = _alpmownload(handle, payloads, syncpath, temporary_syncpath);
 	if(ret < 0) {
 		event.type = ALPM_EVENT_DB_RETRIEVE_FAILED;
 		EVENT(handle, &event);
@@ -230,13 +230,13 @@ int SYMEXPORT alpm_db_update(alpm_handle_t *handle, alpm_list_t *dbs, int force)
 	EVENT(handle, &event);
 
 	for(i = dbs; i; i = i->next) {
-		alpm_db_t *db = i->data;
+		alpmb_t *db = i->data;
 		if(!(db->usage & ALPM_DB_USAGE_SYNC)) {
 			continue;
 		}
 
 		/* Cache needs to be rebuilt */
-		_alpm_db_free_pkgcache(db);
+		_alpmb_free_pkgcache(db);
 
 		/* clear all status flags regarding validity/existence */
 		db->status &= ~DB_STATUS_VALID;
@@ -265,7 +265,7 @@ cleanup:
 	}
 
 	if(payloads) {
-		alpm_list_free_inner(payloads, (alpm_list_fn_free)_alpm_dload_payload_reset);
+		alpm_list_free_inner(payloads, (alpm_list_fn_free)_alpmload_payload_reset);
 		FREELIST(payloads);
 	}
 	_alpm_remove_temporary_download_dir(temporary_syncpath);
@@ -276,7 +276,7 @@ cleanup:
 }
 
 /* Forward decl so I don't reorganize the whole file right now */
-static int sync_db_read(alpm_db_t *db, struct archive *archive,
+static int sync_db_read(alpmb_t *db, struct archive *archive,
 		struct archive_entry *entry, alpm_pkg_t **likely_pkg);
 
 static int _sync_get_validation(alpm_pkg_t *pkg)
@@ -318,7 +318,7 @@ static const struct pkg_operations *get_sync_pkg_ops(void)
 	return &sync_pkg_ops;
 }
 
-static alpm_pkg_t *load_pkg_for_entry(alpm_db_t *db, const char *entryname,
+static alpm_pkg_t *load_pkg_for_entry(alpmb_t *db, const char *entryname,
 		const char **entry_filename, alpm_pkg_t *likely_pkg)
 {
 	char *pkgname = NULL, *pkgver = NULL;
@@ -417,7 +417,7 @@ static size_t estimate_package_count(struct stat *st, struct archive *archive)
 	return (size_t)((st->st_size / per_package) + 1);
 }
 
-static int sync_db_populate(alpm_db_t *db)
+static int sync_db_populate(alpmb_t *db)
 {
 	const char *dbpath;
 	size_t est_count, count;
@@ -435,9 +435,9 @@ static int sync_db_populate(alpm_db_t *db)
 	if(db->status & DB_STATUS_MISSING) {
 		RET_ERR(db->handle, ALPM_ERR_DB_NOT_FOUND, -1);
 	}
-	dbpath = _alpm_db_path(db);
+	dbpath = _alpmb_path(db);
 	if(!dbpath) {
-		/* pm_errno set in _alpm_db_path() */
+		/* pm_errno set in _alpmb_path() */
 		return -1;
 	}
 
@@ -478,14 +478,14 @@ static int sync_db_populate(alpm_db_t *db)
 	if(ret == -1) {
 		db->status &= ~DB_STATUS_VALID;
 		db->status |= DB_STATUS_INVALID;
-		_alpm_db_free_pkgcache(db);
+		_alpmb_free_pkgcache(db);
 		GOTO_ERR(db->handle, ALPM_ERR_DB_INVALID, cleanup);
 	}
 	/* reading the db file failed */
 	if(archive_ret != ARCHIVE_EOF) {
 		_alpm_log(db->handle, ALPM_LOG_ERROR, _("could not read db '%s' (%s)\n"),
 				db->treename, archive_error_string(archive));
-		_alpm_db_free_pkgcache(db);
+		_alpmb_free_pkgcache(db);
 		ret = -1;
 		GOTO_ERR(db->handle, ALPM_ERR_LIBARCHIVE, cleanup);
 	}
@@ -509,7 +509,7 @@ cleanup:
 
 /* This function validates %FILENAME%. filename must be between 3 and
  * PATH_MAX characters and cannot be contain a path */
-static int _alpm_validate_filename(alpm_db_t *db, const char *pkgname,
+static int _alpm_validate_filename(alpmb_t *db, const char *pkgname,
 		const char *filename)
 {
 	size_t len = strlen(filename);
@@ -556,10 +556,10 @@ static int _alpm_validate_filename(alpm_db_t *db, const char *pkgname,
 #define READ_AND_SPLITDEP(f) do { \
 	if(_alpm_archive_fgets(archive, &buf) != ARCHIVE_OK) goto error; \
 	if(_alpm_strip_newline(buf.line, buf.real_line_size) == 0) break; \
-	f = alpm_list_add(f, alpm_dep_from_string(line)); \
+	f = alpm_list_add(f, alpmep_from_string(line)); \
 } while(1) /* note the while(1) and not (0) */
 
-static int sync_db_read(alpm_db_t *db, struct archive *archive,
+static int sync_db_read(alpmb_t *db, struct archive *archive,
 		struct archive_entry *entry, alpm_pkg_t **likely_pkg)
 {
 	const char *entryname, *filename;
@@ -734,13 +734,13 @@ error:
 struct db_operations sync_db_ops = {
 	.validate         = sync_db_validate,
 	.populate         = sync_db_populate,
-	.unregister       = _alpm_db_unregister,
+	.unregister       = _alpmb_unregister,
 };
 
-alpm_db_t *_alpm_db_register_sync(alpm_handle_t *handle, const char *treename,
+alpmb_t *_alpmb_register_sync(alpm_handle_t *handle, const char *treename,
 		int level)
 {
-	alpm_db_t *db;
+	alpmb_t *db;
 
 	_alpm_log(handle, ALPM_LOG_DEBUG, "registering sync database '%s'\n", treename);
 
@@ -750,7 +750,7 @@ alpm_db_t *_alpm_db_register_sync(alpm_handle_t *handle, const char *treename,
 	}
 #endif
 
-	db = _alpm_db_new(treename, 0);
+	db = _alpmb_new(treename, 0);
 	if(db == NULL) {
 		RET_ERR(handle, ALPM_ERR_DB_CREATE, NULL);
 	}

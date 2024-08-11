@@ -202,7 +202,7 @@ verify_repo_extension() {
 	exit 1
 }
 
-# write an entry to the lpm database
+# write an entry to the lpmatabase
 #   arg1 - path to package
 db_write_entry() {
 	# blank out all variables
@@ -415,7 +415,7 @@ prepare_repo_db() {
 			if ! bsdtar -tqf "$dbfile" '*/desc' >/dev/null 2>&1; then
 				# check empty case
 				if [[ -n $(bsdtar -tqf "$dbfile" '*' 2>/dev/null) ]]; then
-					error "$(gettext "Repository file '%s' is not a proper lpm database.")" "$dbfile"
+					error "$(gettext "Repository file '%s' is not a proper lpmatabase.")" "$dbfile"
 					exit 1
 				fi
 			fi

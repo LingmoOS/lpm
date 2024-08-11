@@ -542,7 +542,7 @@ VERSION         DESCRIPTION
                 the source tarball (FS#43655)
               - A number of typos and translation errors have been fixed
                 (FS#43257, FS#43280, FS#43279, FS#43617, FS#43739)
-              - set sane umask in lpm-db-upgrade (FS#43200) and make it
+              - set sane umask in lpmb-upgrade (FS#43200) and make it
                 more verbose
               - Use correct permissions when creating the log file
               - Fix memory management for file list storage
@@ -566,7 +566,7 @@ VERSION         DESCRIPTION
                   (FS#43286)
 4.2.0         - symlinks to directories on the filesystem are no longer
                 treated as directories
-              - lpm-db-upgrade - fix local database for files installed
+              - lpmb-upgrade - fix local database for files installed
                 into directory symlinks
               - added --assume-installed option to help upgrades where not all
                 installed packages have been rebuilt
@@ -868,7 +868,7 @@ VERSION         DESCRIPTION
                 - handle spaces with filenames in noextract (FS#25100)
                 - allow epoch-versioned optdepends
               - lpm-key: new keyring management tool for signed data
-              - pacsort: new utility, sort version numbers as lpm does
+              - pacsort: new utility, sort version numbers as lpmoes
               - pactree: support sync databases with -s option
               - pkgdelta: add a manpage
               - repo-add:
@@ -932,7 +932,7 @@ VERSION         DESCRIPTION
 3.5.0         - sync DBs read directly from the database tarball
                 (FS#8586, FS#20233)
               - local DB "depends" file has been merged into the "desc" file
-                - lpm-db-upgrade script provided to update the local
+                - lpmb-upgrade script provided to update the local
                   database format
               - sync database extension is .db (without compression suffix)
                 - requires repo-add from lpm-3.4+
