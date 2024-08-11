@@ -1,7 +1,7 @@
 libmakepkg.pc
 makepkg
 makepkg-template
-lpmb-upgrade
+lpm-db-upgrade
 lpm-key
 repo-add
 repo-elephant

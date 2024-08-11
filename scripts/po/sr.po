@@ -207,7 +207,7 @@ msgstr "Део групе пакета је већ изграђен (употр�
 msgid "Make packages compatible for use with lpm"
 msgstr "Ствара пакете сагласне са пакменом"
 
-#: scripts/makepkg.sh.in:878 scripts/lpmb-upgrade.sh.in:41
+#: scripts/makepkg.sh.in:878 scripts/lpm-db-upgrade.sh.in:41
 msgid "Usage: %s [options]"
 msgstr "Употреба: %s [опције]"
 
@@ -396,7 +396,7 @@ msgstr "  --noprogressbar  Не приказује траку напретка �
 msgid "If %s is not specified, %s will look for '%s'"
 msgstr "Уколико %s није одређено, %s ће тражити „%s“"
 
-#: scripts/makepkg.sh.in:933 scripts/lpmb-upgrade.sh.in:57
+#: scripts/makepkg.sh.in:933 scripts/lpm-db-upgrade.sh.in:57
 #: scripts/lpm-key.sh.in:99 scripts/repo-add.sh.in:104
 msgid ""
 "This is free software; see the source for copying conditions.\\nThere is NO "
@@ -496,69 +496,69 @@ msgstr "Фасцикла пакета је спремна."
 msgid "Finished making: %s"
 msgstr "Заврших градњу: %s"
 
-#: scripts/lpmb-upgrade.sh.in:39
-msgid "Upgrade the local lpmatabase to a newer format"
+#: scripts/lpm-db-upgrade.sh.in:39
+msgid "Upgrade the local lpm database to a newer format"
 msgstr "Надоградња локалне пакменове базе на новији формат"
 
-#: scripts/lpmb-upgrade.sh.in:43
+#: scripts/lpm-db-upgrade.sh.in:43
 msgid "options:"
 msgstr "опције:"
 
-#: scripts/lpmb-upgrade.sh.in:44
+#: scripts/lpm-db-upgrade.sh.in:44
 msgid "  -d, --dbpath <path>  set an alternate database location"
 msgstr "  -d, --dbpath <путања>  поставља алтернативну локацију базе"
 
-#: scripts/lpmb-upgrade.sh.in:45
+#: scripts/lpm-db-upgrade.sh.in:45
 msgid "  -h, --help           show this help message and exit"
 msgstr "  --help, -h            Приказује ову поруку помоћи"
 
-#: scripts/lpmb-upgrade.sh.in:46
+#: scripts/lpm-db-upgrade.sh.in:46
 msgid "  -r, --root <path>    set an alternate installation root"
 msgstr "  -r, --root <путања>    поставља алтернативни корен инсталације"
 
-#: scripts/lpmb-upgrade.sh.in:47
+#: scripts/lpm-db-upgrade.sh.in:47
 msgid "  -V, --version        show version information and exit"
 msgstr "  --version             Подаци о верзији"
 
-#: scripts/lpmb-upgrade.sh.in:48
+#: scripts/lpm-db-upgrade.sh.in:48
 msgid "  --config <path>      set an alternate configuration file"
 msgstr "  --config <путања>  поставља алтернативни фајл поставки"
 
-#: scripts/lpmb-upgrade.sh.in:49
+#: scripts/lpm-db-upgrade.sh.in:49
 msgid "  --nocolor            disable colorized output messages"
 msgstr "  --nocolor            bez obojenih izlaznih poruka"
 
-#: scripts/lpmb-upgrade.sh.in:122 scripts/repo-add.sh.in:396
+#: scripts/lpm-db-upgrade.sh.in:122 scripts/repo-add.sh.in:396
 msgid "%s does not exist or is not a directory."
 msgstr "%s не постоји или није у фасцикли."
 
-#: scripts/lpmb-upgrade.sh.in:126
-msgid "%s is not a lpmatabase directory."
+#: scripts/lpm-db-upgrade.sh.in:126
+msgid "%s is not a lpm database directory."
 msgstr "%s није фасцикла пакменове базе."
 
-#: scripts/lpmb-upgrade.sh.in:130
+#: scripts/lpm-db-upgrade.sh.in:130
 msgid "You must have correct permissions to upgrade the database."
 msgstr "Морате имати одговарајуће дозволе за надоградњу базе."
 
-#: scripts/lpmb-upgrade.sh.in:140
+#: scripts/lpm-db-upgrade.sh.in:140
 msgid "Pacman lock file was found. Cannot run while lpm is running."
 msgstr ""
 "Нађен је пакменов забравни фајл. Не могу да извршим ако је пакмен већ "
 "покренут."
 
-#: scripts/lpmb-upgrade.sh.in:152
+#: scripts/lpm-db-upgrade.sh.in:152
 msgid "Pre-3.5 database format detected - upgrading..."
 msgstr "Нађена је база у пре-3.5 формату — надограђујем..."
 
-#: scripts/lpmb-upgrade.sh.in:159
+#: scripts/lpm-db-upgrade.sh.in:159
 msgid "Done."
 msgstr "Готово."
 
-#: scripts/lpmb-upgrade.sh.in:163
+#: scripts/lpm-db-upgrade.sh.in:163
 msgid "Pre-4.2 database format detected - upgrading..."
 msgstr "Нађена је база у пре-4.2 формату — надограђујем..."
 
-#: scripts/lpmb-upgrade.sh.in:185
+#: scripts/lpm-db-upgrade.sh.in:185
 msgid "symlink '%s' points outside lpm root, manual repair required"
 msgstr ""
 "симболичка веза „%s“ води изван пакменовог корена, потребна је ручна поправка"
@@ -1058,7 +1058,7 @@ msgid "Held by process %s"
 msgstr "Задржано процесом %s"
 
 #: scripts/repo-add.sh.in:418
-msgid "Repository file '%s' is not a proper lpmatabase."
+msgid "Repository file '%s' is not a proper lpm database."
 msgstr "Фајл ризнице „%s“ није исправна пакменова база."
 
 #: scripts/repo-add.sh.in:423

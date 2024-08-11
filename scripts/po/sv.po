@@ -217,7 +217,7 @@ msgstr ""
 msgid "Make packages compatible for use with lpm"
 msgstr "Gör paket kompatibla för användning med lpm"
 
-#: scripts/makepkg.sh.in:878 scripts/lpmb-upgrade.sh.in:41
+#: scripts/makepkg.sh.in:878 scripts/lpm-db-upgrade.sh.in:41
 msgid "Usage: %s [options]"
 msgstr "Användning: %s [alternativ]"
 
@@ -260,7 +260,7 @@ msgstr "  -g, --geninteg   Generera integritetskontroller för källkodsfiler"
 
 #: scripts/makepkg.sh.in:889
 msgid "  -h, --help       Show this help message and exit"
-msgstr "-h, --help Visa det här hjälpmdelandet och avsluta"
+msgstr "-h, --help Visa det här hjälpmeddelandet och avsluta"
 
 #: scripts/makepkg.sh.in:890
 msgid "  -i, --install    Install package after successful build"
@@ -413,7 +413,7 @@ msgstr ""
 msgid "If %s is not specified, %s will look for '%s'"
 msgstr "Om %s inte är angiven, %s kommer söka efter '%s'"
 
-#: scripts/makepkg.sh.in:933 scripts/lpmb-upgrade.sh.in:57
+#: scripts/makepkg.sh.in:933 scripts/lpm-db-upgrade.sh.in:57
 #: scripts/lpm-key.sh.in:99 scripts/repo-add.sh.in:104
 msgid ""
 "This is free software; see the source for copying conditions.\\nThere is NO "
@@ -517,69 +517,69 @@ msgstr "Paketkatalogen är redo."
 msgid "Finished making: %s"
 msgstr "Kompilering klar: %s"
 
-#: scripts/lpmb-upgrade.sh.in:39
-msgid "Upgrade the local lpmatabase to a newer format"
+#: scripts/lpm-db-upgrade.sh.in:39
+msgid "Upgrade the local lpm database to a newer format"
 msgstr "Uppdatera den lokala databasen för lpm till ett nyare format"
 
-#: scripts/lpmb-upgrade.sh.in:43
+#: scripts/lpm-db-upgrade.sh.in:43
 msgid "options:"
 msgstr "alternativ:"
 
-#: scripts/lpmb-upgrade.sh.in:44
+#: scripts/lpm-db-upgrade.sh.in:44
 msgid "  -d, --dbpath <path>  set an alternate database location"
 msgstr "  -d, --dbpath <path>  ange en alternativ plats för databasen"
 
-#: scripts/lpmb-upgrade.sh.in:45
+#: scripts/lpm-db-upgrade.sh.in:45
 msgid "  -h, --help           show this help message and exit"
-msgstr "-h, --help visa det här hjälpmdelandet och avsluta"
+msgstr "-h, --help visa det här hjälpmeddelandet och avsluta"
 
-#: scripts/lpmb-upgrade.sh.in:46
+#: scripts/lpm-db-upgrade.sh.in:46
 msgid "  -r, --root <path>    set an alternate installation root"
 msgstr "-r, --root <sökväg> ange en alternativ root för installation"
 
-#: scripts/lpmb-upgrade.sh.in:47
+#: scripts/lpm-db-upgrade.sh.in:47
 msgid "  -V, --version        show version information and exit"
 msgstr "-V, --version visa versionsinformation och avsluta"
 
-#: scripts/lpmb-upgrade.sh.in:48
+#: scripts/lpm-db-upgrade.sh.in:48
 msgid "  --config <path>      set an alternate configuration file"
 msgstr "--config <sökväg> ange en alternativ konfigurationsfil"
 
-#: scripts/lpmb-upgrade.sh.in:49
+#: scripts/lpm-db-upgrade.sh.in:49
 msgid "  --nocolor            disable colorized output messages"
 msgstr "--nocolor inaktivera färglagd utdata"
 
-#: scripts/lpmb-upgrade.sh.in:122 scripts/repo-add.sh.in:396
+#: scripts/lpm-db-upgrade.sh.in:122 scripts/repo-add.sh.in:396
 msgid "%s does not exist or is not a directory."
 msgstr "%s existerar inte eller är inte en katalog."
 
-#: scripts/lpmb-upgrade.sh.in:126
-msgid "%s is not a lpmatabase directory."
+#: scripts/lpm-db-upgrade.sh.in:126
+msgid "%s is not a lpm database directory."
 msgstr "%s är inte en databaskatalog för lpm."
 
-#: scripts/lpmb-upgrade.sh.in:130
+#: scripts/lpm-db-upgrade.sh.in:130
 msgid "You must have correct permissions to upgrade the database."
 msgstr "Du måste ha korrekta rättigheter för att uppgradera databasen."
 
-#: scripts/lpmb-upgrade.sh.in:140
+#: scripts/lpm-db-upgrade.sh.in:140
 msgid "Pacman lock file was found. Cannot run while lpm is running."
 msgstr "Pacmans låsfil hittades. Kan inte köras medan lpm körs."
 
-#: scripts/lpmb-upgrade.sh.in:152
+#: scripts/lpm-db-upgrade.sh.in:152
 msgid "Pre-3.5 database format detected - upgrading..."
 msgstr ""
 "Databas med ett format tidigare än version 3.5 har upptäckts - uppgraderar..."
 
-#: scripts/lpmb-upgrade.sh.in:159
+#: scripts/lpm-db-upgrade.sh.in:159
 msgid "Done."
 msgstr "Klar."
 
-#: scripts/lpmb-upgrade.sh.in:163
+#: scripts/lpm-db-upgrade.sh.in:163
 msgid "Pre-4.2 database format detected - upgrading..."
 msgstr ""
 "Databas med ett format tidigare än version 4.2 har upptäckts - uppgraderar..."
 
-#: scripts/lpmb-upgrade.sh.in:185
+#: scripts/lpm-db-upgrade.sh.in:185
 msgid "symlink '%s' points outside lpm root, manual repair required"
 msgstr ""
 "Den symboliska länken '%s' pekar utanför lpm:s root. Manuell reparation "
@@ -721,7 +721,7 @@ msgstr ""
 
 #: scripts/lpm-key.sh.in:91
 msgid "  -h, --help                Show this help message and exit"
-msgstr "  -h, --help                Visa det här hjälpmdelandet och avsluta"
+msgstr "  -h, --help                Visa det här hjälpmeddelandet och avsluta"
 
 #: scripts/lpm-key.sh.in:92
 msgid "  -V, --version             Show program version"
@@ -1090,7 +1090,7 @@ msgid "Held by process %s"
 msgstr "Kvarhållen av processen %s"
 
 #: scripts/repo-add.sh.in:418
-msgid "Repository file '%s' is not a proper lpmatabase."
+msgid "Repository file '%s' is not a proper lpm database."
 msgstr "Förrådsfilen '%s' är inte en riktig lpmdatabas."
 
 #: scripts/repo-add.sh.in:423

@@ -216,7 +216,7 @@ msgstr "軟體包群組的其中一部份早已建置過。(使用 %s 將之覆�
 msgid "Make packages compatible for use with lpm"
 msgstr "讓軟體包可與 lpm 的使用相容"
 
-#: scripts/makepkg.sh.in:878 scripts/lpmb-upgrade.sh.in:41
+#: scripts/makepkg.sh.in:878 scripts/lpm-db-upgrade.sh.in:41
 msgid "Usage: %s [options]"
 msgstr "用法：%s [選項]"
 
@@ -398,7 +398,7 @@ msgstr "  --noprogressbar  當下載檔案時不顯示進度條"
 msgid "If %s is not specified, %s will look for '%s'"
 msgstr "若未指定 %s，則 %s 將查找「%s」"
 
-#: scripts/makepkg.sh.in:933 scripts/lpmb-upgrade.sh.in:57
+#: scripts/makepkg.sh.in:933 scripts/lpm-db-upgrade.sh.in:57
 #: scripts/lpm-key.sh.in:99 scripts/repo-add.sh.in:104
 msgid ""
 "This is free software; see the source for copying conditions.\\nThere is NO "
@@ -499,67 +499,67 @@ msgstr "軟體包目錄準備就緒。"
 msgid "Finished making: %s"
 msgstr "製作完成：%s"
 
-#: scripts/lpmb-upgrade.sh.in:39
-msgid "Upgrade the local lpmatabase to a newer format"
+#: scripts/lpm-db-upgrade.sh.in:39
+msgid "Upgrade the local lpm database to a newer format"
 msgstr "升級本機 lpm 資料庫至較新的格式"
 
-#: scripts/lpmb-upgrade.sh.in:43
+#: scripts/lpm-db-upgrade.sh.in:43
 msgid "options:"
 msgstr "選項："
 
-#: scripts/lpmb-upgrade.sh.in:44
+#: scripts/lpm-db-upgrade.sh.in:44
 msgid "  -d, --dbpath <path>  set an alternate database location"
 msgstr "  -d, --dbpath <path>  設定替代資料庫位置"
 
-#: scripts/lpmb-upgrade.sh.in:45
+#: scripts/lpm-db-upgrade.sh.in:45
 msgid "  -h, --help           show this help message and exit"
 msgstr "  -h, --help                顯示此說明訊息後離開"
 
-#: scripts/lpmb-upgrade.sh.in:46
+#: scripts/lpm-db-upgrade.sh.in:46
 msgid "  -r, --root <path>    set an alternate installation root"
 msgstr "  -r, --root <path>    設定替代安裝根目錄"
 
-#: scripts/lpmb-upgrade.sh.in:47
+#: scripts/lpm-db-upgrade.sh.in:47
 msgid "  -V, --version        show version information and exit"
 msgstr "  -V, --version        顯示版本資訊後離開"
 
-#: scripts/lpmb-upgrade.sh.in:48
+#: scripts/lpm-db-upgrade.sh.in:48
 msgid "  --config <path>      set an alternate configuration file"
 msgstr "  --config <path>      設定替換用組態檔"
 
-#: scripts/lpmb-upgrade.sh.in:49
+#: scripts/lpm-db-upgrade.sh.in:49
 msgid "  --nocolor            disable colorized output messages"
 msgstr "  --nocolor            停用色彩化輸出訊息"
 
-#: scripts/lpmb-upgrade.sh.in:122 scripts/repo-add.sh.in:396
+#: scripts/lpm-db-upgrade.sh.in:122 scripts/repo-add.sh.in:396
 msgid "%s does not exist or is not a directory."
 msgstr "%s 不存在或不是目錄。"
 
-#: scripts/lpmb-upgrade.sh.in:126
-msgid "%s is not a lpmatabase directory."
+#: scripts/lpm-db-upgrade.sh.in:126
+msgid "%s is not a lpm database directory."
 msgstr "%s 不是 lpm 資料庫目錄。"
 
-#: scripts/lpmb-upgrade.sh.in:130
+#: scripts/lpm-db-upgrade.sh.in:130
 msgid "You must have correct permissions to upgrade the database."
 msgstr "您必須有適當的權限才得以升級資料庫。"
 
-#: scripts/lpmb-upgrade.sh.in:140
+#: scripts/lpm-db-upgrade.sh.in:140
 msgid "Pacman lock file was found. Cannot run while lpm is running."
 msgstr "發現 lpm 鎖定檔。當 lpm 在執行之時便無法執行。"
 
-#: scripts/lpmb-upgrade.sh.in:152
+#: scripts/lpm-db-upgrade.sh.in:152
 msgid "Pre-3.5 database format detected - upgrading..."
 msgstr "偵測到 pre-3.5 資料庫格式 - 升級中..."
 
-#: scripts/lpmb-upgrade.sh.in:159
+#: scripts/lpm-db-upgrade.sh.in:159
 msgid "Done."
 msgstr "完成。"
 
-#: scripts/lpmb-upgrade.sh.in:163
+#: scripts/lpm-db-upgrade.sh.in:163
 msgid "Pre-4.2 database format detected - upgrading..."
 msgstr "偵測到 pre-4.2 資料庫格式 - 升級中..."
 
-#: scripts/lpmb-upgrade.sh.in:185
+#: scripts/lpm-db-upgrade.sh.in:185
 msgid "symlink '%s' points outside lpm root, manual repair required"
 msgstr "「%s」符號連結指向 lpm 根目錄之外，需要手動修復"
 
@@ -1042,7 +1042,7 @@ msgid "Held by process %s"
 msgstr "被 %s 程序保留"
 
 #: scripts/repo-add.sh.in:418
-msgid "Repository file '%s' is not a proper lpmatabase."
+msgid "Repository file '%s' is not a proper lpm database."
 msgstr "軟體庫檔案「%s」並非適當的 lpm 資料庫。"
 
 #: scripts/repo-add.sh.in:423

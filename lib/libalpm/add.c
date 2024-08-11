@@ -79,7 +79,7 @@ int SYMEXPORT alpm_add_pkg(alpm_handle_t *handle, alpm_pkg_t *pkg)
 		RET_ERR(handle, ALPM_ERR_TRANS_DUP_TARGET, -1);
 	}
 
-	if((local = _alpmb_get_pkgfromcache(handle->db_local, pkgname))) {
+	if((local = _alpm_db_get_pkgfromcache(handle->db_local, pkgname))) {
 		const char *localpkgname = local->name;
 		const char *localpkgver = local->version;
 		int cmp = _alpm_pkg_compare_versions(pkg, local);
@@ -184,7 +184,7 @@ static int extract_db_file(alpm_handle_t *handle, struct archive *archive,
 	}
 	archive_entry_set_perm(entry, 0644);
 	snprintf(filename, PATH_MAX, "%s%s-%s/%s",
-			_alpmb_path(handle->db_local), newpkg->name, newpkg->version, dbfile);
+			_alpm_db_path(handle->db_local), newpkg->name, newpkg->version, dbfile);
 	return perform_extraction(handle, archive, entry, filename);
 }
 
@@ -418,7 +418,7 @@ static int commit_single_pkg(alpm_handle_t *handle, alpm_pkg_t *newpkg,
 	int ret = 0, errors = 0;
 	int is_upgrade = 0;
 	alpm_pkg_t *oldpkg = NULL;
-	alpmb_t *db = handle->db_local;
+	alpm_db_t *db = handle->db_local;
 	alpm_trans_t *trans = handle->trans;
 	alpm_progress_t progress = ALPM_PROGRESS_ADD_START;
 	alpm_event_package_operation_t event;
@@ -432,7 +432,7 @@ static int commit_single_pkg(alpm_handle_t *handle, alpm_pkg_t *newpkg,
 	ASSERT(trans != NULL, return -1);
 
 	/* see if this is an upgrade. if so, remove the old package first */
-	if(_alpmb_get_pkgfromcache(db, newpkg->name) && (oldpkg = newpkg->oldpkg)) {
+	if(_alpm_db_get_pkgfromcache(db, newpkg->name) && (oldpkg = newpkg->oldpkg)) {
 		int cmp = _alpm_pkg_compare_versions(newpkg, oldpkg);
 		if(cmp < 0) {
 			log_msg = "downgrading";
@@ -606,7 +606,7 @@ static int commit_single_pkg(alpm_handle_t *handle, alpm_pkg_t *newpkg,
 		return -1;
 	}
 
-	if(_alpmb_add_pkgincache(db, newpkg) == -1) {
+	if(_alpm_db_add_pkgincache(db, newpkg) == -1) {
 		_alpm_log(handle, ALPM_LOG_ERROR, _("could not add entry '%s' in cache\n"),
 				newpkg->name);
 	}

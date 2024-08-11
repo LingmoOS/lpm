@@ -218,7 +218,7 @@ msgstr ""
 msgid "Make packages compatible for use with lpm"
 msgstr "Gør pakker kompatible med lpm-brug"
 
-#: scripts/makepkg.sh.in:878 scripts/lpmb-upgrade.sh.in:41
+#: scripts/makepkg.sh.in:878 scripts/lpm-db-upgrade.sh.in:41
 msgid "Usage: %s [options]"
 msgstr "Brug: %s [valgmuligheder]"
 
@@ -410,7 +410,7 @@ msgstr "  --noprogressbar  Vis ikke en statusbjælke, når der hentes filer"
 msgid "If %s is not specified, %s will look for '%s'"
 msgstr "Hvis %s ikke er angivet, vil %s kigge efter '%s'"
 
-#: scripts/makepkg.sh.in:933 scripts/lpmb-upgrade.sh.in:57
+#: scripts/makepkg.sh.in:933 scripts/lpm-db-upgrade.sh.in:57
 #: scripts/lpm-key.sh.in:99 scripts/repo-add.sh.in:104
 msgid ""
 "This is free software; see the source for copying conditions.\\nThere is NO "
@@ -511,67 +511,67 @@ msgstr "Pakkemappe er klar."
 msgid "Finished making: %s"
 msgstr "Færdig med fremstilling: %s"
 
-#: scripts/lpmb-upgrade.sh.in:39
-msgid "Upgrade the local lpmatabase to a newer format"
-msgstr "Opdater den lokale lpmatabase til et nyere format"
+#: scripts/lpm-db-upgrade.sh.in:39
+msgid "Upgrade the local lpm database to a newer format"
+msgstr "Opdater den lokale lpm database til et nyere format"
 
-#: scripts/lpmb-upgrade.sh.in:43
+#: scripts/lpm-db-upgrade.sh.in:43
 msgid "options:"
 msgstr "valgmuligheder:"
 
-#: scripts/lpmb-upgrade.sh.in:44
+#: scripts/lpm-db-upgrade.sh.in:44
 msgid "  -d, --dbpath <path>  set an alternate database location"
 msgstr "  -d, --dbpath <sti>  angiv en alternativ databaseplacering"
 
-#: scripts/lpmb-upgrade.sh.in:45
+#: scripts/lpm-db-upgrade.sh.in:45
 msgid "  -h, --help           show this help message and exit"
 msgstr "  -h, --help           vis denne hjælpetekst of afslut"
 
-#: scripts/lpmb-upgrade.sh.in:46
+#: scripts/lpm-db-upgrade.sh.in:46
 msgid "  -r, --root <path>    set an alternate installation root"
 msgstr "  -r, --root <sti>    angiv en alternativ installationsrod"
 
-#: scripts/lpmb-upgrade.sh.in:47
+#: scripts/lpm-db-upgrade.sh.in:47
 msgid "  -V, --version        show version information and exit"
 msgstr "  -V, --version        vis versionsinformation of afslut"
 
-#: scripts/lpmb-upgrade.sh.in:48
+#: scripts/lpm-db-upgrade.sh.in:48
 msgid "  --config <path>      set an alternate configuration file"
 msgstr "  --config <sti>      angiv alternativ konfigurationsfil"
 
-#: scripts/lpmb-upgrade.sh.in:49
+#: scripts/lpm-db-upgrade.sh.in:49
 msgid "  --nocolor            disable colorized output messages"
 msgstr "  --nocolor            deaktiver farvede output-tekst"
 
-#: scripts/lpmb-upgrade.sh.in:122 scripts/repo-add.sh.in:396
+#: scripts/lpm-db-upgrade.sh.in:122 scripts/repo-add.sh.in:396
 msgid "%s does not exist or is not a directory."
 msgstr "%s findes ikke elelr er ikke en mappe."
 
-#: scripts/lpmb-upgrade.sh.in:126
-msgid "%s is not a lpmatabase directory."
-msgstr "%s er ikke en lpmatabase-mappe."
+#: scripts/lpm-db-upgrade.sh.in:126
+msgid "%s is not a lpm database directory."
+msgstr "%s er ikke en lpm database-mappe."
 
-#: scripts/lpmb-upgrade.sh.in:130
+#: scripts/lpm-db-upgrade.sh.in:130
 msgid "You must have correct permissions to upgrade the database."
 msgstr "Du skal have korrekte rettigheder for at opgradere databasen."
 
-#: scripts/lpmb-upgrade.sh.in:140
+#: scripts/lpm-db-upgrade.sh.in:140
 msgid "Pacman lock file was found. Cannot run while lpm is running."
 msgstr "Pacmans låsningsfil blev fundet. Kan ikke køre mens lpm kører."
 
-#: scripts/lpmb-upgrade.sh.in:152
+#: scripts/lpm-db-upgrade.sh.in:152
 msgid "Pre-3.5 database format detected - upgrading..."
 msgstr "Pre-3.5 database format detekteret - opgraderer..."
 
-#: scripts/lpmb-upgrade.sh.in:159
+#: scripts/lpm-db-upgrade.sh.in:159
 msgid "Done."
 msgstr "Færdig."
 
-#: scripts/lpmb-upgrade.sh.in:163
+#: scripts/lpm-db-upgrade.sh.in:163
 msgid "Pre-4.2 database format detected - upgrading..."
 msgstr "Før-4.2 database format opdaget - opgraderer..."
 
-#: scripts/lpmb-upgrade.sh.in:185
+#: scripts/lpm-db-upgrade.sh.in:185
 msgid "symlink '%s' points outside lpm root, manual repair required"
 msgstr "symlink '%s' peger udenfor lpm roden, manuel reparation nødvendig"
 
@@ -1063,8 +1063,8 @@ msgid "Held by process %s"
 msgstr "Holdt af proces %s"
 
 #: scripts/repo-add.sh.in:418
-msgid "Repository file '%s' is not a proper lpmatabase."
-msgstr "Arkivfil '%s' er ikke en korrekt lpmatabase."
+msgid "Repository file '%s' is not a proper lpm database."
+msgstr "Arkivfil '%s' er ikke en korrekt lpm-database."
 
 #: scripts/repo-add.sh.in:423
 msgid "Extracting %s to a temporary location..."

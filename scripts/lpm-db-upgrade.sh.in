@@ -1,6 +1,6 @@
 #!/bin/bash -e
 #
-#   lpmb-upgrade - upgrade the local lpmb to a newer format
+#   lpm-db-upgrade - upgrade the local lpm db to a newer format
 #
 #   Copyright (c) 2010-2024 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
@@ -34,9 +34,9 @@ source "$MAKEPKG_LIBRARY"/util/message.sh
 source "$MAKEPKG_LIBRARY"/util/parseopts.sh
 
 usage() {
-	printf "lpmb-upgrade (lpm) %s\n" "${myver}"
+	printf "lpm-db-upgrade (lpm) %s\n" "${myver}"
 	echo
-	printf -- "$(gettext "Upgrade the local lpmatabase to a newer format")\n"
+	printf -- "$(gettext "Upgrade the local lpm database to a newer format")\n"
 	echo
 	printf -- "$(gettext "Usage: %s [options]")\n" "$0"
 	echo
@@ -51,7 +51,7 @@ usage() {
 }
 
 version() {
-	printf "lpmb-upgrade (lpm) %s\n" "$myver"
+	printf "lpm-db-upgrade (lpm) %s\n" "$myver"
 	printf -- "Copyright (c) 2010-2024 Pacman Development Team <pacman-dev@lists.archlinux.org>.\n"
 	printf '\n'
 	printf -- "$(gettext "\
@@ -123,7 +123,7 @@ if [[ ! -d $dbroot ]]; then
 fi
 
 if [[ ! -d $dbroot/local ]]; then
-	die "$(gettext "%s is not a lpmatabase directory.")" "$dbroot"
+	die "$(gettext "%s is not a lpm database directory.")" "$dbroot"
 fi
 
 if [[ ! -w $dbroot ]]; then

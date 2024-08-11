@@ -504,8 +504,8 @@ msgstr ""
 
 #: src/lpm/conf.c:876
 #, c-format
-msgid "try running lpmb-upgrade\n"
-msgstr "bandykite įvykdyti komandą lpmb-upgrade\n"
+msgid "try running lpm-db-upgrade\n"
+msgstr "bandykite įvykdyti komandą lpm-db-upgrade\n"
 
 #: src/lpm/conf.c:894
 #, c-format
@@ -561,33 +561,33 @@ msgstr ""
 "konfigūracijos failas %s, eilutė %d: Visos direktyvos turi priklausyti "
 "skyriuj\n"
 
-#: src/lpmatabase.c:50 src/lpm/files.c:335 src/lpm/query.c:434
+#: src/lpm/database.c:50 src/lpm/files.c:335 src/lpm/query.c:434
 #: src/lpm/remove.c:85 src/lpm/sync.c:970 src/lpm/upgrade.c:76
 #, c-format
 msgid "no targets specified (use -h for help)\n"
 msgstr "nenurodytas joks objektas (bandykite -h pagalbai)\n"
 
-#: src/lpmatabase.c:59
+#: src/lpm/database.c:59
 #, c-format
 msgid "no install reason specified (use -h for help)\n"
 msgstr "nenurodyta įdiegimo priežastis (bandykite -h pagalbai)\n"
 
-#: src/lpmatabase.c:73
+#: src/lpm/database.c:73
 #, c-format
 msgid "could not set install reason for package %s (%s)\n"
 msgstr "nepavyko nustatyti įdiegimo priežasties paketui %s (%s)\n"
 
-#: src/lpmatabase.c:79
+#: src/lpm/database.c:79
 #, c-format
 msgid "%s: install reason has been set to 'installed as dependency'\n"
 msgstr "%s: diegimo priežastis nustatyta kaip „įdiegta kaip priklausomybė“\n"
 
-#: src/lpmatabase.c:81
+#: src/lpm/database.c:81
 #, c-format
 msgid "%s: install reason has been set to 'explicitly installed'\n"
 msgstr "%s: diegimo priežastis nustatyta kaip „įdiegta savarankiškai“\n"
 
-#: src/lpmatabase.c:296
+#: src/lpm/database.c:296
 #, c-format
 msgid "No database errors have been found!\n"
 msgstr "Nerasta jokių duomenų bazės klaidų!\n"

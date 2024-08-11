@@ -219,7 +219,7 @@ msgstr ""
 msgid "Make packages compatible for use with lpm"
 msgstr "Создание пакетов для последующей установки с помощью lpm"
 
-#: scripts/makepkg.sh.in:878 scripts/lpmb-upgrade.sh.in:41
+#: scripts/makepkg.sh.in:878 scripts/lpm-db-upgrade.sh.in:41
 msgid "Usage: %s [options]"
 msgstr "Использование: %s [параметры]"
 
@@ -415,7 +415,7 @@ msgstr "      --noprogressbar  Не показывать индикатор вы
 msgid "If %s is not specified, %s will look for '%s'"
 msgstr "Если параметр '%s' не указан, то '%s' будет искать '%s'"
 
-#: scripts/makepkg.sh.in:933 scripts/lpmb-upgrade.sh.in:57
+#: scripts/makepkg.sh.in:933 scripts/lpm-db-upgrade.sh.in:57
 #: scripts/lpm-key.sh.in:99 scripts/repo-add.sh.in:104
 msgid ""
 "This is free software; see the source for copying conditions.\\nThere is NO "
@@ -518,68 +518,68 @@ msgstr "Директория для сборки готова."
 msgid "Finished making: %s"
 msgstr "Завершена сборка пакета %s"
 
-#: scripts/lpmb-upgrade.sh.in:39
-msgid "Upgrade the local lpmatabase to a newer format"
+#: scripts/lpm-db-upgrade.sh.in:39
+msgid "Upgrade the local lpm database to a newer format"
 msgstr "Преобразовать базу данных lpm к новому формату"
 
-#: scripts/lpmb-upgrade.sh.in:43
+#: scripts/lpm-db-upgrade.sh.in:43
 msgid "options:"
 msgstr "параметры:"
 
-#: scripts/lpmb-upgrade.sh.in:44
+#: scripts/lpm-db-upgrade.sh.in:44
 msgid "  -d, --dbpath <path>  set an alternate database location"
 msgstr "  -d, --dbpath <путь>  задать альтернативное расположение базы данных"
 
-#: scripts/lpmb-upgrade.sh.in:45
+#: scripts/lpm-db-upgrade.sh.in:45
 msgid "  -h, --help           show this help message and exit"
 msgstr "  -h, --help           показать справку и выйти"
 
-#: scripts/lpmb-upgrade.sh.in:46
+#: scripts/lpm-db-upgrade.sh.in:46
 msgid "  -r, --root <path>    set an alternate installation root"
 msgstr "  -r, --root <путь>    путь установки"
 
-#: scripts/lpmb-upgrade.sh.in:47
+#: scripts/lpm-db-upgrade.sh.in:47
 msgid "  -V, --version        show version information and exit"
 msgstr "  -V, --version        показать версию и выйти"
 
-#: scripts/lpmb-upgrade.sh.in:48
+#: scripts/lpm-db-upgrade.sh.in:48
 msgid "  --config <path>      set an alternate configuration file"
 msgstr "      --config <путь>  файл настроек"
 
-#: scripts/lpmb-upgrade.sh.in:49
+#: scripts/lpm-db-upgrade.sh.in:49
 msgid "  --nocolor            disable colorized output messages"
 msgstr "      --nocolor        отключить цветные сообщения"
 
-#: scripts/lpmb-upgrade.sh.in:122 scripts/repo-add.sh.in:396
+#: scripts/lpm-db-upgrade.sh.in:122 scripts/repo-add.sh.in:396
 msgid "%s does not exist or is not a directory."
 msgstr "'%s' не существует или не является директорией."
 
-#: scripts/lpmb-upgrade.sh.in:126
-msgid "%s is not a lpmatabase directory."
+#: scripts/lpm-db-upgrade.sh.in:126
+msgid "%s is not a lpm database directory."
 msgstr "'%s' не является директорией базы данных lpm."
 
-#: scripts/lpmb-upgrade.sh.in:130
+#: scripts/lpm-db-upgrade.sh.in:130
 msgid "You must have correct permissions to upgrade the database."
 msgstr "Недостаточно прав для оптимизации базы данных."
 
-#: scripts/lpmb-upgrade.sh.in:140
+#: scripts/lpm-db-upgrade.sh.in:140
 msgid "Pacman lock file was found. Cannot run while lpm is running."
 msgstr ""
 "Обнаружен блокировочный файл lpm. Запуск невозможен, когда запущен lpm."
 
-#: scripts/lpmb-upgrade.sh.in:152
+#: scripts/lpm-db-upgrade.sh.in:152
 msgid "Pre-3.5 database format detected - upgrading..."
 msgstr "Обнаружен формат базы данных <3.5 -- обновление..."
 
-#: scripts/lpmb-upgrade.sh.in:159
+#: scripts/lpm-db-upgrade.sh.in:159
 msgid "Done."
 msgstr "Готово."
 
-#: scripts/lpmb-upgrade.sh.in:163
+#: scripts/lpm-db-upgrade.sh.in:163
 msgid "Pre-4.2 database format detected - upgrading..."
 msgstr "Обнаружен формат базы данных <4.2 -- обновление..."
 
-#: scripts/lpmb-upgrade.sh.in:185
+#: scripts/lpm-db-upgrade.sh.in:185
 msgid "symlink '%s' points outside lpm root, manual repair required"
 msgstr ""
 "символическая ссылка '%s' указывает за пределы директории lpm, необходимо "
@@ -1081,7 +1081,7 @@ msgid "Held by process %s"
 msgstr "Удерживается процессом %s"
 
 #: scripts/repo-add.sh.in:418
-msgid "Repository file '%s' is not a proper lpmatabase."
+msgid "Repository file '%s' is not a proper lpm database."
 msgstr "Файл репозитория '%s' не является базой данных lpm."
 
 #: scripts/repo-add.sh.in:423

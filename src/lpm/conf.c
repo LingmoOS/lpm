@@ -817,7 +817,7 @@ static int replace_server_list_vars(config_t *c, config_repo_t *r, alpm_list_t *
 static int register_repo(config_repo_t *repo)
 {
 	alpm_list_t *i;
-	alpmb_t *db;
+	alpm_db_t *db;
 
 	db = alpm_register_syncdb(config->handle, repo->name, repo->siglevel);
 	if(db == NULL) {
@@ -828,23 +828,23 @@ static int register_repo(config_repo_t *repo)
 
 	pm_printf(ALPM_LOG_DEBUG, "setting usage of %d for %s repository\n",
 			repo->usage, repo->name);
-	alpmb_set_usage(db, repo->usage);
+	alpm_db_set_usage(db, repo->usage);
 
 	for(i = repo->cache_servers; i; i = alpm_list_next(i)) {
 		const char *value = i->data;
-		if(alpmb_add_cache_server(db, value) != 0) {
-			/* pm_errno is set by alpmb_setserver */
+		if(alpm_db_add_cache_server(db, value) != 0) {
+			/* pm_errno is set by alpm_db_setserver */
 			pm_printf(ALPM_LOG_ERROR, _("could not add cache server URL to database '%s': %s (%s)\n"),
-					alpmb_get_name(db), value, alpm_strerror(alpm_errno(config->handle)));
+					alpm_db_get_name(db), value, alpm_strerror(alpm_errno(config->handle)));
 			return 1;
 		}
 	}
 	for(i = repo->servers; i; i = alpm_list_next(i)) {
 		const char *value = i->data;
-		if(alpmb_add_server(db, value) != 0) {
-			/* pm_errno is set by alpmb_setserver */
+		if(alpm_db_add_server(db, value) != 0) {
+			/* pm_errno is set by alpm_db_setserver */
 			pm_printf(ALPM_LOG_ERROR, _("could not add server URL to database '%s': %s (%s)\n"),
-					alpmb_get_name(db), value, alpm_strerror(alpm_errno(config->handle)));
+					alpm_db_get_name(db), value, alpm_strerror(alpm_errno(config->handle)));
 			return 1;
 		}
 	}
@@ -873,7 +873,7 @@ static int setup_libalpm(void)
 		pm_printf(ALPM_LOG_ERROR, _("failed to initialize alpm library:\n(root: %s, dbpath: %s)\n%s\n"),
 		        config->rootdir, config->dbpath, alpm_strerror(err));
 		if(err == ALPM_ERR_DB_VERSION) {
-			fprintf(stderr, _("try running lpmb-upgrade\n"));
+			fprintf(stderr, _("try running lpm-db-upgrade\n"));
 		}
 		return -1;
 	}
@@ -951,14 +951,14 @@ static int setup_libalpm(void)
 
 	for(i = config->assumeinstalled; i; i = i->next) {
 		char *entry = i->data;
-		alpmepend_t *dep = alpmep_from_string(entry);
+		alpm_depend_t *dep = alpm_dep_from_string(entry);
 		if(!dep) {
 			return 1;
 		}
 		pm_printf(ALPM_LOG_DEBUG, "parsed assume installed: %s %s\n", dep->name, dep->version);
 
 		ret = alpm_option_add_assumeinstalled(handle, dep);
-		alpmep_free(dep);
+		alpm_dep_free(dep);
 		if(ret) {
 			pm_printf(ALPM_LOG_ERROR, _("Failed to pass %s entry to libalpm"), "assume-installed");
 			return ret;

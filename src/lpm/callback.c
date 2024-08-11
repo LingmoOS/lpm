@@ -338,7 +338,7 @@ void cb_event(void *ctx, alpm_event_t *event)
 		case ALPM_EVENT_OPTDEP_REMOVAL:
 			{
 				alpm_event_optdep_removal_t *e = &event->optdep_removal;
-				char *dep_string = alpmep_compute_string(e->optdep);
+				char *dep_string = alpm_dep_compute_string(e->optdep);
 				colon_printf(_("%s optionally requires %s\n"),
 						alpm_pkg_get_name(e->pkg),
 						dep_string);
@@ -455,7 +455,7 @@ void cb_question(void *ctx, alpm_question_t *question)
 				alpm_question_replace_t *q = &question->replace;
 				q->replace = yesno(_("Replace %s with %s/%s?"),
 						alpm_pkg_get_name(q->oldpkg),
-						alpmb_get_name(q->newdb),
+						alpm_db_get_name(q->newdb),
 						alpm_pkg_get_name(q->newpkg));
 			}
 			break;
@@ -517,7 +517,7 @@ void cb_question(void *ctx, alpm_question_t *question)
 			{
 				alpm_question_select_provider_t *q = &question->select_provider;
 				size_t count = alpm_list_count(q->providers);
-				char *depstring = alpmep_compute_string(q->depend);
+				char *depstring = alpm_dep_compute_string(q->depend);
 				colon_printf(_n("There is %zu provider available for %s\n",
 						"There are %zu providers available for %s:\n", count),
 						count, depstring);
@@ -878,7 +878,7 @@ static void draw_lpm_progress_bar(struct lpm_progress_bar *bar)
 	return;
 }
 
-static void dload_init_event(const char *filename, alpmownload_event_init_t *data)
+static void dload_init_event(const char *filename, alpm_download_event_init_t *data)
 {
 	(void)data;
 	char *cleaned_filename = clean_filename(filename);
@@ -965,7 +965,7 @@ static void update_bar_finalstats(struct lpm_progress_bar *bar)
 }
 
 /* Handles download progress event */
-static void dload_progress_event(const char *filename, alpmownload_event_progress_t *data)
+static void dload_progress_event(const char *filename, alpm_download_event_progress_t *data)
 {
 	int index;
 	struct lpm_progress_bar *bar;
@@ -1001,7 +1001,7 @@ static void dload_progress_event(const char *filename, alpmownload_event_progres
 }
 
 /* download retried */
-static void dload_retry_event(const char *filename, alpmownload_event_retry_t *data) {
+static void dload_retry_event(const char *filename, alpm_download_event_retry_t *data) {
 	if(!dload_progressbar_enabled()) {
 		return;
 	}
@@ -1029,7 +1029,7 @@ static void dload_retry_event(const char *filename, alpmownload_event_retry_t *d
 
 
 /* download completed */
-static void dload_complete_event(const char *filename, alpmownload_event_completed_t *data)
+static void dload_complete_event(const char *filename, alpm_download_event_completed_t *data)
 {
 	int index;
 	struct lpm_progress_bar *bar;
@@ -1048,7 +1048,7 @@ static void dload_complete_event(const char *filename, alpmownload_event_complet
 	bar->completed = true;
 
 	/* This may not have been initialized if the download finished before
-	 * an alpmownload_event_progress_t event happened */
+	 * an alpm_download_event_progress_t event happened */
 	bar->total_size = data->total;
 
 	if(data->result == 1) {
@@ -1112,7 +1112,7 @@ static int strendswith(const char *haystack, const char *needle)
 }
 
 /* Callback to handle display of download progress */
-void cb_download(void *ctx, const char *filename, alpmownload_event_type_t event, void *data)
+void cb_download(void *ctx, const char *filename, alpm_download_event_type_t event, void *data)
 {
 	(void)ctx;
 

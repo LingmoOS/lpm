@@ -3,7 +3,7 @@
 # scripts with gettext translations
 scripts/makepkg.sh.in
 scripts/makepkg-template.pl.in
-scripts/lpmb-upgrade.sh.in
+scripts/lpm-db-upgrade.sh.in
 scripts/lpm-key.sh.in
 scripts/repo-add.sh.in
 scripts/libmakepkg/integrity.sh.in

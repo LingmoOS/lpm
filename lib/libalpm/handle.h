@@ -53,8 +53,8 @@ do { \
 
 struct _alpm_handle_t {
 	/* internal usage */
-	alpmb_t *db_local;    /* local db pointer */
-	alpm_list_t *dbs_sync;  /* List of (alpmb_t *) */
+	alpm_db_t *db_local;    /* local db pointer */
+	alpm_list_t *dbs_sync;  /* List of (alpm_db_t *) */
 	FILE *logstream;        /* log file stream pointer */
 	alpm_trans_t *trans;
 

@@ -130,7 +130,7 @@ struct _alpm_pkg_t {
 	/* origin == PKG_FROM_FILE, use pkg->origin_data.file
 	 * origin == PKG_FROM_*DB, use pkg->origin_data.db */
 	union {
-		alpmb_t *db;
+		alpm_db_t *db;
 		char *file;
 	} origin_data;
 
@@ -140,7 +140,7 @@ struct _alpm_pkg_t {
 
 	alpm_list_t *xdata;
 
-	/* Bitfield from alpmbinfrq_t */
+	/* Bitfield from alpm_dbinfrq_t */
 	int infolevel;
 	/* Bitfield from alpm_pkgvalidation_t */
 	int validation;

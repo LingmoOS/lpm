@@ -35,7 +35,7 @@
 #include "alpm.h"
 #include "handle.h"
 
-int SYMEXPORT alpmecode_signature(const char *base64_data,
+int SYMEXPORT alpm_decode_signature(const char *base64_data,
 		unsigned char **data, size_t *data_len)
 {
 	size_t len = strlen(base64_data);
@@ -624,7 +624,7 @@ int _alpm_gpgme_checksig(alpm_handle_t *handle, const char *path,
 	if(base64_sig) {
 		/* memory-based, we loaded it from a sync DB */
 		size_t data_len;
-		int decode_ret = alpmecode_signature(base64_sig,
+		int decode_ret = alpm_decode_signature(base64_sig,
 				&decoded_sigdata, &data_len);
 		if(decode_ret) {
 			GOTO_ERR(handle, ALPM_ERR_SIG_INVALID, error);
@@ -1008,14 +1008,14 @@ int SYMEXPORT alpm_pkg_check_pgp_signature(alpm_pkg_t *pkg,
 			pkg->base64_sig, siglist);
 }
 
-int SYMEXPORT alpmb_check_pgp_signature(alpmb_t *db,
+int SYMEXPORT alpm_db_check_pgp_signature(alpm_db_t *db,
 		alpm_siglist_t *siglist)
 {
 	ASSERT(db != NULL, return -1);
 	ASSERT(siglist != NULL, RET_ERR(db->handle, ALPM_ERR_WRONG_ARGS, -1));
 	db->handle->pm_errno = ALPM_ERR_OK;
 
-	return _alpm_gpgme_checksig(db->handle, _alpmb_path(db), NULL, siglist);
+	return _alpm_gpgme_checksig(db->handle, _alpm_db_path(db), NULL, siglist);
 }
 
 int SYMEXPORT alpm_siglist_cleanup(alpm_siglist_t *siglist)

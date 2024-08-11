@@ -52,7 +52,7 @@ alpm_handle_t *_alpm_handle_new(void)
 void _alpm_handle_free(alpm_handle_t *handle)
 {
 	alpm_list_t *i;
-	alpmb_t *db;
+	alpm_db_t *db;
 
 	if(handle == NULL) {
 		return;
@@ -108,7 +108,7 @@ void _alpm_handle_free(alpm_handle_t *handle)
 	FREELIST(handle->ignoregroup);
 	FREELIST(handle->overwrite_files);
 
-	alpm_list_free_inner(handle->assumeinstalled, (alpm_list_fn_free)alpmep_free);
+	alpm_list_free_inner(handle->assumeinstalled, (alpm_list_fn_free)alpm_dep_free);
 	alpm_list_free(handle->assumeinstalled);
 
 	FREE(handle);
@@ -736,13 +736,13 @@ int SYMEXPORT alpm_option_remove_overwrite_file(alpm_handle_t *handle, const cha
 	return _alpm_option_strlist_rem(handle, &(handle->overwrite_files), glob);
 }
 
-int SYMEXPORT alpm_option_add_assumeinstalled(alpm_handle_t *handle, const alpmepend_t *dep)
+int SYMEXPORT alpm_option_add_assumeinstalled(alpm_handle_t *handle, const alpm_depend_t *dep)
 {
-	alpmepend_t *depcpy;
+	alpm_depend_t *depcpy;
 	CHECK_HANDLE(handle, return -1);
 	ASSERT(dep->mod == ALPM_DEP_MOD_EQ || dep->mod == ALPM_DEP_MOD_ANY,
 			RET_ERR(handle, ALPM_ERR_WRONG_ARGS, -1));
-	ASSERT((depcpy = _alpmep_dup(dep)), RET_ERR(handle, ALPM_ERR_MEMORY, -1));
+	ASSERT((depcpy = _alpm_dep_dup(dep)), RET_ERR(handle, ALPM_ERR_MEMORY, -1));
 
 	/* fill in name_hash in case dep was built by hand */
 	depcpy->name_hash = _alpm_hash_sdbm(dep->name);
@@ -754,7 +754,7 @@ int SYMEXPORT alpm_option_set_assumeinstalled(alpm_handle_t *handle, alpm_list_t
 {
 	CHECK_HANDLE(handle, return -1);
 	if(handle->assumeinstalled) {
-		alpm_list_free_inner(handle->assumeinstalled, (alpm_list_fn_free)alpmep_free);
+		alpm_list_free_inner(handle->assumeinstalled, (alpm_list_fn_free)alpm_dep_free);
 		alpm_list_free(handle->assumeinstalled);
 		handle->assumeinstalled = NULL;
 	}
@@ -769,8 +769,8 @@ int SYMEXPORT alpm_option_set_assumeinstalled(alpm_handle_t *handle, alpm_list_t
 
 static int assumeinstalled_cmp(const void *d1, const void *d2)
 {
-	const alpmepend_t *dep1 = d1;
-	const alpmepend_t *dep2 = d2;
+	const alpm_depend_t *dep1 = d1;
+	const alpm_depend_t *dep2 = d2;
 
 	if(dep1->name_hash != dep2->name_hash
 			|| strcmp(dep1->name, dep2->name) != 0) {
@@ -790,14 +790,14 @@ static int assumeinstalled_cmp(const void *d1, const void *d2)
 	return -1;
 }
 
-int SYMEXPORT alpm_option_remove_assumeinstalled(alpm_handle_t *handle, const alpmepend_t *dep)
+int SYMEXPORT alpm_option_remove_assumeinstalled(alpm_handle_t *handle, const alpm_depend_t *dep)
 {
-	alpmepend_t *vdata = NULL;
+	alpm_depend_t *vdata = NULL;
 	CHECK_HANDLE(handle, return -1);
 
 	handle->assumeinstalled = alpm_list_remove(handle->assumeinstalled, dep, &assumeinstalled_cmp, (void **)&vdata);
 	if(vdata != NULL) {
-		alpmep_free(vdata);
+		alpm_dep_free(vdata);
 		return 1;
 	}
 
@@ -830,7 +830,7 @@ int SYMEXPORT alpm_option_remove_architecture(alpm_handle_t *handle, const char 
 	return 0;
 }
 
-alpmb_t SYMEXPORT *alpm_get_localdb(alpm_handle_t *handle)
+alpm_db_t SYMEXPORT *alpm_get_localdb(alpm_handle_t *handle)
 {
 	CHECK_HANDLE(handle, return NULL);
 	return handle->db_local;

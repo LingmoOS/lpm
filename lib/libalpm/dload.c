@@ -254,7 +254,7 @@ static int dload_progress_cb(void *file, curl_off_t dltotal, curl_off_t dlnow,
 {
 	struct dload_payload *payload = (struct dload_payload *)file;
 	off_t current_size, total_size;
-	alpmownload_event_progress_t cb_data = {0};
+	alpm_download_event_progress_t cb_data = {0};
 
 	/* avoid displaying progress bar for redirects with a body */
 	if(payload->respcode >= 300) {
@@ -473,7 +473,7 @@ static int curl_retry_next_server(CURLM *curlm, CURL *curl, struct dload_payload
 	}
 
 	if(handle->dlcb) {
-		alpmownload_event_retry_t cb_data;
+		alpm_download_event_retry_t cb_data;
 		cb_data.resume = payload->allow_resume;
 		handle->dlcb(handle->dlcb_ctx, payload->remote_name, ALPM_DOWNLOAD_RETRY, &cb_data);
 	}
@@ -639,18 +639,18 @@ static int curl_check_finished_download(alpm_handle_t *handle, CURLM *curlm, CUR
 		snprintf(sig->fileurl, len, "%s.sig", url);
 
 		int remote_name_len = strlen(payload->remote_name) + 5;
-		MALLOC(sig->remote_name, remote_name_len, _alpmload_payload_reset(sig);
+		MALLOC(sig->remote_name, remote_name_len, _alpm_dload_payload_reset(sig);
 			FREE(sig); GOTO_ERR(handle, ALPM_ERR_MEMORY, cleanup));
 		snprintf(sig->remote_name, remote_name_len, "%s.sig", payload->remote_name);
 
 		/* force the filename to be realname + ".sig" */
 		int destfile_name_len = strlen(realname) + 5;
-		MALLOC(sig->destfile_name, destfile_name_len, _alpmload_payload_reset(sig);
+		MALLOC(sig->destfile_name, destfile_name_len, _alpm_dload_payload_reset(sig);
 				FREE(sig); GOTO_ERR(handle, ALPM_ERR_MEMORY, cleanup));
 		snprintf(sig->destfile_name, destfile_name_len, "%s.sig", realname);
 
 		int tempfile_name_len = strlen(realname) + 10;
-		MALLOC(sig->tempfile_name, tempfile_name_len, _alpmload_payload_reset(sig);
+		MALLOC(sig->tempfile_name, tempfile_name_len, _alpm_dload_payload_reset(sig);
 				FREE(sig); GOTO_ERR(handle, ALPM_ERR_MEMORY, cleanup));
 		snprintf(sig->tempfile_name, tempfile_name_len, "%s.sig.part", realname);
 
@@ -717,7 +717,7 @@ cleanup:
 	}
 
 	if(handle->dlcb) {
-		alpmownload_event_completed_t cb_data = {0};
+		alpm_download_event_completed_t cb_data = {0};
 		cb_data.total = bytes_dl;
 		cb_data.result = ret;
 		handle->dlcb(handle->dlcb_ctx, payload->remote_name, ALPM_DOWNLOAD_COMPLETED, &cb_data);
@@ -735,7 +735,7 @@ cleanup:
 
 	if(payload->signature) {
 		/* free signature payload memory that was allocated earlier in dload.c */
-		_alpmload_payload_reset(payload);
+		_alpm_dload_payload_reset(payload);
 		FREE(payload);
 	}
 
@@ -805,7 +805,7 @@ static int curl_add_payload(alpm_handle_t *handle, CURLM *curlm,
 	curl_multi_add_handle(curlm, curl);
 
 	if(handle->dlcb) {
-		alpmownload_event_init_t cb_data = {.optional = payload->errors_ok};
+		alpm_download_event_init_t cb_data = {.optional = payload->errors_ok};
 		handle->dlcb(handle->dlcb_ctx, payload->remote_name, ALPM_DOWNLOAD_INIT, &cb_data);
 	}
 
@@ -1178,7 +1178,7 @@ static void prepare_resumable_downloads(alpm_list_t *payloads, const char *local
  * Returns 0 if a payload was actually downloaded
  * Returns 1 if no files were downloaded and all errors were non-fatal
  */
-int _alpmownload(alpm_handle_t *handle,
+int _alpm_download(alpm_handle_t *handle,
 		alpm_list_t *payloads /* struct dload_payload */,
 		const char *localpath,
 		const char *temporary_localpath)
@@ -1357,7 +1357,7 @@ int SYMEXPORT alpm_fetch_pkgurl(alpm_handle_t *handle, const alpm_list_t *urls,
 		event.type = ALPM_EVENT_PKG_RETRIEVE_START;
 		event.pkg_retrieve.num = alpm_list_count(payloads);
 		EVENT(handle, &event);
-		if(_alpmownload(handle, payloads, cachedir, temporary_cachedir) == -1) {
+		if(_alpm_download(handle, payloads, cachedir, temporary_cachedir) == -1) {
 			_alpm_log(handle, ALPM_LOG_WARNING, _("failed to retrieve some files\n"));
 			event.type = ALPM_EVENT_PKG_RETRIEVE_FAILED;
 			EVENT(handle, &event);
@@ -1386,7 +1386,7 @@ int SYMEXPORT alpm_fetch_pkgurl(alpm_handle_t *handle, const alpm_list_t *urls,
 			}
 		}
 
-		alpm_list_free_inner(payloads, (alpm_list_fn_free)_alpmload_payload_reset);
+		alpm_list_free_inner(payloads, (alpm_list_fn_free)_alpm_dload_payload_reset);
 		FREELIST(payloads);
 	}
 
@@ -1395,7 +1395,7 @@ int SYMEXPORT alpm_fetch_pkgurl(alpm_handle_t *handle, const alpm_list_t *urls,
 	return 0;
 
 err:
-	alpm_list_free_inner(payloads, (alpm_list_fn_free)_alpmload_payload_reset);
+	alpm_list_free_inner(payloads, (alpm_list_fn_free)_alpm_dload_payload_reset);
 	_alpm_remove_temporary_download_dir(temporary_cachedir);
 	FREE(temporary_cachedir);
 	FREELIST(payloads);
@@ -1404,7 +1404,7 @@ err:
 	return -1;
 }
 
-void _alpmload_payload_reset(struct dload_payload *payload)
+void _alpm_dload_payload_reset(struct dload_payload *payload)
 {
 	ASSERT(payload, return);
 

@@ -27,10 +27,10 @@
 #include "conf.h"
 #include "package.h"
 
-static void print_line_machinereadable(alpmb_t *db, alpm_pkg_t *pkg, char *filename)
+static void print_line_machinereadable(alpm_db_t *db, alpm_pkg_t *pkg, char *filename)
 {
 	/* Fields are repo, pkgname, pkgver, filename separated with \0 */
-	fputs(alpmb_get_name(db), stdout);
+	fputs(alpm_db_get_name(db), stdout);
 	fputc(0, stdout);
 	fputs(alpm_pkg_get_name(pkg), stdout);
 	fputc(0, stdout);
@@ -40,7 +40,7 @@ static void print_line_machinereadable(alpmb_t *db, alpm_pkg_t *pkg, char *filen
 	fputs("\n", stdout);
 }
 
-static void dump_pkg_machinereadable(alpmb_t *db, alpm_pkg_t *pkg)
+static void dump_pkg_machinereadable(alpm_db_t *db, alpm_pkg_t *pkg)
 {
 	alpm_filelist_t *pkgfiles = alpm_pkg_get_files(pkg);
 	for(size_t filenum = 0; filenum < pkgfiles->count; filenum++) {
@@ -49,18 +49,18 @@ static void dump_pkg_machinereadable(alpmb_t *db, alpm_pkg_t *pkg)
 	}
 }
 
-static void print_owned_by(alpmb_t *db, alpm_pkg_t *pkg, char *filename)
+static void print_owned_by(alpm_db_t *db, alpm_pkg_t *pkg, char *filename)
 {
 	const colstr_t *colstr = &config->colstr;
 	printf(_("%s is owned by %s%s/%s%s %s%s%s\n"), filename,
-		colstr->repo, alpmb_get_name(db), colstr->title,
+		colstr->repo, alpm_db_get_name(db), colstr->title,
 		alpm_pkg_get_name(pkg), colstr->version,
 		alpm_pkg_get_version(pkg), colstr->nocolor);
 }
 
-static void print_match(alpm_list_t *match, alpmb_t *repo, alpm_pkg_t *pkg, int exact_file)
+static void print_match(alpm_list_t *match, alpm_db_t *repo, alpm_pkg_t *pkg, int exact_file)
 {
-	alpmb_t *db_local = alpm_get_localdb(config->handle);
+	alpm_db_t *db_local = alpm_get_localdb(config->handle);
 	const colstr_t *colstr = &config->colstr;
 
 	if(config->op_f_machinereadable) {
@@ -70,7 +70,7 @@ static void print_match(alpm_list_t *match, alpmb_t *repo, alpm_pkg_t *pkg, int 
 			print_line_machinereadable(repo, pkg, filename);
 		}
 	} else if(config->quiet) {
-		printf("%s/%s\n", alpmb_get_name(repo), alpm_pkg_get_name(pkg));
+		printf("%s/%s\n", alpm_db_get_name(repo), alpm_pkg_get_name(pkg));
 	} else if(exact_file) {
 		alpm_list_t *ml;
 		for(ml = match; ml; ml = alpm_list_next(ml)) {
@@ -79,7 +79,7 @@ static void print_match(alpm_list_t *match, alpmb_t *repo, alpm_pkg_t *pkg, int 
 		}
 	} else {
 		alpm_list_t *ml;
-		printf("%s%s/%s%s %s%s%s", colstr->repo, alpmb_get_name(repo),
+		printf("%s%s/%s%s %s%s%s", colstr->repo, alpm_db_get_name(repo),
 			colstr->title, alpm_pkg_get_name(pkg),
 			colstr->version, alpm_pkg_get_version(pkg), colstr->nocolor);
 
@@ -154,8 +154,8 @@ static int files_search(alpm_list_t *syncs, alpm_list_t *targets, int regex) {
 
 		for(s = syncs; s; s = alpm_list_next(s)) {
 			alpm_list_t *p;
-			alpmb_t *repo = s->data;
-			alpm_list_t *packages = alpmb_get_pkgcache(repo);
+			alpm_db_t *repo = s->data;
+			alpm_list_t *packages = alpm_db_get_pkgcache(repo);
 			int m;
 
 			for(p = packages; p; p = alpm_list_next(p)) {
@@ -261,15 +261,15 @@ static int files_list(alpm_list_t *syncs, alpm_list_t *targets) {
 
 			for(j = syncs; j; j = alpm_list_next(j)) {
 				alpm_pkg_t *pkg;
-				alpmb_t *db = j->data;
+				alpm_db_t *db = j->data;
 
 				if(repo) {
-					if(strcmp(alpmb_get_name(db), repo) != 0) {
+					if(strcmp(alpm_db_get_name(db), repo) != 0) {
 						continue;
 					}
 				}
 
-				if((pkg = alpmb_get_pkg(db, targ)) != NULL) {
+				if((pkg = alpm_db_get_pkg(db, targ)) != NULL) {
 					found = 1;
 					if(config->op_f_machinereadable) {
 						dump_pkg_machinereadable(db, pkg);
@@ -289,9 +289,9 @@ static int files_list(alpm_list_t *syncs, alpm_list_t *targets) {
 		}
 	} else {
 		for(i = syncs; i; i = alpm_list_next(i)) {
-		alpmb_t *db = i->data;
+		alpm_db_t *db = i->data;
 
-			for(j = alpmb_get_pkgcache(db); j; j = alpm_list_next(j)) {
+			for(j = alpm_db_get_pkgcache(db); j; j = alpm_list_next(j)) {
 				alpm_pkg_t *pkg = j->data;
 				if(config->op_f_machinereadable) {
 					dump_pkg_machinereadable(db, pkg);

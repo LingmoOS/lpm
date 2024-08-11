@@ -36,7 +36,7 @@ void cb_progress(void *ctx, alpm_progress_t event, const char *pkgname,
 		int percent, size_t howmany, size_t remain);
 
 /* callback to handle display of download progress */
-void cb_download(void *ctx, const char *filename, alpmownload_event_type_t event,
+void cb_download(void *ctx, const char *filename, alpm_download_event_type_t event,
 		void *data);
 
 /* callback to handle messages/notifications from lpm library */

@@ -66,7 +66,7 @@ alpm_handle_t SYMEXPORT *alpm_initialize(const char *root, const char *dbpath,
 	MALLOC(myhandle->lockfile, lockfilelen, goto nomem);
 	snprintf(myhandle->lockfile, lockfilelen, "%s%s", myhandle->dbpath, lf);
 
-	if(_alpmb_register_local(myhandle) == NULL) {
+	if(_alpm_db_register_local(myhandle) == NULL) {
 		myerr = myhandle->pm_errno;
 		goto cleanup;
 	}

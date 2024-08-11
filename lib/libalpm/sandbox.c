@@ -127,7 +127,7 @@ void _alpm_sandbox_cb_log(void *ctx, alpm_loglevel_t level, const char *fmt, va_
 	FREE(string);
 }
 
-void _alpm_sandbox_cb_dl(void *ctx, const char *filename, alpmownload_event_type_t event, void *data)
+void _alpm_sandbox_cb_dl(void *ctx, const char *filename, alpm_download_event_type_t event, void *data)
 {
 	_alpm_sandbox_callback_t type = ALPM_SANDBOX_CB_DOWNLOAD;
 	_alpm_sandbox_callback_context *context = ctx;
@@ -146,16 +146,16 @@ void _alpm_sandbox_cb_dl(void *ctx, const char *filename, alpmownload_event_type
 	write_to_pipe(context->callback_pipe, &event, sizeof(event));
 	switch(event) {
 		case ALPM_DOWNLOAD_INIT:
-			write_to_pipe(context->callback_pipe, data, sizeof(alpmownload_event_init_t));
+			write_to_pipe(context->callback_pipe, data, sizeof(alpm_download_event_init_t));
 			break;
 		case ALPM_DOWNLOAD_PROGRESS:
-			write_to_pipe(context->callback_pipe, data, sizeof(alpmownload_event_progress_t));
+			write_to_pipe(context->callback_pipe, data, sizeof(alpm_download_event_progress_t));
 			break;
 		case ALPM_DOWNLOAD_RETRY:
-			write_to_pipe(context->callback_pipe, data, sizeof(alpmownload_event_retry_t));
+			write_to_pipe(context->callback_pipe, data, sizeof(alpm_download_event_retry_t));
 			break;
 		case ALPM_DOWNLOAD_COMPLETED:
-			write_to_pipe(context->callback_pipe, data, sizeof(alpmownload_event_completed_t));
+			write_to_pipe(context->callback_pipe, data, sizeof(alpm_download_event_completed_t));
 			break;
 	}
 	write_to_pipe(context->callback_pipe, &filename_len, sizeof(filename_len));
@@ -182,33 +182,33 @@ bool _alpm_sandbox_process_cb_log(alpm_handle_t *handle, int callback_pipe) {
 }
 
 bool _alpm_sandbox_process_cb_download(alpm_handle_t *handle, int callback_pipe) {
-	alpmownload_event_type_t type;
+	alpm_download_event_type_t type;
 	char *filename = NULL;
 	size_t filename_size, cb_data_size;
 	union {
-		alpmownload_event_init_t init;
-		alpmownload_event_progress_t progress;
-		alpmownload_event_retry_t retry;
-		alpmownload_event_completed_t completed;
+		alpm_download_event_init_t init;
+		alpm_download_event_progress_t progress;
+		alpm_download_event_retry_t retry;
+		alpm_download_event_completed_t completed;
 	} cb_data;
 
 	ASSERT(read_from_pipe(callback_pipe, &type, sizeof(type)) != -1, return false);
 
 	switch (type) {
 		case ALPM_DOWNLOAD_INIT:
-			cb_data_size = sizeof(alpmownload_event_init_t);
+			cb_data_size = sizeof(alpm_download_event_init_t);
 			ASSERT(read_from_pipe(callback_pipe, &cb_data.init, cb_data_size) != -1, return false);
 			break;
 		case ALPM_DOWNLOAD_PROGRESS:
-			cb_data_size = sizeof(alpmownload_event_progress_t);
+			cb_data_size = sizeof(alpm_download_event_progress_t);
 			ASSERT(read_from_pipe(callback_pipe, &cb_data.progress, cb_data_size) != -1, return false);
 			break;
 		case ALPM_DOWNLOAD_RETRY:
-			cb_data_size = sizeof(alpmownload_event_retry_t);
+			cb_data_size = sizeof(alpm_download_event_retry_t);
 			ASSERT(read_from_pipe(callback_pipe, &cb_data.retry, cb_data_size) != -1, return false);
 			break;
 		case ALPM_DOWNLOAD_COMPLETED:
-			cb_data_size = sizeof(alpmownload_event_completed_t);
+			cb_data_size = sizeof(alpm_download_event_completed_t);
 			ASSERT(read_from_pipe(callback_pipe, &cb_data.completed, cb_data_size) != -1, return false);
 			break;
 		default:

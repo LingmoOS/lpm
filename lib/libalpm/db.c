@@ -37,7 +37,7 @@
 #include "package.h"
 #include "group.h"
 
-alpmb_t SYMEXPORT *alpm_register_syncdb(alpm_handle_t *handle,
+alpm_db_t SYMEXPORT *alpm_register_syncdb(alpm_handle_t *handle,
 		const char *treename, int siglevel)
 {
 	alpm_list_t *i;
@@ -55,30 +55,30 @@ alpmb_t SYMEXPORT *alpm_register_syncdb(alpm_handle_t *handle,
 		RET_ERR(handle, ALPM_ERR_DB_NOT_NULL, NULL);
 	}
 	for(i = handle->dbs_sync; i; i = i->next) {
-		alpmb_t *d = i->data;
+		alpm_db_t *d = i->data;
 		if(strcmp(treename, d->treename) == 0) {
 			RET_ERR(handle, ALPM_ERR_DB_NOT_NULL, NULL);
 		}
 	}
 
-	return _alpmb_register_sync(handle, treename, siglevel);
+	return _alpm_db_register_sync(handle, treename, siglevel);
 }
 
-/* Helper function for alpmb_unregister{_all} */
-void _alpmb_unregister(alpmb_t *db)
+/* Helper function for alpm_db_unregister{_all} */
+void _alpm_db_unregister(alpm_db_t *db)
 {
 	if(db == NULL) {
 		return;
 	}
 
 	_alpm_log(db->handle, ALPM_LOG_DEBUG, "unregistering database '%s'\n", db->treename);
-	_alpmb_free(db);
+	_alpm_db_free(db);
 }
 
 int SYMEXPORT alpm_unregister_all_syncdbs(alpm_handle_t *handle)
 {
 	alpm_list_t *i;
-	alpmb_t *db;
+	alpm_db_t *db;
 
 	/* Sanity checks */
 	CHECK_HANDLE(handle, return -1);
@@ -95,7 +95,7 @@ int SYMEXPORT alpm_unregister_all_syncdbs(alpm_handle_t *handle)
 	return 0;
 }
 
-int SYMEXPORT alpmb_unregister(alpmb_t *db)
+int SYMEXPORT alpm_db_unregister(alpm_db_t *db)
 {
 	int found = 0;
 	alpm_handle_t *handle;
@@ -117,7 +117,7 @@ int SYMEXPORT alpmb_unregister(alpmb_t *db)
 		 */
 		void *data;
 		handle->dbs_sync = alpm_list_remove(handle->dbs_sync,
-				db, _alpmb_cmp, &data);
+				db, _alpm_db_cmp, &data);
 		if(data) {
 			found = 1;
 		}
@@ -131,40 +131,40 @@ int SYMEXPORT alpmb_unregister(alpmb_t *db)
 	return 0;
 }
 
-alpm_list_t SYMEXPORT *alpmb_get_cache_servers(const alpmb_t *db)
+alpm_list_t SYMEXPORT *alpm_db_get_cache_servers(const alpm_db_t *db)
 {
 	ASSERT(db != NULL, return NULL);
 	return db->cache_servers;
 }
 
-int SYMEXPORT alpmb_set_cache_servers(alpmb_t *db, alpm_list_t *cache_servers)
+int SYMEXPORT alpm_db_set_cache_servers(alpm_db_t *db, alpm_list_t *cache_servers)
 {
 	alpm_list_t *i;
 	ASSERT(db != NULL, return -1);
 	FREELIST(db->cache_servers);
 	for(i = cache_servers; i; i = i->next) {
 		char *url = i->data;
-		if(alpmb_add_cache_server(db, url) != 0) {
+		if(alpm_db_add_cache_server(db, url) != 0) {
 			return -1;
 		}
 	}
 	return 0;
 }
 
-alpm_list_t SYMEXPORT *alpmb_get_servers(const alpmb_t *db)
+alpm_list_t SYMEXPORT *alpm_db_get_servers(const alpm_db_t *db)
 {
 	ASSERT(db != NULL, return NULL);
 	return db->servers;
 }
 
-int SYMEXPORT alpmb_set_servers(alpmb_t *db, alpm_list_t *servers)
+int SYMEXPORT alpm_db_set_servers(alpm_db_t *db, alpm_list_t *servers)
 {
 	alpm_list_t *i;
 	ASSERT(db != NULL, return -1);
 	FREELIST(db->servers);
 	for(i = servers; i; i = i->next) {
 		char *url = i->data;
-		if(alpmb_add_server(db, url) != 0) {
+		if(alpm_db_add_server(db, url) != 0) {
 			return -1;
 		}
 	}
@@ -184,7 +184,7 @@ static char *sanitize_url(const char *url)
 	return newurl;
 }
 
-int SYMEXPORT alpmb_add_cache_server(alpmb_t *db, const char *url)
+int SYMEXPORT alpm_db_add_cache_server(alpm_db_t *db, const char *url)
 {
 	char *newurl;
 
@@ -203,7 +203,7 @@ int SYMEXPORT alpmb_add_cache_server(alpmb_t *db, const char *url)
 	return 0;
 }
 
-int SYMEXPORT alpmb_add_server(alpmb_t *db, const char *url)
+int SYMEXPORT alpm_db_add_server(alpm_db_t *db, const char *url)
 {
 	char *newurl;
 
@@ -222,7 +222,7 @@ int SYMEXPORT alpmb_add_server(alpmb_t *db, const char *url)
 	return 0;
 }
 
-int SYMEXPORT alpmb_remove_cache_server(alpmb_t *db, const char *url)
+int SYMEXPORT alpm_db_remove_cache_server(alpm_db_t *db, const char *url)
 {
 	char *newurl, *vdata = NULL;
 	int ret = 1;
@@ -248,7 +248,7 @@ int SYMEXPORT alpmb_remove_cache_server(alpmb_t *db, const char *url)
 	return ret;
 }
 
-int SYMEXPORT alpmb_remove_server(alpmb_t *db, const char *url)
+int SYMEXPORT alpm_db_remove_server(alpm_db_t *db, const char *url)
 {
 	char *newurl, *vdata = NULL;
 	int ret = 1;
@@ -274,19 +274,19 @@ int SYMEXPORT alpmb_remove_server(alpmb_t *db, const char *url)
 	return ret;
 }
 
-alpm_handle_t SYMEXPORT *alpmb_get_handle(alpmb_t *db)
+alpm_handle_t SYMEXPORT *alpm_db_get_handle(alpm_db_t *db)
 {
 	ASSERT(db != NULL, return NULL);
 	return db->handle;
 }
 
-const char SYMEXPORT *alpmb_get_name(const alpmb_t *db)
+const char SYMEXPORT *alpm_db_get_name(const alpm_db_t *db)
 {
 	ASSERT(db != NULL, return NULL);
 	return db->treename;
 }
 
-int SYMEXPORT alpmb_get_siglevel(alpmb_t *db)
+int SYMEXPORT alpm_db_get_siglevel(alpm_db_t *db)
 {
 	ASSERT(db != NULL, return -1);
 	if(db->siglevel & ALPM_SIG_USE_DEFAULT) {
@@ -296,14 +296,14 @@ int SYMEXPORT alpmb_get_siglevel(alpmb_t *db)
 	}
 }
 
-int SYMEXPORT alpmb_get_valid(alpmb_t *db)
+int SYMEXPORT alpm_db_get_valid(alpm_db_t *db)
 {
 	ASSERT(db != NULL, return -1);
 	db->handle->pm_errno = ALPM_ERR_OK;
 	return db->ops->validate(db);
 }
 
-alpm_pkg_t SYMEXPORT *alpmb_get_pkg(alpmb_t *db, const char *name)
+alpm_pkg_t SYMEXPORT *alpm_db_get_pkg(alpm_db_t *db, const char *name)
 {
 	alpm_pkg_t *pkg;
 	ASSERT(db != NULL, return NULL);
@@ -311,56 +311,56 @@ alpm_pkg_t SYMEXPORT *alpmb_get_pkg(alpmb_t *db, const char *name)
 	ASSERT(name != NULL && strlen(name) != 0,
 			RET_ERR(db->handle, ALPM_ERR_WRONG_ARGS, NULL));
 
-	pkg = _alpmb_get_pkgfromcache(db, name);
+	pkg = _alpm_db_get_pkgfromcache(db, name);
 	if(!pkg) {
 		RET_ERR(db->handle, ALPM_ERR_PKG_NOT_FOUND, NULL);
 	}
 	return pkg;
 }
 
-alpm_list_t SYMEXPORT *alpmb_get_pkgcache(alpmb_t *db)
+alpm_list_t SYMEXPORT *alpm_db_get_pkgcache(alpm_db_t *db)
 {
 	ASSERT(db != NULL, return NULL);
 	db->handle->pm_errno = ALPM_ERR_OK;
-	return _alpmb_get_pkgcache(db);
+	return _alpm_db_get_pkgcache(db);
 }
 
-alpm_group_t SYMEXPORT *alpmb_get_group(alpmb_t *db, const char *name)
+alpm_group_t SYMEXPORT *alpm_db_get_group(alpm_db_t *db, const char *name)
 {
 	ASSERT(db != NULL, return NULL);
 	db->handle->pm_errno = 0;
 	ASSERT(name != NULL && strlen(name) != 0,
 			RET_ERR(db->handle, ALPM_ERR_WRONG_ARGS, NULL));
 
-	return _alpmb_get_groupfromcache(db, name);
+	return _alpm_db_get_groupfromcache(db, name);
 }
 
-alpm_list_t SYMEXPORT *alpmb_get_groupcache(alpmb_t *db)
+alpm_list_t SYMEXPORT *alpm_db_get_groupcache(alpm_db_t *db)
 {
 	ASSERT(db != NULL, return NULL);
 	db->handle->pm_errno = ALPM_ERR_OK;
 
-	return _alpmb_get_groupcache(db);
+	return _alpm_db_get_groupcache(db);
 }
 
-int SYMEXPORT alpmb_search(alpmb_t *db, const alpm_list_t *needles,
+int SYMEXPORT alpm_db_search(alpm_db_t *db, const alpm_list_t *needles,
 		alpm_list_t **ret)
 {
 	ASSERT(db != NULL && ret != NULL && *ret == NULL,
 			RET_ERR(db->handle, ALPM_ERR_WRONG_ARGS, -1));
 	db->handle->pm_errno = ALPM_ERR_OK;
 
-	return _alpmb_search(db, needles, ret);
+	return _alpm_db_search(db, needles, ret);
 }
 
-int SYMEXPORT alpmb_set_usage(alpmb_t *db, int usage)
+int SYMEXPORT alpm_db_set_usage(alpm_db_t *db, int usage)
 {
 	ASSERT(db != NULL, return -1);
 	db->usage = usage;
 	return 0;
 }
 
-int SYMEXPORT alpmb_get_usage(alpmb_t *db, int *usage)
+int SYMEXPORT alpm_db_get_usage(alpm_db_t *db, int *usage)
 {
 	ASSERT(db != NULL, return -1);
 	ASSERT(usage != NULL, return -1);
@@ -368,11 +368,11 @@ int SYMEXPORT alpmb_get_usage(alpmb_t *db, int *usage)
 	return 0;
 }
 
-alpmb_t *_alpmb_new(const char *treename, int is_local)
+alpm_db_t *_alpm_db_new(const char *treename, int is_local)
 {
-	alpmb_t *db;
+	alpm_db_t *db;
 
-	CALLOC(db, 1, sizeof(alpmb_t), return NULL);
+	CALLOC(db, 1, sizeof(alpm_db_t), return NULL);
 	STRDUP(db->treename, treename, FREE(db); return NULL);
 	if(is_local) {
 		db->status |= DB_STATUS_LOCAL;
@@ -384,11 +384,11 @@ alpmb_t *_alpmb_new(const char *treename, int is_local)
 	return db;
 }
 
-void _alpmb_free(alpmb_t *db)
+void _alpm_db_free(alpm_db_t *db)
 {
 	ASSERT(db != NULL, return);
 	/* cleanup pkgcache */
-	_alpmb_free_pkgcache(db);
+	_alpm_db_free_pkgcache(db);
 	/* cleanup server list */
 	FREELIST(db->cache_servers);
 	FREELIST(db->servers);
@@ -399,7 +399,7 @@ void _alpmb_free(alpmb_t *db)
 	return;
 }
 
-const char *_alpmb_path(alpmb_t *db)
+const char *_alpm_db_path(alpm_db_t *db)
 {
 	if(!db) {
 		return NULL;
@@ -432,14 +432,14 @@ const char *_alpmb_path(alpmb_t *db)
 	return db->_path;
 }
 
-int _alpmb_cmp(const void *d1, const void *d2)
+int _alpm_db_cmp(const void *d1, const void *d2)
 {
-	const alpmb_t *db1 = d1;
-	const alpmb_t *db2 = d2;
+	const alpm_db_t *db1 = d1;
+	const alpm_db_t *db2 = d2;
 	return strcmp(db1->treename, db2->treename);
 }
 
-int _alpmb_search(alpmb_t *db, const alpm_list_t *needles,
+int _alpm_db_search(alpm_db_t *db, const alpm_list_t *needles,
 		alpm_list_t **ret)
 {
 	const alpm_list_t *i, *j, *k;
@@ -449,7 +449,7 @@ int _alpmb_search(alpmb_t *db, const alpm_list_t *needles,
 	}
 
 	/* copy the pkgcache- we will free the list var after each needle */
-	alpm_list_t *list = alpm_list_copy(_alpmb_get_pkgcache(db));
+	alpm_list_t *list = alpm_list_copy(_alpm_db_get_pkgcache(db));
 
 	for(i = needles; i; i = i->next) {
 		char *targ;
@@ -488,7 +488,7 @@ int _alpmb_search(alpmb_t *db, const alpm_list_t *needles,
 			if(!matched) {
 				/* check provides */
 				for(k = alpm_pkg_get_provides(pkg); k; k = k->next) {
-					alpmepend_t *provide = k->data;
+					alpm_depend_t *provide = k->data;
 					if(regexec(&reg, provide->name, 0, 0, 0) == 0) {
 						matched = provide->name;
 						break;
@@ -526,9 +526,9 @@ int _alpmb_search(alpmb_t *db, const alpm_list_t *needles,
 /* Returns a new package cache from db.
  * It frees the cache if it already exists.
  */
-static int load_pkgcache(alpmb_t *db)
+static int load_pkgcache(alpm_db_t *db)
 {
-	_alpmb_free_pkgcache(db);
+	_alpm_db_free_pkgcache(db);
 
 	_alpm_log(db->handle, ALPM_LOG_DEBUG, "loading package cache for repository '%s'\n",
 			db->treename);
@@ -542,7 +542,7 @@ static int load_pkgcache(alpmb_t *db)
 	return 0;
 }
 
-static void free_groupcache(alpmb_t *db)
+static void free_groupcache(alpm_db_t *db)
 {
 	alpm_list_t *lg;
 
@@ -561,7 +561,7 @@ static void free_groupcache(alpmb_t *db)
 	db->status &= ~DB_STATUS_GRPCACHE;
 }
 
-void _alpmb_free_pkgcache(alpmb_t *db)
+void _alpm_db_free_pkgcache(alpm_db_t *db)
 {
 	if(db == NULL || db->pkgcache == NULL) {
 		return;
@@ -579,7 +579,7 @@ void _alpmb_free_pkgcache(alpmb_t *db)
 	free_groupcache(db);
 }
 
-alpm_pkghash_t *_alpmb_get_pkgcache_hash(alpmb_t *db)
+alpm_pkghash_t *_alpm_db_get_pkgcache_hash(alpm_db_t *db)
 {
 	if(db == NULL) {
 		return NULL;
@@ -599,9 +599,9 @@ alpm_pkghash_t *_alpmb_get_pkgcache_hash(alpmb_t *db)
 	return db->pkgcache;
 }
 
-alpm_list_t *_alpmb_get_pkgcache(alpmb_t *db)
+alpm_list_t *_alpm_db_get_pkgcache(alpm_db_t *db)
 {
-	alpm_pkghash_t *hash = _alpmb_get_pkgcache_hash(db);
+	alpm_pkghash_t *hash = _alpm_db_get_pkgcache_hash(db);
 
 	if(hash == NULL) {
 		return NULL;
@@ -611,7 +611,7 @@ alpm_list_t *_alpmb_get_pkgcache(alpmb_t *db)
 }
 
 /* "duplicate" pkg then add it to pkgcache */
-int _alpmb_add_pkgincache(alpmb_t *db, alpm_pkg_t *pkg)
+int _alpm_db_add_pkgincache(alpm_db_t *db, alpm_pkg_t *pkg)
 {
 	alpm_pkg_t *newpkg = NULL;
 
@@ -644,7 +644,7 @@ int _alpmb_add_pkgincache(alpmb_t *db, alpm_pkg_t *pkg)
 	return 0;
 }
 
-int _alpmb_remove_pkgfromcache(alpmb_t *db, alpm_pkg_t *pkg)
+int _alpm_db_remove_pkgfromcache(alpm_db_t *db, alpm_pkg_t *pkg)
 {
 	alpm_pkg_t *data = NULL;
 
@@ -670,13 +670,13 @@ int _alpmb_remove_pkgfromcache(alpmb_t *db, alpm_pkg_t *pkg)
 	return 0;
 }
 
-alpm_pkg_t *_alpmb_get_pkgfromcache(alpmb_t *db, const char *target)
+alpm_pkg_t *_alpm_db_get_pkgfromcache(alpm_db_t *db, const char *target)
 {
 	if(db == NULL) {
 		return NULL;
 	}
 
-	alpm_pkghash_t *pkgcache = _alpmb_get_pkgcache_hash(db);
+	alpm_pkghash_t *pkgcache = _alpm_db_get_pkgcache_hash(db);
 	if(!pkgcache) {
 		return NULL;
 	}
@@ -686,7 +686,7 @@ alpm_pkg_t *_alpmb_get_pkgfromcache(alpmb_t *db, const char *target)
 
 /* Returns a new group cache from db.
  */
-static int load_grpcache(alpmb_t *db)
+static int load_grpcache(alpm_db_t *db)
 {
 	alpm_list_t *lp;
 
@@ -697,7 +697,7 @@ static int load_grpcache(alpmb_t *db)
 	_alpm_log(db->handle, ALPM_LOG_DEBUG, "loading group cache for repository '%s'\n",
 			db->treename);
 
-	for(lp = _alpmb_get_pkgcache(db); lp; lp = lp->next) {
+	for(lp = _alpm_db_get_pkgcache(db); lp; lp = lp->next) {
 		const alpm_list_t *i;
 		alpm_pkg_t *pkg = lp->data;
 
@@ -736,7 +736,7 @@ static int load_grpcache(alpmb_t *db)
 	return 0;
 }
 
-alpm_list_t *_alpmb_get_groupcache(alpmb_t *db)
+alpm_list_t *_alpm_db_get_groupcache(alpm_db_t *db)
 {
 	if(db == NULL) {
 		return NULL;
@@ -753,7 +753,7 @@ alpm_list_t *_alpmb_get_groupcache(alpmb_t *db)
 	return db->grpcache;
 }
 
-alpm_group_t *_alpmb_get_groupfromcache(alpmb_t *db, const char *target)
+alpm_group_t *_alpm_db_get_groupfromcache(alpm_db_t *db, const char *target)
 {
 	alpm_list_t *i;
 
@@ -761,7 +761,7 @@ alpm_group_t *_alpmb_get_groupfromcache(alpmb_t *db, const char *target)
 		return NULL;
 	}
 
-	for(i = _alpmb_get_groupcache(db); i; i = i->next) {
+	for(i = _alpm_db_get_groupcache(db); i; i = i->next) {
 		alpm_group_t *info = i->data;
 
 		if(strcmp(info->name, target) == 0) {

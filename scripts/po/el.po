@@ -215,7 +215,7 @@ msgstr ""
 msgid "Make packages compatible for use with lpm"
 msgstr "Δημιουργία πακέτων συμβατών για χρήση με τον lpm."
 
-#: scripts/makepkg.sh.in:878 scripts/lpmb-upgrade.sh.in:41
+#: scripts/makepkg.sh.in:878 scripts/lpm-db-upgrade.sh.in:41
 msgid "Usage: %s [options]"
 msgstr "Χρήση: %s [επιλογές]"
 
@@ -410,7 +410,7 @@ msgstr "  --noprogressbar  Λήψη αρχείων χωρίς γραμμή πρ�
 msgid "If %s is not specified, %s will look for '%s'"
 msgstr "Εάν το %s δεν καθοριστεί, το %s θα αναζητήσει το '%s'"
 
-#: scripts/makepkg.sh.in:933 scripts/lpmb-upgrade.sh.in:57
+#: scripts/makepkg.sh.in:933 scripts/lpm-db-upgrade.sh.in:57
 #: scripts/lpm-key.sh.in:99 scripts/repo-add.sh.in:104
 msgid ""
 "This is free software; see the source for copying conditions.\\nThere is NO "
@@ -512,69 +512,69 @@ msgstr "Κατάλογος πακέτου έτοιμος."
 msgid "Finished making: %s"
 msgstr "Τέλος δημιουργίας: %s"
 
-#: scripts/lpmb-upgrade.sh.in:39
-msgid "Upgrade the local lpmatabase to a newer format"
+#: scripts/lpm-db-upgrade.sh.in:39
+msgid "Upgrade the local lpm database to a newer format"
 msgstr "Αναβάθμιση τοπικής βάσης πακέτων του lpm σε νεότερη μορφή"
 
-#: scripts/lpmb-upgrade.sh.in:43
+#: scripts/lpm-db-upgrade.sh.in:43
 msgid "options:"
 msgstr "επιλογές:"
 
-#: scripts/lpmb-upgrade.sh.in:44
+#: scripts/lpm-db-upgrade.sh.in:44
 msgid "  -d, --dbpath <path>  set an alternate database location"
 msgstr "  -d, --dbpath <path>  ορισμός εναλλακτικής θέσης βάσης"
 
-#: scripts/lpmb-upgrade.sh.in:45
+#: scripts/lpm-db-upgrade.sh.in:45
 msgid "  -h, --help           show this help message and exit"
 msgstr "  -h, --help           Εμφάνιση αυτής της βοήθειας και έξοδος"
 
-#: scripts/lpmb-upgrade.sh.in:46
+#: scripts/lpm-db-upgrade.sh.in:46
 msgid "  -r, --root <path>    set an alternate installation root"
 msgstr "  -r, --root <path>    Ορισμός εναλλακτικού ριζικού καταλόγου"
 
-#: scripts/lpmb-upgrade.sh.in:47
+#: scripts/lpm-db-upgrade.sh.in:47
 msgid "  -V, --version        show version information and exit"
 msgstr "  -V, --version        Εμφάνιση πληροφοριών έκδοσης και έξοδος"
 
-#: scripts/lpmb-upgrade.sh.in:48
+#: scripts/lpm-db-upgrade.sh.in:48
 msgid "  --config <path>      set an alternate configuration file"
 msgstr "  --config <path>      Ορισμός εναλλακτικού αρχείου ρυθμίσεων"
 
-#: scripts/lpmb-upgrade.sh.in:49
+#: scripts/lpm-db-upgrade.sh.in:49
 msgid "  --nocolor            disable colorized output messages"
 msgstr "  --nocolor            Απενεργοποίηση χρώματος μηνυμάτων"
 
-#: scripts/lpmb-upgrade.sh.in:122 scripts/repo-add.sh.in:396
+#: scripts/lpm-db-upgrade.sh.in:122 scripts/repo-add.sh.in:396
 msgid "%s does not exist or is not a directory."
 msgstr "Το %s δεν υπάρχει ή δεν είναι κατάλογος."
 
-#: scripts/lpmb-upgrade.sh.in:126
-msgid "%s is not a lpmatabase directory."
+#: scripts/lpm-db-upgrade.sh.in:126
+msgid "%s is not a lpm database directory."
 msgstr "Το %s δεν είναι κατάλογος βάσης του lpm."
 
-#: scripts/lpmb-upgrade.sh.in:130
+#: scripts/lpm-db-upgrade.sh.in:130
 msgid "You must have correct permissions to upgrade the database."
 msgstr "Απαιτούνται σωστές άδειες για την αναβάθμιση της βάσης."
 
-#: scripts/lpmb-upgrade.sh.in:140
+#: scripts/lpm-db-upgrade.sh.in:140
 msgid "Pacman lock file was found. Cannot run while lpm is running."
 msgstr ""
 "Υπάρχει αρχείο κλειδώματος του lpm. Αδυναμία εκτέλεσης ενώ ο lpm "
 "λειτουργεί."
 
-#: scripts/lpmb-upgrade.sh.in:152
+#: scripts/lpm-db-upgrade.sh.in:152
 msgid "Pre-3.5 database format detected - upgrading..."
 msgstr "Εντοπίστηκε μορφή βάσης προ-3.5 - αναβάθμιση..."
 
-#: scripts/lpmb-upgrade.sh.in:159
+#: scripts/lpm-db-upgrade.sh.in:159
 msgid "Done."
 msgstr "Πέρας."
 
-#: scripts/lpmb-upgrade.sh.in:163
+#: scripts/lpm-db-upgrade.sh.in:163
 msgid "Pre-4.2 database format detected - upgrading..."
 msgstr "Εντοπισμός μορφής βάσης δεδομένων προ-4.2 - αναβάθμιση..."
 
-#: scripts/lpmb-upgrade.sh.in:185
+#: scripts/lpm-db-upgrade.sh.in:185
 msgid "symlink '%s' points outside lpm root, manual repair required"
 msgstr ""
 "ο συμβολικός δεσμός '%s' δείχνει εκτός ριζικού καταλόγου lpm, απαιτείται "
@@ -1081,7 +1081,7 @@ msgid "Held by process %s"
 msgstr "Κρατείται από την διεργασία %s"
 
 #: scripts/repo-add.sh.in:418
-msgid "Repository file '%s' is not a proper lpmatabase."
+msgid "Repository file '%s' is not a proper lpm database."
 msgstr "Το αρχείο αποθετηρίου '%s' δεν είναι κατάλληλη βάση lpm."
 
 #: scripts/repo-add.sh.in:423

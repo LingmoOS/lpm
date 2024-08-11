@@ -282,7 +282,7 @@ int SYMEXPORT alpm_pkg_get_sig(alpm_pkg_t *pkg, unsigned char **sig, size_t *sig
 	ASSERT(pkg != NULL, return -1);
 
 	if(pkg->base64_sig) {
-		int ret = alpmecode_signature(pkg->base64_sig, sig, sig_len);
+		int ret = alpm_decode_signature(pkg->base64_sig, sig, sig_len);
 		if(ret != 0) {
 			RET_ERR(pkg->handle, ALPM_ERR_SIG_INVALID, -1);
 		}
@@ -427,7 +427,7 @@ alpm_list_t SYMEXPORT *alpm_pkg_get_backup(alpm_pkg_t *pkg)
 	return pkg->ops->get_backup(pkg);
 }
 
-alpmb_t SYMEXPORT *alpm_pkg_get_db(alpm_pkg_t *pkg)
+alpm_db_t SYMEXPORT *alpm_pkg_get_db(alpm_pkg_t *pkg)
 {
 	/* Sanity checks */
 	ASSERT(pkg != NULL, return NULL);
@@ -495,13 +495,13 @@ alpm_list_t SYMEXPORT *alpm_pkg_get_xdata(alpm_pkg_t *pkg)
 	return pkg->ops->get_xdata(pkg);
 }
 
-static void find_requiredby(alpm_pkg_t *pkg, alpmb_t *db, alpm_list_t **reqs,
+static void find_requiredby(alpm_pkg_t *pkg, alpm_db_t *db, alpm_list_t **reqs,
 		int optional)
 {
 	const alpm_list_t *i;
 	pkg->handle->pm_errno = ALPM_ERR_OK;
 
-	for(i = _alpmb_get_pkgcache(db); i; i = i->next) {
+	for(i = _alpm_db_get_pkgcache(db); i; i = i->next) {
 		alpm_pkg_t *cachepkg = i->data;
 		alpm_list_t *j;
 
@@ -512,7 +512,7 @@ static void find_requiredby(alpm_pkg_t *pkg, alpmb_t *db, alpm_list_t **reqs,
 		}
 
 		for(; j; j = j->next) {
-			if(_alpmepcmp(pkg, j->data)) {
+			if(_alpm_depcmp(pkg, j->data)) {
 				const char *cachepkgname = cachepkg->name;
 				if(alpm_list_find_str(*reqs, cachepkgname) == NULL) {
 					*reqs = alpm_list_add(*reqs, strdup(cachepkgname));
@@ -526,7 +526,7 @@ static alpm_list_t *compute_requiredby(alpm_pkg_t *pkg, int optional)
 {
 	const alpm_list_t *i;
 	alpm_list_t *reqs = NULL;
-	alpmb_t *db;
+	alpm_db_t *db;
 
 	ASSERT(pkg != NULL, return NULL);
 	pkg->handle->pm_errno = ALPM_ERR_OK;
@@ -584,7 +584,7 @@ static alpm_list_t *list_depdup(alpm_list_t *old)
 {
 	alpm_list_t *i, *new = NULL;
 	for(i = old; i; i = i->next) {
-		new = alpm_list_add(new, _alpmep_dup(i->data));
+		new = alpm_list_add(new, _alpm_dep_dup(i->data));
 	}
 	return new;
 }
@@ -683,7 +683,7 @@ cleanup:
 
 static void free_deplist(alpm_list_t *deps)
 {
-	alpm_list_free_inner(deps, (alpm_list_fn_free)alpmep_free);
+	alpm_list_free_inner(deps, (alpm_list_fn_free)alpm_dep_free);
 	alpm_list_free(deps);
 }
 

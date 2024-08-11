@@ -1275,7 +1275,7 @@ int main(int argc, char *argv[])
 	/* start the requested operation */
 	switch(config->op) {
 		case PM_OP_DATABASE:
-			ret = lpmatabase(pm_targets);
+			ret = lpm_database(pm_targets);
 			break;
 		case PM_OP_REMOVE:
 			ret = lpm_remove(pm_targets);
@@ -1290,7 +1290,7 @@ int main(int argc, char *argv[])
 			ret = lpm_sync(pm_targets);
 			break;
 		case PM_OP_DEPTEST:
-			ret = lpmeptest(pm_targets);
+			ret = lpm_deptest(pm_targets);
 			break;
 		case PM_OP_FILES:
 			ret = lpm_files(pm_targets);

@@ -93,7 +93,7 @@ alpm_list_t *alpm_list_add(alpm_list_t *list, void *data)
 8.  Declare all variables at the start of the block.
 [source,C]
 -------------------------------------------
-int SYMEXPORT alpmb_remove_server(alpmb_t *db, const char *url)
+int SYMEXPORT alpm_db_remove_server(alpm_db_t *db, const char *url)
 {
   char *newurl, *vdata = NULL;
 
@@ -116,7 +116,7 @@ int SYMEXPORT alpmb_remove_server(alpmb_t *db, const char *url)
 
 [source,C]
 -------------------------------------------
-int SYMEXPORT alpmb_remove_server(alpmb_t *db, const char *url)
+int SYMEXPORT alpm_db_remove_server(alpm_db_t *db, const char *url)
 {
   char *newurl = url;
 

@@ -232,7 +232,7 @@ msgstr ""
 msgid "Make packages compatible for use with lpm"
 msgstr "Stwórz pakiety kompatybilne do użytku z lpmem"
 
-#: scripts/makepkg.sh.in:878 scripts/lpmb-upgrade.sh.in:41
+#: scripts/makepkg.sh.in:878 scripts/lpm-db-upgrade.sh.in:41
 msgid "Usage: %s [options]"
 msgstr "Użycie: %s [opcje]"
 
@@ -420,7 +420,7 @@ msgstr "  --noprogressbar  Nie pokazuj paska postępu przy pobieraniu plików"
 msgid "If %s is not specified, %s will look for '%s'"
 msgstr "Jeśli %s nie jest podane, %s będzie szukać '%s'"
 
-#: scripts/makepkg.sh.in:933 scripts/lpmb-upgrade.sh.in:57
+#: scripts/makepkg.sh.in:933 scripts/lpm-db-upgrade.sh.in:57
 #: scripts/lpm-key.sh.in:99 scripts/repo-add.sh.in:104
 msgid ""
 "This is free software; see the source for copying conditions.\\nThere is NO "
@@ -523,68 +523,68 @@ msgstr "Katalog pakietu jest gotowy."
 msgid "Finished making: %s"
 msgstr "Ukończono tworzenie: %s"
 
-#: scripts/lpmb-upgrade.sh.in:39
-msgid "Upgrade the local lpmatabase to a newer format"
+#: scripts/lpm-db-upgrade.sh.in:39
+msgid "Upgrade the local lpm database to a newer format"
 msgstr "Aktualizacja lokalnej bazy danych lpma do nowszego formatu"
 
-#: scripts/lpmb-upgrade.sh.in:43
+#: scripts/lpm-db-upgrade.sh.in:43
 msgid "options:"
 msgstr "opcje:"
 
-#: scripts/lpmb-upgrade.sh.in:44
+#: scripts/lpm-db-upgrade.sh.in:44
 msgid "  -d, --dbpath <path>  set an alternate database location"
 msgstr "-d, --dbpath <ścieżka> ustawia alternatywną lokalizację bazy danych"
 
-#: scripts/lpmb-upgrade.sh.in:45
+#: scripts/lpm-db-upgrade.sh.in:45
 msgid "  -h, --help           show this help message and exit"
 msgstr "-h, --help pokazuje tą wiadomość pomoczy i kończy"
 
-#: scripts/lpmb-upgrade.sh.in:46
+#: scripts/lpm-db-upgrade.sh.in:46
 msgid "  -r, --root <path>    set an alternate installation root"
 msgstr "-r, --root <ścieżka> ustawia alternatywny cel instalacji"
 
-#: scripts/lpmb-upgrade.sh.in:47
+#: scripts/lpm-db-upgrade.sh.in:47
 msgid "  -V, --version        show version information and exit"
 msgstr "-V, --version pokazuje informację o wersji i kończy"
 
-#: scripts/lpmb-upgrade.sh.in:48
+#: scripts/lpm-db-upgrade.sh.in:48
 msgid "  --config <path>      set an alternate configuration file"
 msgstr "--config <ścieżka> ustawia alternatywny plik konfiguracyjny"
 
-#: scripts/lpmb-upgrade.sh.in:49
+#: scripts/lpm-db-upgrade.sh.in:49
 msgid "  --nocolor            disable colorized output messages"
 msgstr "--nocolor wyłącza kolorowe komunikaty"
 
-#: scripts/lpmb-upgrade.sh.in:122 scripts/repo-add.sh.in:396
+#: scripts/lpm-db-upgrade.sh.in:122 scripts/repo-add.sh.in:396
 msgid "%s does not exist or is not a directory."
 msgstr "%s nie istnieje lub nie jest katalogiem."
 
-#: scripts/lpmb-upgrade.sh.in:126
-msgid "%s is not a lpmatabase directory."
+#: scripts/lpm-db-upgrade.sh.in:126
+msgid "%s is not a lpm database directory."
 msgstr "%s nie jest bazą danych lpma."
 
-#: scripts/lpmb-upgrade.sh.in:130
+#: scripts/lpm-db-upgrade.sh.in:130
 msgid "You must have correct permissions to upgrade the database."
 msgstr "Musisz posiadać odpowiednie uprawnienia, by zaktualizować bazę danych."
 
-#: scripts/lpmb-upgrade.sh.in:140
+#: scripts/lpm-db-upgrade.sh.in:140
 msgid "Pacman lock file was found. Cannot run while lpm is running."
 msgstr ""
-"Znaleziono plik blokady lpma. Nie można kontynuować gdy lpmziała."
+"Znaleziono plik blokady lpma. Nie można kontynuować gdy lpm działa."
 
-#: scripts/lpmb-upgrade.sh.in:152
+#: scripts/lpm-db-upgrade.sh.in:152
 msgid "Pre-3.5 database format detected - upgrading..."
 msgstr "Wykryto bazę danych sprzed wersji 3.5 - aktualizowanie..."
 
-#: scripts/lpmb-upgrade.sh.in:159
+#: scripts/lpm-db-upgrade.sh.in:159
 msgid "Done."
 msgstr "Gotowe."
 
-#: scripts/lpmb-upgrade.sh.in:163
+#: scripts/lpm-db-upgrade.sh.in:163
 msgid "Pre-4.2 database format detected - upgrading..."
 msgstr "Wykryto format bazy danych sprzed wersji 4.2 - aktualizowanie..."
 
-#: scripts/lpmb-upgrade.sh.in:185
+#: scripts/lpm-db-upgrade.sh.in:185
 msgid "symlink '%s' points outside lpm root, manual repair required"
 msgstr ""
 "punkt dowiązania symbolicznego '%s' poza ścieżką docelową lpma, wymagana "
@@ -1093,7 +1093,7 @@ msgid "Held by process %s"
 msgstr "Przetrzymywany przez proces %s"
 
 #: scripts/repo-add.sh.in:418
-msgid "Repository file '%s' is not a proper lpmatabase."
+msgid "Repository file '%s' is not a proper lpm database."
 msgstr "Plik repozytorium '%s' nie jest poprawną bazą lpma."
 
 #: scripts/repo-add.sh.in:423

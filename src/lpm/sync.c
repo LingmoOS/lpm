@@ -117,8 +117,8 @@ static int sync_cleandb(const char *dbpath)
 		}
 
 		for(i = syncdbs; i && !found; i = alpm_list_next(i)) {
-			alpmb_t *db = i->data;
-			found = !strcmp(dbname, alpmb_get_name(db));
+			alpm_db_t *db = i->data;
+			found = !strcmp(dbname, alpm_db_get_name(db));
 		}
 
 		/* We have a file that doesn't match any syncdb. */
@@ -159,7 +159,7 @@ static int sync_cleancache(int level)
 {
 	alpm_list_t *i;
 	alpm_list_t *sync_dbs = alpm_get_syncdbs(config->handle);
-	alpmb_t *db_local = alpm_get_localdb(config->handle);
+	alpm_db_t *db_local = alpm_get_localdb(config->handle);
 	alpm_list_t *cachedirs = alpm_option_get_cachedirs(config->handle);
 	int ret = 0;
 
@@ -270,7 +270,7 @@ static int sync_cleancache(int level)
 
 			if(config->cleanmethod & PM_CLEAN_KEEPINST) {
 				/* check if this package is in the local DB */
-				pkg = alpmb_get_pkg(db_local, local_name);
+				pkg = alpm_db_get_pkg(db_local, local_name);
 				if(pkg != NULL && alpm_pkg_vercmp(local_version,
 							alpm_pkg_get_version(pkg)) == 0) {
 					/* package was found in local DB and version matches, keep it */
@@ -283,8 +283,8 @@ static int sync_cleancache(int level)
 				alpm_list_t *j;
 				/* check if this package is in a sync DB */
 				for(j = sync_dbs; j && delete; j = alpm_list_next(j)) {
-					alpmb_t *db = j->data;
-					pkg = alpmb_get_pkg(db, local_name);
+					alpm_db_t *db = j->data;
+					pkg = alpm_db_get_pkg(db, local_name);
 					if(pkg != NULL && alpm_pkg_vercmp(local_version,
 								alpm_pkg_get_version(pkg)) == 0) {
 						/* package was found in a sync DB and version matches, keep it */
@@ -321,7 +321,7 @@ static int sync_search(alpm_list_t *syncs, alpm_list_t *targets)
 	int found = 0;
 
 	for(i = syncs; i; i = alpm_list_next(i)) {
-		alpmb_t *db = i->data;
+		alpm_db_t *db = i->data;
 		int ret = dump_pkg_search(db, targets, 1);
 
 		if(ret == -1) {
@@ -347,8 +347,8 @@ static int sync_group(int level, alpm_list_t *syncs, alpm_list_t *targets)
 			found = 0;
 			const char *grpname = i->data;
 			for(j = syncs; j; j = alpm_list_next(j)) {
-				alpmb_t *db = j->data;
-				alpm_group_t *grp = alpmb_get_group(db, grpname);
+				alpm_db_t *db = j->data;
+				alpm_group_t *grp = alpm_db_get_group(db, grpname);
 
 				if(grp) {
 					found++;
@@ -370,9 +370,9 @@ static int sync_group(int level, alpm_list_t *syncs, alpm_list_t *targets)
 	} else {
 		ret = 1;
 		for(i = syncs; i; i = alpm_list_next(i)) {
-			alpmb_t *db = i->data;
+			alpm_db_t *db = i->data;
 
-			for(j = alpmb_get_groupcache(db); j; j = alpm_list_next(j)) {
+			for(j = alpm_db_get_groupcache(db); j; j = alpm_list_next(j)) {
 				alpm_group_t *grp = j->data;
 				ret = 0;
 
@@ -419,13 +419,13 @@ static int sync_info(alpm_list_t *syncs, alpm_list_t *targets)
 			}
 
 			for(j = syncs; j; j = alpm_list_next(j)) {
-				alpmb_t *db = j->data;
-				if(repo && strcmp(repo, alpmb_get_name(db)) != 0) {
+				alpm_db_t *db = j->data;
+				if(repo && strcmp(repo, alpm_db_get_name(db)) != 0) {
 					continue;
 				}
 				founddb = 1;
 
-				for(k = alpmb_get_pkgcache(db); k; k = alpm_list_next(k)) {
+				for(k = alpm_db_get_pkgcache(db); k; k = alpm_list_next(k)) {
 					alpm_pkg_t *pkg = k->data;
 
 					if(strcmp(alpm_pkg_get_name(pkg), pkgstr) == 0) {
@@ -450,9 +450,9 @@ static int sync_info(alpm_list_t *syncs, alpm_list_t *targets)
 		}
 	} else {
 		for(i = syncs; i; i = alpm_list_next(i)) {
-			alpmb_t *db = i->data;
+			alpm_db_t *db = i->data;
 
-			for(j = alpmb_get_pkgcache(db); j; j = alpm_list_next(j)) {
+			for(j = alpm_db_get_pkgcache(db); j; j = alpm_list_next(j)) {
 				alpm_pkg_t *pkg = j->data;
 				dump_pkg_full(pkg, config->op_s_info > 1);
 			}
@@ -465,18 +465,18 @@ static int sync_info(alpm_list_t *syncs, alpm_list_t *targets)
 static int sync_list(alpm_list_t *syncs, alpm_list_t *targets)
 {
 	alpm_list_t *i, *j, *ls = NULL;
-	alpmb_t *db_local = alpm_get_localdb(config->handle);
+	alpm_db_t *db_local = alpm_get_localdb(config->handle);
 	int ret = 0;
 
 	if(targets) {
 		for(i = targets; i; i = alpm_list_next(i)) {
 			const char *repo = i->data;
-			alpmb_t *db = NULL;
+			alpm_db_t *db = NULL;
 
 			for(j = syncs; j; j = alpm_list_next(j)) {
-				alpmb_t *d = j->data;
+				alpm_db_t *d = j->data;
 
-				if(strcmp(repo, alpmb_get_name(d)) == 0) {
+				if(strcmp(repo, alpm_db_get_name(d)) == 0) {
 					db = d;
 					break;
 				}
@@ -495,14 +495,14 @@ static int sync_list(alpm_list_t *syncs, alpm_list_t *targets)
 	}
 
 	for(i = ls; i; i = alpm_list_next(i)) {
-		alpmb_t *db = i->data;
+		alpm_db_t *db = i->data;
 
-		for(j = alpmb_get_pkgcache(db); j; j = alpm_list_next(j)) {
+		for(j = alpm_db_get_pkgcache(db); j; j = alpm_list_next(j)) {
 			alpm_pkg_t *pkg = j->data;
 
 			if(!config->quiet) {
 				const colstr_t *colstr = &config->colstr;
-				printf("%s%s %s%s %s%s%s", colstr->repo, alpmb_get_name(db),
+				printf("%s%s %s%s %s%s%s", colstr->repo, alpm_db_get_name(db),
 						colstr->title, alpm_pkg_get_name(pkg),
 						colstr->version, alpm_pkg_get_version(pkg), colstr->nocolor);
 				print_installed(db_local, pkg);
@@ -520,12 +520,12 @@ static int sync_list(alpm_list_t *syncs, alpm_list_t *targets)
 	return ret;
 }
 
-static alpmb_t *get_db(const char *dbname)
+static alpm_db_t *get_db(const char *dbname)
 {
 	alpm_list_t *i;
 	for(i = alpm_get_syncdbs(config->handle); i; i = i->next) {
-		alpmb_t *db = i->data;
-		if(strcmp(alpmb_get_name(db), dbname) == 0) {
+		alpm_db_t *db = i->data;
+		if(strcmp(alpm_db_get_name(db), dbname) == 0) {
 			return db;
 		}
 	}
@@ -549,9 +549,9 @@ static int group_exists(alpm_list_t *dbs, const char *name)
 {
 	alpm_list_t *i;
 	for(i = dbs; i; i = i->next) {
-		alpmb_t *db = i->data;
+		alpm_db_t *db = i->data;
 
-		if(alpmb_get_group(db, name)) {
+		if(alpm_db_get_group(db, name)) {
 			return 1;
 		}
 	}
@@ -656,7 +656,7 @@ static int process_target(const char *target, int error)
 	alpm_list_t *dblist;
 
 	if(targname && targname != targstring) {
-		alpmb_t *db;
+		alpm_db_t *db;
 		const char *dbname;
 		int usage;
 
@@ -673,8 +673,8 @@ static int process_target(const char *target, int error)
 
 		/* explicitly mark this repo as valid for installs since
 		 * a repo name was given with the target */
-		alpmb_get_usage(db, &usage);
-		alpmb_set_usage(db, usage|ALPM_DB_USAGE_INSTALL);
+		alpm_db_get_usage(db, &usage);
+		alpm_db_set_usage(db, usage|ALPM_DB_USAGE_INSTALL);
 
 		dblist = alpm_list_add(NULL, db);
 		ret = process_targname(dblist, targname, error);
@@ -682,7 +682,7 @@ static int process_target(const char *target, int error)
 
 		/* restore old usage so we don't possibly disturb later
 		 * targets */
-		alpmb_set_usage(db, usage);
+		alpm_db_set_usage(db, usage);
 	} else {
 		targname = targstring;
 		dblist = alpm_get_syncdbs(config->handle);
@@ -738,9 +738,9 @@ static int sync_trans(alpm_list_t *targets)
 	return sync_prepare_execute();
 }
 
-static void print_broken_dep(alpmepmissing_t *miss)
+static void print_broken_dep(alpm_depmissing_t *miss)
 {
-	char *depstring = alpmep_compute_string(miss->depend);
+	char *depstring = alpm_dep_compute_string(miss->depend);
 	alpm_list_t *trans_add = alpm_trans_get_add(config->handle);
 	alpm_pkg_t *pkg;
 	if(miss->causingpkg == NULL) {
@@ -780,7 +780,7 @@ int sync_prepare_execute(void)
 			case ALPM_ERR_UNSATISFIED_DEPS:
 				for(i = data; i; i = alpm_list_next(i)) {
 					print_broken_dep(i->data);
-					alpmepmissing_free(i->data);
+					alpm_depmissing_free(i->data);
 				}
 				break;
 			case ALPM_ERR_CONFLICTING_DEPS:
@@ -794,7 +794,7 @@ int sync_prepare_execute(void)
 								alpm_pkg_get_name(conflict->package2),
 								alpm_pkg_get_version(conflict->package2));
 					} else {
-						char *reason = alpmep_compute_string(conflict->reason);
+						char *reason = alpm_dep_compute_string(conflict->reason);
 						colon_printf(_("%s-%s and %s-%s are in conflict (%s)\n"),
 								alpm_pkg_get_name(conflict->package1),
 								alpm_pkg_get_version(conflict->package1),

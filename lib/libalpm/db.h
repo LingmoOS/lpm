@@ -31,7 +31,7 @@
 #include "signing.h"
 
 /* Database entries */
-typedef enum _alpmbinfrq_t {
+typedef enum _alpm_dbinfrq_t {
 	INFRQ_BASE = (1 << 0),
 	INFRQ_DESC = (1 << 1),
 	INFRQ_FILES = (1 << 2),
@@ -41,10 +41,10 @@ typedef enum _alpmbinfrq_t {
 	INFRQ_ALL = INFRQ_BASE | INFRQ_DESC | INFRQ_FILES |
 		INFRQ_SCRIPTLET | INFRQ_DSIZE,
 	INFRQ_ERROR = (1 << 30)
-} alpmbinfrq_t;
+} alpm_dbinfrq_t;
 
 /** Database status. Bitflags. */
-enum _alpmbstatus_t {
+enum _alpm_dbstatus_t {
 	DB_STATUS_VALID = (1 << 0),
 	DB_STATUS_INVALID = (1 << 1),
 	DB_STATUS_EXISTS = (1 << 2),
@@ -56,16 +56,16 @@ enum _alpmbstatus_t {
 };
 
 struct db_operations {
-	int (*validate) (alpmb_t *);
-	int (*populate) (alpmb_t *);
-	void (*unregister) (alpmb_t *);
+	int (*validate) (alpm_db_t *);
+	int (*populate) (alpm_db_t *);
+	void (*unregister) (alpm_db_t *);
 };
 
 /* Database */
-struct _alpmb_t {
+struct _alpm_db_t {
 	alpm_handle_t *handle;
 	char *treename;
-	/* do not access directly, use _alpmb_path(db) for lazy access */
+	/* do not access directly, use _alpm_db_path(db) for lazy access */
 	char *_path;
 	alpm_pkghash_t *pkgcache;
 	alpm_list_t *grpcache;
@@ -74,43 +74,43 @@ struct _alpmb_t {
 	const struct db_operations *ops;
 
 	/* bitfields for validity, local, loaded caches, etc. */
-	/* From _alpmbstatus_t */
+	/* From _alpm_dbstatus_t */
 	int status;
 	/* alpm_siglevel_t */
 	int siglevel;
-	/* alpmb_usage_t */
+	/* alpm_db_usage_t */
 	int usage;
 };
 
 
 /* db.c, database general calls */
-alpmb_t *_alpmb_new(const char *treename, int is_local);
-void _alpmb_free(alpmb_t *db);
-const char *_alpmb_path(alpmb_t *db);
-int _alpmb_cmp(const void *d1, const void *d2);
-int _alpmb_search(alpmb_t *db, const alpm_list_t *needles,
+alpm_db_t *_alpm_db_new(const char *treename, int is_local);
+void _alpm_db_free(alpm_db_t *db);
+const char *_alpm_db_path(alpm_db_t *db);
+int _alpm_db_cmp(const void *d1, const void *d2);
+int _alpm_db_search(alpm_db_t *db, const alpm_list_t *needles,
 		alpm_list_t **ret);
-alpmb_t *_alpmb_register_local(alpm_handle_t *handle);
-alpmb_t *_alpmb_register_sync(alpm_handle_t *handle, const char *treename,
+alpm_db_t *_alpm_db_register_local(alpm_handle_t *handle);
+alpm_db_t *_alpm_db_register_sync(alpm_handle_t *handle, const char *treename,
 		int level);
-void _alpmb_unregister(alpmb_t *db);
+void _alpm_db_unregister(alpm_db_t *db);
 
 /* be_*.c, backend specific calls */
-int _alpm_local_db_prepare(alpmb_t *db, alpm_pkg_t *info);
-int _alpm_local_db_write(alpmb_t *db, alpm_pkg_t *info, int inforeq);
-int _alpm_local_db_remove(alpmb_t *db, alpm_pkg_t *info);
-char *_alpm_local_db_pkgpath(alpmb_t *db, alpm_pkg_t *info, const char *filename);
+int _alpm_local_db_prepare(alpm_db_t *db, alpm_pkg_t *info);
+int _alpm_local_db_write(alpm_db_t *db, alpm_pkg_t *info, int inforeq);
+int _alpm_local_db_remove(alpm_db_t *db, alpm_pkg_t *info);
+char *_alpm_local_db_pkgpath(alpm_db_t *db, alpm_pkg_t *info, const char *filename);
 
 /* cache bullshit */
 /* packages */
-void _alpmb_free_pkgcache(alpmb_t *db);
-int _alpmb_add_pkgincache(alpmb_t *db, alpm_pkg_t *pkg);
-int _alpmb_remove_pkgfromcache(alpmb_t *db, alpm_pkg_t *pkg);
-alpm_pkghash_t *_alpmb_get_pkgcache_hash(alpmb_t *db);
-alpm_list_t *_alpmb_get_pkgcache(alpmb_t *db);
-alpm_pkg_t *_alpmb_get_pkgfromcache(alpmb_t *db, const char *target);
+void _alpm_db_free_pkgcache(alpm_db_t *db);
+int _alpm_db_add_pkgincache(alpm_db_t *db, alpm_pkg_t *pkg);
+int _alpm_db_remove_pkgfromcache(alpm_db_t *db, alpm_pkg_t *pkg);
+alpm_pkghash_t *_alpm_db_get_pkgcache_hash(alpm_db_t *db);
+alpm_list_t *_alpm_db_get_pkgcache(alpm_db_t *db);
+alpm_pkg_t *_alpm_db_get_pkgfromcache(alpm_db_t *db, const char *target);
 /* groups */
-alpm_list_t *_alpmb_get_groupcache(alpmb_t *db);
-alpm_group_t *_alpmb_get_groupfromcache(alpmb_t *db, const char *target);
+alpm_list_t *_alpm_db_get_groupcache(alpm_db_t *db);
+alpm_group_t *_alpm_db_get_groupfromcache(alpm_db_t *db, const char *target);
 
 #endif /* ALPM_DB_H */

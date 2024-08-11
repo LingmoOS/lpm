@@ -202,7 +202,7 @@ msgstr "आंशिक पैकेज समूह बिल्ड पूर�
 msgid "Make packages compatible for use with lpm"
 msgstr "पैकेज को पैकमैन के साथ उपयोग हेतु संगत करें"
 
-#: scripts/makepkg.sh.in:878 scripts/lpmb-upgrade.sh.in:41
+#: scripts/makepkg.sh.in:878 scripts/lpm-db-upgrade.sh.in:41
 msgid "Usage: %s [options]"
 msgstr "उपयोग : %s [विकल्प]"
 
@@ -384,7 +384,7 @@ msgstr "  --noprogressbar  फाइलें डाउनलोड करते
 msgid "If %s is not specified, %s will look for '%s'"
 msgstr "%s निर्दिष्ट न होने पर, %s '%s' को खोजेगा"
 
-#: scripts/makepkg.sh.in:933 scripts/lpmb-upgrade.sh.in:57
+#: scripts/makepkg.sh.in:933 scripts/lpm-db-upgrade.sh.in:57
 #: scripts/lpm-key.sh.in:99 scripts/repo-add.sh.in:104
 msgid ""
 "This is free software; see the source for copying conditions.\\nThere is NO "
@@ -485,67 +485,67 @@ msgstr "पैकेज डायरेक्टरी तैयार है।
 msgid "Finished making: %s"
 msgstr "निर्माण पूर्ण : %s"
 
-#: scripts/lpmb-upgrade.sh.in:39
-msgid "Upgrade the local lpmatabase to a newer format"
+#: scripts/lpm-db-upgrade.sh.in:39
+msgid "Upgrade the local lpm database to a newer format"
 msgstr "लोकल पैकमैन डेटाबेस को नए प्रारूप में अपडेट करें"
 
-#: scripts/lpmb-upgrade.sh.in:43
+#: scripts/lpm-db-upgrade.sh.in:43
 msgid "options:"
 msgstr "विकल्प :"
 
-#: scripts/lpmb-upgrade.sh.in:44
+#: scripts/lpm-db-upgrade.sh.in:44
 msgid "  -d, --dbpath <path>  set an alternate database location"
 msgstr "  -d, --dbpath <path>  वैकल्पिक डेटाबेस स्थान सेट करें"
 
-#: scripts/lpmb-upgrade.sh.in:45
+#: scripts/lpm-db-upgrade.sh.in:45
 msgid "  -h, --help           show this help message and exit"
 msgstr "  -h, --help           यह सहायता संदेश दिखाएँ व बंद करें"
 
-#: scripts/lpmb-upgrade.sh.in:46
+#: scripts/lpm-db-upgrade.sh.in:46
 msgid "  -r, --root <path>    set an alternate installation root"
 msgstr "  -r, --root <path>    वैकल्पिक इंस्टॉल रुट सेट करें"
 
-#: scripts/lpmb-upgrade.sh.in:47
+#: scripts/lpm-db-upgrade.sh.in:47
 msgid "  -V, --version        show version information and exit"
 msgstr "  -V, --version        संस्करण जानकारी दिखाएँ व बंद करें"
 
-#: scripts/lpmb-upgrade.sh.in:48
+#: scripts/lpm-db-upgrade.sh.in:48
 msgid "  --config <path>      set an alternate configuration file"
 msgstr "  --config <path>      वैकल्पिक विन्यास फाइल सेट करें"
 
-#: scripts/lpmb-upgrade.sh.in:49
+#: scripts/lpm-db-upgrade.sh.in:49
 msgid "  --nocolor            disable colorized output messages"
 msgstr "  --nocolor            रंगीन आउटपुट संदेश निष्क्रिय करें"
 
-#: scripts/lpmb-upgrade.sh.in:122 scripts/repo-add.sh.in:396
+#: scripts/lpm-db-upgrade.sh.in:122 scripts/repo-add.sh.in:396
 msgid "%s does not exist or is not a directory."
 msgstr "%s मौजूद नहीं है या यह डायरेक्टरी नहीं है।"
 
-#: scripts/lpmb-upgrade.sh.in:126
-msgid "%s is not a lpmatabase directory."
+#: scripts/lpm-db-upgrade.sh.in:126
+msgid "%s is not a lpm database directory."
 msgstr "%s पैकमैन डेटाबेस डायरेक्टरी नहीं है।"
 
-#: scripts/lpmb-upgrade.sh.in:130
+#: scripts/lpm-db-upgrade.sh.in:130
 msgid "You must have correct permissions to upgrade the database."
 msgstr "डेटाबेस अपग्रेड हेतु उचित अनुमतियाँ होना आवश्यक हैं।"
 
-#: scripts/lpmb-upgrade.sh.in:140
+#: scripts/lpm-db-upgrade.sh.in:140
 msgid "Pacman lock file was found. Cannot run while lpm is running."
 msgstr "पैकमैन लॉक फाइल मिली। पैकमैन क्रियान्वन के समय निष्पादन संभव नहीं है।"
 
-#: scripts/lpmb-upgrade.sh.in:152
+#: scripts/lpm-db-upgrade.sh.in:152
 msgid "Pre-3.5 database format detected - upgrading..."
 msgstr "3.5 संस्करण पूर्व डेटाबेस प्रारूप पहचाना गया - अपग्रेड हो रहा है..."
 
-#: scripts/lpmb-upgrade.sh.in:159
+#: scripts/lpm-db-upgrade.sh.in:159
 msgid "Done."
 msgstr "पूर्ण हुआ।"
 
-#: scripts/lpmb-upgrade.sh.in:163
+#: scripts/lpm-db-upgrade.sh.in:163
 msgid "Pre-4.2 database format detected - upgrading..."
 msgstr "4.2 संस्करण पूर्व डेटाबेस प्रारूप पहचाना गया - अपग्रेड हो रहा है..."
 
-#: scripts/lpmb-upgrade.sh.in:185
+#: scripts/lpm-db-upgrade.sh.in:185
 msgid "symlink '%s' points outside lpm root, manual repair required"
 msgstr "फाइल प्रतीक लिंक '%s'  पैकमैन रुट के बाहर निर्दिष्ट, मैनुअल निवारण आवश्यक "
 
@@ -1034,7 +1034,7 @@ msgid "Held by process %s"
 msgstr "%s प्रक्रिया हेतु कार्यरत"
 
 #: scripts/repo-add.sh.in:418
-msgid "Repository file '%s' is not a proper lpmatabase."
+msgid "Repository file '%s' is not a proper lpm database."
 msgstr "पैकेज-संग्रह फाइल '%s' उचित पैकमैन डेटाबेस नहीं है।"
 
 #: scripts/repo-add.sh.in:423

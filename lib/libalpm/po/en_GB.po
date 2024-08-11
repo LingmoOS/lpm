@@ -52,7 +52,7 @@ msgstr "warning given when extracting %s (%s)\n"
 msgid "could not extract %s (%s)\n"
 msgstr "could not extract %s (%s)\n"
 
-#: lib/libalpm/add.c:159 lib/libalpmload.c:707 lib/libalpm/remove.c:550
+#: lib/libalpm/add.c:159 lib/libalpm/dload.c:707 lib/libalpm/remove.c:550
 #, c-format
 msgid "could not rename %s to %s (%s)\n"
 msgstr "could not rename %s to %s (%s)\n"
@@ -169,7 +169,7 @@ msgstr "unknown install reason for package %s: %s\n"
 
 #: lib/libalpm/be_local.c:743 lib/libalpm/be_local.c:856
 #: lib/libalpm/be_local.c:996 lib/libalpm/be_local.c:1102
-#: lib/libalpmiskspace.c:135 lib/libalpmload.c:792 lib/libalpm/util.c:273
+#: lib/libalpm/diskspace.c:135 lib/libalpm/dload.c:792 lib/libalpm/util.c:273
 #: lib/libalpm/util.c:289
 #, c-format
 msgid "could not open file %s: %s\n"
@@ -281,160 +281,160 @@ msgstr "unknown database file: %s\n"
 msgid "%s: unknown key '%s' in sync database\n"
 msgstr "%s: unknown key '%s' in sync database\n"
 
-#: lib/libalpmb.c:413
+#: lib/libalpm/db.c:413
 #, c-format
 msgid "database path is undefined\n"
 msgstr "database path is undefined\n"
 
-#: lib/libalpmeps.c:184
+#: lib/libalpm/deps.c:184
 #, c-format
 msgid "dependency cycle detected:\n"
 msgstr "dependency cycle detected:\n"
 
-#: lib/libalpmeps.c:187
+#: lib/libalpm/deps.c:187
 #, c-format
 msgid "%s will be removed after its %s dependency\n"
 msgstr "%s will be removed after its %s dependency\n"
 
-#: lib/libalpmeps.c:191
+#: lib/libalpm/deps.c:191
 #, c-format
 msgid "%s will be installed before its %s dependency\n"
 msgstr "%s will be installed before its %s dependency\n"
 
-#: lib/libalpmeps.c:666 lib/libalpmeps.c:697
+#: lib/libalpm/deps.c:666 lib/libalpm/deps.c:697
 #, c-format
 msgid "ignoring package %s-%s\n"
 msgstr "ignoring package %s-%s\n"
 
-#: lib/libalpmeps.c:842
+#: lib/libalpm/deps.c:842
 #, c-format
 msgid "cannot resolve \"%s\", a dependency of \"%s\"\n"
 msgstr "cannot resolve \"%s\", a dependency of \"%s\"\n"
 
-#: lib/libalpmiskspace.c:78
+#: lib/libalpm/diskspace.c:78
 #, c-format
 msgid "could not get filesystem information for %s: %s\n"
 msgstr "could not get filesystem information for %s: %s\n"
 
-#: lib/libalpmiskspace.c:108
+#: lib/libalpm/diskspace.c:108
 #, c-format
 msgid "could not open file: %s: %s\n"
 msgstr "could not open file: %s: %s\n"
 
-#: lib/libalpmiskspace.c:154 lib/libalpmiskspace.c:167
+#: lib/libalpm/diskspace.c:154 lib/libalpm/diskspace.c:167
 #, c-format
 msgid "could not get filesystem information\n"
 msgstr "could not get filesystem information\n"
 
-#: lib/libalpmiskspace.c:254
+#: lib/libalpm/diskspace.c:254
 #, c-format
 msgid "could not get file information for %s\n"
 msgstr "could not get file information for %s\n"
 
-#: lib/libalpmiskspace.c:268 lib/libalpmiskspace.c:327
+#: lib/libalpm/diskspace.c:268 lib/libalpm/diskspace.c:327
 #, c-format
 msgid "could not determine mount point for file %s\n"
 msgstr "could not determine mount point for file %s\n"
 
-#: lib/libalpmiskspace.c:366
+#: lib/libalpm/diskspace.c:366
 #, c-format
 msgid "Partition %s too full: %jd blocks needed, %ju blocks free\n"
 msgstr "Partition %s too full: %jd blocks needed, %ju blocks free\n"
 
-#: lib/libalpmiskspace.c:391 lib/libalpmiskspace.c:445
+#: lib/libalpm/diskspace.c:391 lib/libalpm/diskspace.c:445
 #, c-format
 msgid "could not determine filesystem mount points\n"
 msgstr "could not determine filesystem mount points\n"
 
-#: lib/libalpmiskspace.c:397
+#: lib/libalpm/diskspace.c:397
 #, c-format
 msgid "could not determine cachedir mount point %s\n"
 msgstr "could not determine cachedir mount point %s\n"
 
-#: lib/libalpmiskspace.c:450
+#: lib/libalpm/diskspace.c:450
 #, c-format
 msgid "could not determine root mount point %s\n"
 msgstr "could not determine root mount point %s\n"
 
-#: lib/libalpmiskspace.c:498
+#: lib/libalpm/diskspace.c:498
 #, c-format
 msgid "Partition %s is mounted read only\n"
 msgstr "Partition %s is mounted read only\n"
 
-#: lib/libalpmload.c:107
+#: lib/libalpm/dload.c:107
 #, c-format
 msgid "failed to create temporary file for download\n"
 msgstr "failed to create temporary file for download\n"
 
-#: lib/libalpmload.c:198
+#: lib/libalpm/dload.c:198
 #, c-format
 msgid ""
 "too many errors from %s, skipping for the remainder of this transaction\n"
 msgstr ""
 "too many errors from %s, skipping for the remainder of this transaction\n"
 
-#: lib/libalpmload.c:215
+#: lib/libalpm/dload.c:215
 #, c-format
 msgid "fatal error from %s, skipping for the remainder of this transaction\n"
 msgstr "fatal error from %s, skipping for the remainder of this transaction\n"
 
-#: lib/libalpmload.c:310
+#: lib/libalpm/dload.c:310
 #, c-format
 msgid "disk"
 msgstr "disk"
 
-#: lib/libalpmload.c:532 lib/libalpmload.c:570 lib/libalpmload.c:583
+#: lib/libalpm/dload.c:532 lib/libalpm/dload.c:570 lib/libalpm/dload.c:583
 #, c-format
 msgid "failed retrieving file '%s' from %s : %s\n"
 msgstr "failed retrieving file '%s' from %s : %s\n"
 
-#: lib/libalpmload.c:562
+#: lib/libalpm/dload.c:562
 #, c-format
 msgid "failed retrieving file '%s' from %s : expected download size exceeded\n"
 msgstr ""
 "failed retrieving file '%s' from %s : expected download size exceeded\n"
 
-#: lib/libalpmload.c:685
+#: lib/libalpm/dload.c:685
 #, c-format
 msgid "%s appears to be truncated: %jd/%jd bytes\n"
 msgstr "%s appears to be truncated: %jd/%jd bytes\n"
 
-#: lib/libalpmload.c:776
+#: lib/libalpm/dload.c:776
 #, c-format
 msgid "url '%s' is invalid\n"
 msgstr "URL '%s' is invalid\n"
 
-#: lib/libalpmload.c:864
+#: lib/libalpm/dload.c:864
 #, c-format
 msgid "failed to setup a download payload for %s\n"
 msgstr "failed to setup a download payload for %s\n"
 
-#: lib/libalpmload.c:876
+#: lib/libalpm/dload.c:876
 #, c-format
 msgid "curl returned error %d from transfer\n"
 msgstr "curl returned error %d from transfer\n"
 
-#: lib/libalpmload.c:900
+#: lib/libalpm/dload.c:900
 #, c-format
 msgid "curl transfer error: %d\n"
 msgstr "curl transfer error: %d\n"
 
-#: lib/libalpmload.c:963
+#: lib/libalpm/dload.c:963
 #, c-format
 msgid "could not chdir to download directory %s\n"
 msgstr "could not chdir to download directory %s\n"
 
-#: lib/libalpmload.c:968
+#: lib/libalpm/dload.c:968
 #, c-format
 msgid "switching to sandbox user '%s' failed!\n"
 msgstr "switching to sandbox user '%s' failed!\n"
 
-#: lib/libalpmload.c:1361 lib/libalpm/sync.c:861
+#: lib/libalpm/dload.c:1361 lib/libalpm/sync.c:861
 #, c-format
 msgid "failed to retrieve some files\n"
 msgstr "failed to retrieve some files\n"
 
-#: lib/libalpmload.c:1384
+#: lib/libalpm/dload.c:1384
 #, c-format
 msgid "download completed successfully but no file in the cache\n"
 msgstr "download completed successfully but no file in the cache\n"

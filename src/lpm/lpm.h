@@ -25,9 +25,9 @@
 #define LPM_CALLER_PREFIX "LPM"
 
 /* database.c */
-int lpmatabase(alpm_list_t *targets);
+int lpm_database(alpm_list_t *targets);
 /* deptest.c */
-int lpmeptest(alpm_list_t *targets);
+int lpm_deptest(alpm_list_t *targets);
 /* files.c */
 int lpm_files(alpm_list_t *files);
 /* query.c */

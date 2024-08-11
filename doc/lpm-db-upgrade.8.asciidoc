@@ -1,17 +1,17 @@
-lpmb-upgrade(8)
+lpm-db-upgrade(8)
 ====================
 
 Name
 ----
-lpmb-upgrade - upgrade the local lpmatabase to a newer format
+lpm-db-upgrade - upgrade the local lpm database to a newer format
 
 Synopsis
 --------
-'lpmb-upgrade' [options]
+'lpm-db-upgrade' [options]
 
 Description
 -----------
-'lpmb-upgrade' is a script that upgrades the local database used
+'lpm-db-upgrade' is a script that upgrades the local database used
 by linkman:lpm[8] to a newer format.
 
 Options

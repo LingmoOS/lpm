@@ -462,8 +462,8 @@ msgstr ""
 
 #: src/lpm/conf.c:876
 #, c-format
-msgid "try running lpmb-upgrade\n"
-msgstr "lpmb-upgrade を実行してください\n"
+msgid "try running lpm-db-upgrade\n"
+msgstr "lpm-db-upgrade を実行してください\n"
 
 #: src/lpm/conf.c:894
 #, c-format
@@ -517,34 +517,34 @@ msgstr ""
 "設定ファイル %s, %d 行: 全てのディレクティブはセクションに入れる必要がありま"
 "す。\n"
 
-#: src/lpmatabase.c:50 src/lpm/files.c:335 src/lpm/query.c:434
+#: src/lpm/database.c:50 src/lpm/files.c:335 src/lpm/query.c:434
 #: src/lpm/remove.c:85 src/lpm/sync.c:970 src/lpm/upgrade.c:76
 #, c-format
 msgid "no targets specified (use -h for help)\n"
 msgstr "対象が指定されていません (-h を使ってヘルプを見て下さい)\n"
 
-#: src/lpmatabase.c:59
+#: src/lpm/database.c:59
 #, c-format
 msgid "no install reason specified (use -h for help)\n"
 msgstr "インストール方法が指定されていません (-h を使ってヘルプを見て下さい)\n"
 
-#: src/lpmatabase.c:73
+#: src/lpm/database.c:73
 #, c-format
 msgid "could not set install reason for package %s (%s)\n"
 msgstr "パッケージ %s のインストール方法を設定できませんでした (%s)\n"
 
-#: src/lpmatabase.c:79
+#: src/lpm/database.c:79
 #, c-format
 msgid "%s: install reason has been set to 'installed as dependency'\n"
 msgstr ""
 "%s: インストール方法は '依存関係としてインストール' に設定されています\n"
 
-#: src/lpmatabase.c:81
+#: src/lpm/database.c:81
 #, c-format
 msgid "%s: install reason has been set to 'explicitly installed'\n"
 msgstr "%s: インストール方法は '明示的にインストール' に設定されています\n"
 
-#: src/lpmatabase.c:296
+#: src/lpm/database.c:296
 #, c-format
 msgid "No database errors have been found!\n"
 msgstr "データベースにエラーは見つかりませんでした！\n"

@@ -145,32 +145,32 @@ static void make_aligned_titles(void)
 }
 
 /** Turn a depends list into a text list.
- * @param deps a list with items of type alpmepend_t
+ * @param deps a list with items of type alpm_depend_t
  */
 static void deplist_display(const char *title,
 		alpm_list_t *deps, unsigned short cols)
 {
 	alpm_list_t *i, *text = NULL;
 	for(i = deps; i; i = alpm_list_next(i)) {
-		alpmepend_t *dep = i->data;
-		text = alpm_list_add(text, alpmep_compute_string(dep));
+		alpm_depend_t *dep = i->data;
+		text = alpm_list_add(text, alpm_dep_compute_string(dep));
 	}
 	list_display(title, text, cols);
 	FREELIST(text);
 }
 
 /** Turn a optdepends list into a text list.
- * @param optdeps a list with items of type alpmepend_t
+ * @param optdeps a list with items of type alpm_depend_t
  */
 static void optdeplist_display(alpm_pkg_t *pkg, unsigned short cols)
 {
 	alpm_list_t *i, *text = NULL;
-	alpmb_t *localdb = alpm_get_localdb(config->handle);
+	alpm_db_t *localdb = alpm_get_localdb(config->handle);
 	for(i = alpm_pkg_get_optdepends(pkg); i; i = alpm_list_next(i)) {
-		alpmepend_t *optdep = i->data;
-		char *depstring = alpmep_compute_string(optdep);
+		alpm_depend_t *optdep = i->data;
+		char *depstring = alpm_dep_compute_string(optdep);
 		if(alpm_pkg_get_origin(pkg) == ALPM_PKG_FROM_LOCALDB) {
-			if(alpm_find_satisfier(alpmb_get_pkgcache(localdb), depstring)) {
+			if(alpm_find_satisfier(alpm_db_get_pkgcache(localdb), depstring)) {
 				const char *installed = _(" [installed]");
 				depstring = realloc(depstring, strlen(depstring) + strlen(installed) + 1);
 				strcpy(depstring + strlen(depstring), installed);
@@ -260,7 +260,7 @@ void dump_pkg_full(alpm_pkg_t *pkg, int extra)
 	/* actual output */
 	if(from == ALPM_PKG_FROM_SYNCDB) {
 		string_display(titles[T_REPOSITORY],
-				alpmb_get_name(alpm_pkg_get_db(pkg)), cols);
+				alpm_db_get_name(alpm_pkg_get_db(pkg)), cols);
 	}
 	string_display(titles[T_NAME], alpm_pkg_get_name(pkg), cols);
 	string_display(titles[T_VERSION], alpm_pkg_get_version(pkg), cols);
@@ -313,7 +313,7 @@ void dump_pkg_full(alpm_pkg_t *pkg, int extra)
 		if(base64_sig) {
 			unsigned char *decoded_sigdata = NULL;
 			size_t data_len;
-			alpmecode_signature(base64_sig, &decoded_sigdata, &data_len);
+			alpm_decode_signature(base64_sig, &decoded_sigdata, &data_len);
 			alpm_extract_keyid(config->handle, alpm_pkg_get_name(pkg),
 					decoded_sigdata, data_len, &keys);
 			free(decoded_sigdata);
@@ -492,11 +492,11 @@ void dump_pkg_changelog(alpm_pkg_t *pkg)
 	}
 }
 
-void print_installed(alpmb_t *db_local, alpm_pkg_t *pkg)
+void print_installed(alpm_db_t *db_local, alpm_pkg_t *pkg)
 {
 	const char *pkgname = alpm_pkg_get_name(pkg);
 	const char *pkgver = alpm_pkg_get_version(pkg);
-	alpm_pkg_t *lpkg = alpmb_get_pkg(db_local, pkgname);
+	alpm_pkg_t *lpkg = alpm_db_get_pkg(db_local, pkgname);
 	if(lpkg) {
 		const char *lpkgver = alpm_pkg_get_version(lpkg);
 		const colstr_t *colstr = &config->colstr;
@@ -535,10 +535,10 @@ void print_groups(alpm_pkg_t *pkg)
  * @param show_status show if the package is also in the local db
  * @return -1 on error, 0 if there were matches, 1 if there were not
  */
-int dump_pkg_search(alpmb_t *db, alpm_list_t *targets, int show_status)
+int dump_pkg_search(alpm_db_t *db, alpm_list_t *targets, int show_status)
 {
 	int freelist = 0;
-	alpmb_t *db_local;
+	alpm_db_t *db_local;
 	alpm_list_t *i, *searchlist = NULL;
 	unsigned short cols;
 	const colstr_t *colstr = &config->colstr;
@@ -549,12 +549,12 @@ int dump_pkg_search(alpmb_t *db, alpm_list_t *targets, int show_status)
 
 	/* if we have a targets list, search for packages matching it */
 	if(targets) {
-		if(alpmb_search(db, targets, &searchlist) != 0) {
+		if(alpm_db_search(db, targets, &searchlist) != 0) {
 			return -1;
 		}
 		freelist = 1;
 	} else {
-		searchlist = alpmb_get_pkgcache(db);
+		searchlist = alpm_db_get_pkgcache(db);
 		freelist = 0;
 	}
 	if(searchlist == NULL) {
@@ -568,7 +568,7 @@ int dump_pkg_search(alpmb_t *db, alpm_list_t *targets, int show_status)
 		if(config->quiet) {
 			fputs(alpm_pkg_get_name(pkg), stdout);
 		} else {
-			printf("%s%s/%s%s %s%s%s", colstr->repo, alpmb_get_name(db),
+			printf("%s%s/%s%s %s%s%s", colstr->repo, alpm_db_get_name(db),
 					colstr->title, alpm_pkg_get_name(pkg),
 					colstr->version, alpm_pkg_get_version(pkg), colstr->nocolor);
 
