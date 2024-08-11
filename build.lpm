@@ -51,7 +51,7 @@ package() {
 
   local unit
   for unit in dirmngr gpg-agent gpg-agent-{browser,extra,ssh} keyboxd; do
-    ln -s "../${unit}@.socket" "$wantsdir/${unit}@etc-pacman.d-gnupg.socket"
+    ln -s "../${unit}@.socket" "$wantsdir/${unit}@etc-lpm-gnupg.socket"
   done
 }
 
