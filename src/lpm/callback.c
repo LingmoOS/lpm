@@ -176,10 +176,44 @@ static void fill_progress(const int percent, const int proglen)
 					fputs("\033[0;37m \033[m", stdout);
 				}
 			} /* else regular progress bar */
-			else if(i > hashlen - hash) {
-				putchar('#');
+			if(i > hashlen - hash) {
+				putchar('\033');
+				putchar('[');
+				putchar('4');
+				putchar('4');
+				putchar('m');;
+				putchar(' ');
+				putchar('\033');
+				putchar('[');
+				putchar('0');
+				putchar('m');
+			// } else if(i == hashlen - hash) {
+			// 	if(percent % 1 == 0) {
+			// 		// fputs("\033[1;34m>\033[m", stdout);
+			// 		putchar('\033');
+			// 		putchar('[');
+			// 		putchar('3');
+			// 		putchar('4');
+			// 		putchar('m');
+			// 		putchar('>');
+			// 		putchar('\033');
+			// 		putchar('[');
+			// 		putchar('0');
+			// 		putchar('m');
+			// 	}
 			} else {
-				putchar('-');
+				putchar('\033');
+				putchar('[');
+				putchar('4');
+				putchar('1');
+				putchar(';');
+				putchar('8');
+				putchar('m');
+				putchar(' ');
+				putchar('\033');
+				putchar('[');
+				putchar('0');
+				putchar('m');
 			}
 		}
 		putchar(']');
